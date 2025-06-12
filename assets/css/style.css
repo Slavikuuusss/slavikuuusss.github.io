@@ -98,6 +98,7 @@ body {
 .arrow {
   transition: transform 0.3s ease;
 }
+
 .arrow.rotate {
   transform: rotate(180deg);
 }
@@ -116,17 +117,26 @@ body {
   cursor: pointer;
   font-size: 18px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
 }
 
 .burger:hover {
   background-color: #8b5a3c;
 }
 
-/* Content */
+/* Main Content */
 .main-content {
-  margin-left: 300px;
+  margin-left: 280px;
   padding: 60px;
   transition: var(--transition);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Когда сайдбар закрыт */
+.sidebar:not(.open) + .main-content {
+  margin-left: 0;
+  width: 100%;
 }
 
 .container {
@@ -135,6 +145,14 @@ body {
   border-radius: var(--radius);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.4s ease-out;
+  max-width: 1200px;
+  margin: 0 auto;
+  transition: max-width 0.3s ease;
+}
+
+/* Расширенный контейнер при закрытом сайдбаре */
+.sidebar:not(.open) + .main-content .container {
+  max-width: 1400px;
 }
 
 h1, h2, h3, h4 {
@@ -197,7 +215,8 @@ ol {
 /* Responsive */
 @media (max-width: 768px) {
   .main-content {
-    margin-left: 0;
+    margin-left: 0 !important;
+    width: 100% !important;
     padding: 20px;
   }
 
@@ -205,151 +224,9 @@ ol {
     width: 100%;
     max-width: 320px;
   }
-}
-/* Улучшенное поведение контента */
-.main-content {
-  transition: margin-left 0.3s ease, width 0.3s ease;
-  margin-left: 280px;
-  width: calc(100% - 280px);
-  min-height: 100vh;
-  position: relative;
-}
-
-.sidebar:not(.open) + .main-content {
-  margin-left: 0;
-  width: 100%;
-}
-
-/* Затенение фона */
-.// Кнопка вверх
-const backToTopButton = document.getElementById("backToTop");
-const mainOverlay = document.createElement('div');
-mainOverlay.className = 'main-overlay';
-document.body.appendChild(mainOverlay);
-
-// Боковое меню
-const sidebar = document.getElementById("sidebar");
-const burger = document.getElementById("burger");
-const closeSidebar = document.getElementById("closeSidebar");
-
-// Функция переключения сайдбара
-function toggleSidebar() {
-  sidebar.classList.toggle("open");
-  document.body.classList.toggle("no-scroll");
-  mainOverlay.style.visibility = sidebar.classList.contains("open") ? "visible" : "hidden";
-  mainOverlay.style.opacity = sidebar.classList.contains("open") ? "1" : "0";
-}
-
-// Обработчики событий
-burger.addEventListener("click", function(e) {
-  e.stopPropagation();
-  toggleSidebar();
-});
-
-closeSidebar.addEventListener("click", toggleSidebar);
-mainOverlay.addEventListener("click", toggleSidebar);
-
-// Подменю
-document.querySelectorAll(".menu-item[data-toggle]").forEach(item => {
-  item.addEventListener("click", (e) => {
-    e.preventDefault();
-    const targetId = item.getAttribute("data-toggle");
-    const submenu = document.getElementById(targetId);
-    submenu.classList.toggle("open");
-    item.querySelector(".arrow").classList.toggle("rotate");
-  });
-});
-
-// Адаптация для мобильных (только инициализация)
-function initSidebar() {
-  if (window.innerWidth > 768) {
-    sidebar.classList.add("open");
-  } else {
-    sidebar.classList.remove("open");
-  }
-}
-
-// Кнопка "Наверх"
-window.addEventListener("scroll", () => {
-  backToTopButton.style.display = window.scrollY > 300 ? "flex" : "none";
-});
-
-backToTopButton.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-// Инициализация
-initSidebar();
-
-// Ресайз без автоматического управления состоянием
-window.addEventListener("resize", function() {
-  backToTopButton.style.display = window.scrollY > 300 ? "flex" : "none";
-}); {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: 999;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-}
-
-.sidebar.open ~ .main-overlay {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Адаптация для мобильных */
-@media (max-width: 768px) {
-  .main-content {
-    margin-left: 0 !important;
-    width: 100% !important;
-  }
-  
-  .sidebar {width: ;
-    transform: translateX(-100%);
-  }
-  
-  .sidebar.open {
-    transform: translateX(0);
-  }
-  }
-  /* Основные изменения для растягивания контента */
-.main-content {
-  transition: margin-left 0.3s ease, width 0.3s ease;
-  margin-left: 280px; /* Совпадает с шириной сайдбара */
-  width: calc(100% - 280px); /* Динамическая ширина */
-}
-
-/* Когда сайдбар закрыт */
-.sidebar:not(.open) + .main-content {
-  margin-left: 0;
-  width: 100%;
-}
-
-/* Контейнер с контентом */
-.container {
-  max-width: 1200px; /* Фиксированная максимальная ширина */
-  margin: 0 auto;
-  transition: max-width 0.3s ease;
-}
-
-/* Расширяем контейнер когда сайдбар закрыт */
-.sidebar:not(.open) + .main-content .container {
-  max-width: 1400px; /* Увеличиваем на 200px */
-}
-
-/* Для мобильных - оставляем как было */
-@media (max-width: 768px) {
-  .main-content {
-    margin-left: 0 !important;
-    width: 100% !important;
-  }
   
   .sidebar:not(.open) + .main-content .container {
-    max-width: 1200px; /* Возвращаем обычную ширину */
+    max-width: 100%;
+    padding: 20px;
   }
-  }
+}
