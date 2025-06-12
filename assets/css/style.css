@@ -317,3 +317,39 @@ window.addEventListener("resize", function() {
     transform: translateX(0);
   }
   }
+  /* Основные изменения для растягивания контента */
+.main-content {
+  transition: margin-left 0.3s ease, width 0.3s ease;
+  margin-left: 280px; /* Совпадает с шириной сайдбара */
+  width: calc(100% - 280px); /* Динамическая ширина */
+}
+
+/* Когда сайдбар закрыт */
+.sidebar:not(.open) + .main-content {
+  margin-left: 0;
+  width: 100%;
+}
+
+/* Контейнер с контентом */
+.container {
+  max-width: 1200px; /* Фиксированная максимальная ширина */
+  margin: 0 auto;
+  transition: max-width 0.3s ease;
+}
+
+/* Расширяем контейнер когда сайдбар закрыт */
+.sidebar:not(.open) + .main-content .container {
+  max-width: 1400px; /* Увеличиваем на 200px */
+}
+
+/* Для мобильных - оставляем как было */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  
+  .sidebar:not(.open) + .main-content .container {
+    max-width: 1200px; /* Возвращаем обычную ширину */
+  }
+  }
