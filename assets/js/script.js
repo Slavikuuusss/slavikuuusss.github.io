@@ -62,3 +62,34 @@ initSidebar();
 window.addEventListener("resize", function() {
   backToTopButton.style.display = window.scrollY > 300 ? "flex" : "none";
 });
+// Карусель глав
+const carouselTrack = document.querySelector('.carousel-track');
+const carouselItems = document.querySelectorAll('.carousel-item');
+const prevArrow = document.querySelector('.carousel-arrow:first-child');
+const nextArrow = document.querySelector('.carousel-arrow:last-child');
+
+// Обновление активной главы
+function updateActiveChapter() {
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  carouselItems.forEach(item => {
+    item.classList.remove('active');
+    const href = item.getAttribute('href').split('/').pop();
+    if (href === currentPage) {
+      item.classList.add('active');
+      // Прокручиваем к активному элементу
+      item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  });
+}
+
+// Прокрутка карусели
+prevArrow.addEventListener('click', () => {
+  carouselTrack.scrollBy({ left: -100, behavior: 'smooth' });
+});
+
+nextArrow.addEventListener('click', () => {
+  carouselTrack.scrollBy({ left: 100, behavior: 'smooth' });
+});
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', updateActiveChapter);
