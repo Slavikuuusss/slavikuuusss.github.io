@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step by Step — Глава 8</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    .step-actions ul {
+      padding-left: 1.5em;
+      margin: 15px 0;
+    }
+    .step-actions li {
+      margin-bottom: 12px;
+      position: relative;
+      list-style-type: none;
+      padding-left: 1em;
+    }
+    .step-actions li:before {
+      content: "•";
+      color: var(--primary);
+      position: absolute;
+      left: 0;
+    }
+    .image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .image-gallery img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Кнопка-бургер -->
+  <button class="burger" id="burger">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-book-open"></i>Обучалка</h2>
+      <button class="close-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html"><i class="fas fa-book"></i> Step by step</a></li>
+      <li><a href="chapter1.html"><i class="fas fa-book"></i> Меню</a></li>
+      <li><a href="chapter2.html"><i class="fas fa-book"></i> Бар</a></li>
+    </ul>
+  </nav>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <section class="container">
+      <h1><i class="fas fa-tray"></i> Глава 8. Правила работы с подносом</h1>
+
+      <article id="8.1">
+        <h2>8.1. Основные правила работы с подносом</h2>
+
+        <div class="standard-card">
+          <div class="step-header">
+            <i class="fas fa-clipboard-list"></i> Правила ношения подноса
+          </div>
+          <div class="step-content">
+            <div class="step-actions">
+              <ul>
+                <li>Поднос можно носить только на одной руке (в исключительных случаях разрешается слегка придерживать поднос второй рукой)</li>
+                <li>Запрещается ставить поднос на стол</li>
+                <li>Блюда и напитки устанавливаются на поднос только в один ярус</li>
+                <li>Более тяжелые предметы должны находиться ближе к официанту, высокие - к центру подноса</li>
+                <li>Подносом нельзя размахивать, прятать за спину и подмышку, опускать вниз до уровня колен</li>
+                <li>Не допускается носить поднос, взяв его за ободок или же, взяв его двумя руками</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Галерея изображений -->
+        <div class="standard-card">
+          <div class="step-header">
+            <i class="fas fa-images"></i> Примеры правильного и неправильного использования
+          </div>
+          <div class="step-content">
+            <div class="image-gallery">
+              <div>
+                <img src="assets/images/tray1.jpg" alt="Правильное ношение подноса">
+                <p>Рис 1. Правильное положение</p>
+              </div>
+              <div>
+                <img src="assets/images/tray2.jpg" alt="Запрещено ставить на стол">
+                <p>Рис 2. Запрещено ставить на стол</p>
+              </div>
+              <div>
+                <img src="assets/images/tray3.jpg" alt="Запрещено размахивать">
+                <p>Рис 3. Запрещено размахивать</p>
+              </div>
+              <div>
+                <img src="assets/images/tray4.jpg" alt="Запрещено прятать за спину">
+                <p>Рис 4. Запрещено прятать за спину</p>
+              </div>
+              <div>
+                <img src="assets/images/tray5.jpg" alt="Запрещено подмышку">
+                <p>Рис 5. Запрещено подмышку</p>
+              </div>
+              <div>
+                <img src="assets/images/tray6.jpg" alt="Запрещено опускать низко">
+                <p>Рис 6. Запрещено опускать низко</p>
+              </div>
+              <div>
+                <img src="assets/images/tray7.jpg" alt="Неправильный захват">
+                <p>Рис 7. Неправильный захват</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="standard-card">
+          <div class="step-header">
+            <i class="fas fa-broom"></i> Гигиена и хранение
+          </div>
+          <div class="step-content">
+            <div class="step-actions">
+              <ul>
+                <li>За чистотой подносов следят официанты</li>
+                <li>По санитарным нормам подносы отдаются на мойку после каждой уборки грязной посуды</li>
+                <li>Месторасположение подноса – рука официанта, стейшен</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="important-note">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div>
+            <strong>Важно!</strong> Соблюдение правил работы с подносом обеспечивает безопасность и профессиональный уровень обслуживания.
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- Карусель глав -->
+  <div class="chapters-carousel">
+    <div class="carousel-container">
+      <a href="chapter7.html" class="carousel-arrow"><i class="fas fa-chevron-left"></i></a>
+      <div class="carousel-track">
+        <a href="chapter1.html" class="carousel-item">1</a>
+        <a href="chapter2.html" class="carousel-item">2</a>
+        <a href="chapter3.html" class="carousel-item">3</a>
+        <a href="chapter4.html" class="carousel-item">4</a>
+        <a href="chapter5.html" class="carousel-item">5</a>
+        <a href="chapter6.html" class="carousel-item">6</a>
+        <a href="chapter7.html" class="carousel-item">7</a>
+        <a href="chapter8.html" class="carousel-item active">8</a>
+        <a href="chapter9.html" class="carousel-item">9</a>
+        <a href="chapter10.html" class="carousel-item">10</a>
+        <a href="chapter11.html" class="carousel-item">11</a>
+        <a href="chapter12.html" class="carousel-item">12</a>
+        <a href="chapter13.html" class="carousel-item">13</a>
+      </div>
+      <a href="chapter9.html" class="carousel-arrow"><i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <!-- Кнопка вверх -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step by Step — Глава 1</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+  <style>
+    :root {
+      --primary: #8B5A3C;
+      --primary-light: #A9744F;
+      --accent: #D6B97B;
+      --light: #FFFFFF;
+      --bg: #FDFAF5;
+      --dark: #2E1F1A;
+      --muted: #888888;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background-color: var(--bg);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary);
+    }
+
+    /* Основной контент */
+    .main-content {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .container {
+      background: var(--light);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* Карточки */
+    .card {
+      background: var(--light);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--accent);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      color: var(--primary-light);
+    }
+
+    .card-header i {
+      margin-right: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    /* Секции */
+    .section {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(139, 90, 60, 0.1);
+    }
+
+    /* Списки */
+    .rules-list {
+      padding-left: 1.2rem;
+    }
+
+    .rules-list li {
+      margin-bottom: 0.8rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .rules-list li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    /* Фразы */
+    .phrases {
+      background: rgba(214, 185, 123, 0.15);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      margin: 1.5rem 0;
+    }
+
+    .phrase {
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      background: var(--light);
+      border-radius: calc(var(--radius) - 4px);
+      font-style: italic;
+      position: relative;
+      padding-left: 2.5rem;
+    }
+
+    .phrase:before {
+      content: "“";
+      position: absolute;
+      left: 0.8rem;
+      top: 0.5rem;
+      font-size: 1.8rem;
+      color: var(--accent);
+      font-family: serif;
+    }
+
+    /* Важные блоки */
+    .important {
+      background: rgba(139, 90, 60, 0.08);
+      border-left: 4px solid var(--primary);
+      padding: 1.2rem;
+      border-radius: var(--radius);
+      margin: 1.5rem 0;
+    }
+
+    .important-title {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .important-title i {
+      margin-right: 0.5rem;
+    }
+
+    /* Визуализация */
+    .visual-guide {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .visual-item {
+      background: var(--light);
+      border-radius: var(--radius);
+      padding: 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .visual-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .visual-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+    }
+
+    /* Анимации */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1rem;
+      }
+
+      .container {
+        padding: 1.5rem;
+      }
+
+      .visual-guide {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <!-- Кнопка-бургер -->
+  <button class="burger" id="burger">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-book-open"></i>Обучалка</h2>
+      <button class="close-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html" class="active"><i class="fas fa-book"></i> Step by step</a></li>
+      <li><a href="chapter1.html"><i class="fas fa-book"></i> Меню</a></li>
+      <li><a href="chapter2.html"><i class="fas fa-book"></i> Бар</a></li>
+    </ul>
+  </nav>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <section class="container">
+      <h1 style="margin-bottom: 1.5rem;"><i class="fas fa-broom" style="margin-right: 0.8rem;"></i>Глава 12. Правила уборки стола</h1>
+
+      <article id="12.1">
+        <div class="section">
+          <h2 style="color: var(--primary-light); margin-bottom: 1.2rem;">12.1. Уборка во время обслуживания</h2>
+
+          <div class="card">
+            <div class="card-header">
+              <i class="fas fa-eye"></i>
+              <h3>Держи столы с Гостями в поле зрения</h3>
+            </div>
+            <ul class="rules-list">
+              <li>Уборка использованной посуды должна причинять как можно меньше неудобств Гостям</li>
+              <li>Использованные тарелки, приборы и стекло убирай только тогда, когда каждый Гость закончил есть, предварительно спросив разрешения</li>
+            </ul>
+
+            <div class="phrases">
+              <h4 style="margin-bottom: 0.8rem; color: var(--primary-light);">Фразы для получения разрешения:</h4>
+              <div class="phrase">Прошу прощения, я могу убрать (пустую) тарелку?</div>
+              <div class="phrase">Позвольте?</div>
+              <div class="phrase">Разрешите убрать?</div>
+            </div>
+
+            <ul class="rules-list">
+              <li>Если на тарелке осталась еда, следует немного подождать, прежде чем уточнить, можно ли убрать блюдо, некоторые Гости едят медленно или беседуют во время еды</li>
+              <li>Уберите все тарелки и приборы предыдущего курса, прежде чем подавать другие блюда</li>
+            </ul>
+
+            <div class="important">
+              <div class="important-title">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>Важные правила</span>
+              </div>
+              <ul class="rules-list">
+                <li>Предварительно получив разрешение Гостя</li>
+                <li>Переносить в руках более 2-х грязных бокалов и 3-х тарелок ЗАПРЕЩЕНО!</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <i class="fas fa-utensils"></i>
+              <h3>Правила уборки приборов</h3>
+            </div>
+            <ul class="rules-list">
+              <li>При уборке приборов руководствуйся правилом «Убрал вилку – Убери нож», «Убрал нож – Убери ручник»</li>
+              <li>Пользуйся подносом при уборке стола</li>
+            </ul>
+
+            <div class="important">
+              <div class="important-title">
+                <i class="fas fa-ban"></i>
+                <span>Запрещено</span>
+              </div>
+              <ul class="rules-list">
+                <li>Переносить грязную посуду при уборке стола</li>
+                <li>Перегружать поднос - не ставь больше, чем сможешь унести</li>
+              </ul>
+            </div>
+
+            <h4 style="margin: 1.5rem 0 1rem; color: var(--primary-light);">Правила обращения с посудой:</h4>
+            <ul class="rules-list">
+              <li>Не касайся тарелок изнутри, держи ее за края</li>
+              <li>Бокалы и стаканы убирай, поддерживая за низ</li>
+              <li>Ставь тарелки одного размера – большие на большие, маленькие на маленькие</li>
+              <li>Самые маленькие тарелки ставь на тарелки большого размера</li>
+              <li>Приборы клади отдельно от тарелок, непосредственно на поднос</li>
+              <li>Не ставь бокалы друг в друга</li>
+              <li>Убирай со стола все лишнее: контейные палочки, салфетки, зубочистки</li>
+              <li>При необходимости убери крошки, используя чистую салфетку и блюдце</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 style="color: var(--primary-light); margin-bottom: 1.2rem;">12.2. Уборка после ухода Гостей</h2>
+
+          <div class="card">
+            <div class="card-header">
+              <i class="fas fa-user-minus"></i>
+              <h3>Основные действия</h3>
+            </div>
+            <p>После ухода Гостя произведи быструю уборку стола. Крайне важно подготовить стол к приходу новых Гостей как можно быстрее.</p>
+
+            <div class="important">
+              <div class="important-title">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Важно!</span>
+              </div>
+              <p>Уборку стола начинай только после того, как Гости ушли!</p>
+            </div>
+
+            <div class="visual-guide">
+              <div class="visual-item">
+                <div class="visual-icon">
+                  <i class="fas fa-trash"></i>
+                </div>
+                <p>Убери мусор</p>
+              </div>
+              <div class="visual-item">
+                <div class="visual-icon">
+                  <i class="fas fa-table"></i>
+                </div>
+                <p>Протри стол</p>
+              </div>
+              <div class="visual-item">
+                <div class="visual-icon">
+                  <i class="fas fa-couch"></i>
+                </div>
+                <p>Проверь диваны</p>
+              </div>
+              <div class="visual-item">
+                <div class="visual-icon">
+                  <i class="fas fa-chair"></i>
+                </div>
+                <p>Выровняй стулья</p>
+              </div>
+              <div class="visual-item">
+                <div class="visual-icon">
+                  <i class="fas fa-utensils"></i>
+                </div>
+                <p>Засервируй стол</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <i class="fas fa-clipboard-check"></i>
+              <h3>Дополнительные правила</h3>
+            </div>
+            <ul class="rules-list">
+              <li>При уборке стола используй две тряпки: влажную и сухую, а также блюдце для крошек</li>
+              <li>Никогда не используй при Гостях «химию»</li>
+              <li>Выровняй стулья, а при необходимости и стол</li>
+            </ul>
+
+            <h4 style="margin: 1.5rem 0 1rem; color: var(--primary-light);">Проверь комплектность:</h4>
+            <div class="visual-guide">
+              <div class="visual-item">
+                <div class="visual-icon">
+                  <i class="fas fa-tooth"></i>
+                </div>
+                <p>Зубочистки (не более 10)</p>
+              </div>
+              <div class="visual-item">
+                <div class="visual-icon">
+                  <i class="fas fa-mortar-pestle"></i>
+                </div>
+                <p>Соль и перец (чистые, наполненные)</p>
+              </div>
+              <div class="visual-item">
+                <div class="visual-icon">
+                  <i class="fas fa-info-circle"></i>
+                </div>
+                <p>Тейб-темпы (актуальные, симметричные)</p>
+              </div>
+            </div>
+
+            <div class="important">
+              <div class="important-title">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>Важные напоминания</span>
+              </div>
+              <ul class="rules-list">
+                <li>При уборке мелкого мусора с пола всегда используй салфетку</li>
+                <li>Для устранения крупных загрязнений приглашай уборщицу</li>
+                <li>После контакта с использованной посудой вымой руки</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+  <!-- Карусель глав -->
+  <div class="chapters-carousel">
+    <div class="carousel-container">
+      <a href="index.html" class="carousel-arrow"><i class="fas fa-chevron-left"></i></a>
+      <div class="carousel-track">
+        <a href="chapter1.html" class="carousel-item active">1</a>
+        <a href="chapter2.html" class="carousel-item">2</a>
+        <a href="chapter3.html" class="carousel-item">3</a>
+        <a href="chapter4.html" class="carousel-item">4</a>
+        <a href="chapter5.html" class="carousel-item">5</a>
+        <a href="chapter6.html" class="carousel-item">6</a>
+        <a href="chapter7.html" class="carousel-item">7</a>
+        <a href="chapter8.html" class="carousel-item">8</a>
+        <a href="chapter9.html" class="carousel-item">9</a>
+        <a href="chapter10.html" class="carousel-item">10</a>
+        <a href="chapter11.html" class="carousel-item">11</a>
+        <a href="chapter12.html" class="carousel-item">12</a>
+        <a href="chapter13.html" class="carousel-item">13</a>
+      </div>
+      <a href="chapter2.html" class="carousel-arrow"><i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+  <!-- Кнопка вверх -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

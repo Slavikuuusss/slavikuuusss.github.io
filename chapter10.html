@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step by Step — Глава 10</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    /* Улучшенные стили для главы 10 */
+    .drink-rules {
+      margin-bottom: 40px;
+    }
+
+    .drink-category {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
+      overflow: hidden;
+    }
+
+    .drink-header {
+      background: linear-gradient(135deg, var(--primary), #8b5a3c);
+      color: white;
+      padding: 15px 25px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+
+    .drink-header i {
+      margin-right: 12px;
+      font-size: 1.1rem;
+    }
+
+    .drink-content {
+      padding: 20px 25px;
+    }
+
+    .drink-content ul {
+      padding-left: 20px;
+      margin: 15px 0;
+    }
+
+    .drink-content li {
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 15px;
+      line-height: 1.6;
+    }
+
+    .drink-content li:before {
+      content: "•";
+      color: var(--primary);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .sub-category {
+      margin-top: 20px;
+      padding-left: 15px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .sub-category h3 {
+      color: var(--primary);
+      margin-top: 0;
+      font-size: 1.1rem;
+    }
+
+    .temperature-info {
+      background: rgba(214, 185, 123, 0.1);
+      padding: 12px 15px;
+      border-radius: 5px;
+      margin: 15px 0;
+      display: inline-block;
+    }
+
+    .wine-step {
+      margin-bottom: 15px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .wine-step:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 16px;
+      height: 16px;
+      background-color: var(--primary);
+      border-radius: 50%;
+    }
+
+    .wine-step-number {
+      position: absolute;
+      left: 4px;
+      top: 5px;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: bold;
+      width: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Кнопка-бургер -->
+  <button class="burger" id="burger">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-book-open"></i>Обучалка</h2>
+      <button class="close-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html"><i class="fas fa-book"></i> Step by step</a></li>
+      <li><a href="chapter1.html"><i class="fas fa-book"></i> Меню</a></li>
+      <li><a href="chapter2.html"><i class="fas fa-book"></i> Бар</a></li>
+    </ul>
+  </nav>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <section class="container">
+      <h1><i class="fas fa-glass-cheers"></i> Глава 10. Правила подачи напитков</h1>
+
+      <div class="drink-rules">
+        <!-- Безалкогольные напитки -->
+        <div class="drink-category">
+          <div class="drink-header">
+            <i class="fas fa-coffee"></i> Безалкогольные напитки
+          </div>
+          <div class="drink-content">
+            <ul>
+              <li>Если чай подается в чайнике, предупреди Гостя о том, что чаю требуется 5-7 минут, чтобы завариться</li>
+              <li>Если Гость просит молоко или сливки к кофе, то они подаются отдельно в молочнике. Уточни у Гостя в горячем или холодном виде подать молоко</li>
+            </ul>
+
+            <div class="sub-category">
+              <h3>Минеральная вода</h3>
+              <p>Если Гость заказывает минеральную воду, уточни:</p>
+              <ul>
+                <li>С газом или без газа</li>
+                <li>Теплую или холодную</li>
+                <li>Предложи к минеральной воде лед или лимон</li>
+              </ul>
+              <p>Воду переливай в бокал при Госте. Бокал при этом остается на столе. Допустимо подвинуть бокал для удобства налива.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Правила трубочек -->
+        <div class="drink-category">
+          <div class="drink-header">
+            <i class="fas fa-stroopwafel"></i> Правила использования трубочек
+          </div>
+          <div class="drink-content">
+            <div class="sub-category">
+              <h3>Подаются БЕЗ трубочек:</h3>
+              <ul>
+                <li>Соки (исключение - дети)</li>
+                <li>Горячие напитки (кофейные напитки, глинтвейн)</li>
+              </ul>
+            </div>
+
+            <div class="sub-category">
+              <h3>Подаются С трубочками:</h3>
+              <ul>
+                <li>Лимонады</li>
+                <li>Коктейли со льдом</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Пиво -->
+        <div class="drink-category">
+          <div class="drink-header">
+            <i class="fas fa-beer"></i> Бутылочное пиво
+          </div>
+          <div class="drink-content">
+            <ul>
+              <li>Бутылочное пиво подается в закрытом виде, открывается непосредственно перед Гостем за столом</li>
+              <li>Вместе с пивом подается чистый бокал</li>
+              <li>Бутылку и бокал необходимо поставить на стол</li>
+            </ul>
+
+            <div class="sub-category">
+              <h3>Правила наливания пива:</h3>
+              <ul>
+                <li>Во время наполнения держи бутылку под углом в 45 градусов</li>
+                <li>Старайся, чтобы бутылка не касалась стенок стакана. Между ними должно оставаться 1-2 см</li>
+                <li>Наполнять бокал необходимо так, чтобы пиво лилось на середину бокала</li>
+                <li>Если ты видишь, что пена резко поднимается и может выйти за края, подожди немного, затем наливай снова</li>
+                <li>При наполнении в бокале должно образоваться около 2-4 см пены - идеальная «пивная голова»</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Вино -->
+        <div class="drink-category">
+          <div class="drink-header">
+            <i class="fas fa-wine-glass-alt"></i> Вино
+          </div>
+          <div class="drink-content">
+            <p>При подаче вина обращайте внимание на соблюдение стандарта внешнего вида и температуру подачи напитка. Этикетка должна быть направлена в сторону Гостя.</p>
+
+            <div class="temperature-info">
+              <p><i class="fas fa-wine-bottle"></i> Красное вино подается при температуре <strong>16-22°C</strong></p>
+              <p><i class="fas fa-wine-bottle"></i> Белые, розовые, шампанские и игристые вина подаются охлажденными <strong>6-12°C</strong></p>
+            </div>
+
+            <ul>
+              <li>Вино открывается на столе</li>
+              <li>При открывании вина используется нарзанник, ручник, блюдце для пробки</li>
+              <li>Перед подачей бокалов на стол необходимо убедиться, что бокал чистый и натертый</li>
+            </ul>
+
+            <div class="sub-category">
+              <h3>Как открывать вино:</h3>
+
+              <div class="wine-step">
+                <span class="wine-step-number">1</span>
+                Перед тем как приступить к открыванию бутылки вина, необходимо продемонстрировать этикетку Гостю, заказавшему вино, озвучить название вина и страну происхождения
+              </div>
+
+              <div class="wine-step">
+                <span class="wine-step-number">2</span>
+                После того как Гость убедится, что это именно то вино, которое он заказал, и даст свое разрешение открыть его, бутылка ставится на стол таким образом, чтобы этикетка была обращена к Гостю, заказавшему вино
+              </div>
+
+              <!-- Остальные шаги аналогично -->
+              <div class="wine-step">
+                <span class="wine-step-number">3</span>
+                Необходимо достать караванчик, открыть нож и сделать им фольгу или полиэтилен, которыми обтянуто горлышко бутылки. Срезать надо аккуратно, ровно по верхнему краю, вокруг горлышка, двумя движениями.
+              </div>
+
+              <!-- ... остальные шаги ... -->
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Шампанское -->
+        <div class="drink-category">
+          <div class="drink-header">
+            <i class="fas fa-wine-glass"></i> Шампанские и игристые вина
+          </div>
+          <div class="drink-content">
+            <p>Шампанские и игристые вина приносят и демонстрируют Гостю так же, как и остальные вина</p>
+            <ul>
+              <li>Отпусти мозле и при отсутствии сильного давления на пробку осторожно удали её. Охватив одной рукой горлышко бутылки, другой возьмись за пробку и, если она не выходит сама, начни слегка крутить пробку.</li>
+              <li>Разлить шампанское на 2/3 бокала в несколько подходов</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Кулер -->
+        <div class="drink-category">
+          <div class="drink-header">
+            <i class="fas fa-wine-bottle"></i> Правила обращения с кулером
+          </div>
+          <div class="drink-content">
+            <ul>
+              <li>Кулер используется для охлаждения и подачи белого, розового вина и игристых вин</li>
+              <li>Кулер должен быть чистым без разводов и царапин</li>
+              <li>Положи ковшик льда на дно ведра кулера</li>
+              <li>Налей воды на ½ кулера, это позволит легко брать и обратно ставить бутылку</li>
+              <li>Поставь бутылку в ведро кулера и положи еще один ковшик льда вокруг нее</li>
+              <li>Если в бутылке еще осталось вино, после того как все бокалы наполнены, бутылку нужно оставить в кулере</li>
+              <li>Оставь ручник на кулере. Гость сможет вытереть бутылку, если будет самостоятельно разливать вино</li>
+              <li>Если бутылка пуста, ее нужно убрать</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Карусель глав -->
+  <div class="chapters-carousel">
+    <div class="carousel-container">
+      <a href="chapter9.html" class="carousel-arrow"><i class="fas fa-chevron-left"></i></a>
+      <div class="carousel-track">
+        <a href="chapter1.html" class="carousel-item">1</a>
+        <a href="chapter2.html" class="carousel-item">2</a>
+        <a href="chapter3.html" class="carousel-item">3</a>
+        <a href="chapter4.html" class="carousel-item">4</a>
+        <a href="chapter5.html" class="carousel-item">5</a>
+        <a href="chapter6.html" class="carousel-item">6</a>
+        <a href="chapter7.html" class="carousel-item">7</a>
+        <a href="chapter8.html" class="carousel-item">8</a>
+        <a href="chapter9.html" class="carousel-item">9</a>
+        <a href="chapter10.html" class="carousel-item active">10</a>
+        <a href="chapter11.html" class="carousel-item">11</a>
+        <a href="chapter12.html" class="carousel-item">12</a>
+        <a href="chapter13.html" class="carousel-item">13</a>
+      </div>
+      <a href="chapter11.html" class="carousel-arrow"><i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <!-- Кнопка вверх -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

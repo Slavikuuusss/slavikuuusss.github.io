@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step by Step — Глава 13</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Кнопка-бургер -->
+  <button class="burger" id="burger">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-book-open"></i>Обучалка</h2>
+      <button class="close-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html"><i class="fas fa-book"></i> Step by step</a></li>
+      <li><a href="chapter1.html"><i class="fas fa-book"></i> Меню</a></li>
+      <!-- Остальные главы -->
+      <li><a href="chapter13.html" class="active"><i class="fas fa-book"></i> Бар</a></li>
+    </ul>
+  </nav>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <section class="container">
+      <h1><i class="fas fa-utensils"></i> Глава 13. Меню</h1>
+
+      <div class="important">
+        <p>Меню – представляет собой ассортимент блюд, предлагаемых в ресторане</p>
+        <h3>ОФИЦИАНТ = ЭКСПЕРТ + ПУТЕВОДИТЕЛЬ по меню</h3>
+      </div>
+
+      <article id="13.1">
+        <h2>При изучении меню обрати внимание на следующие моменты:</h2>
+        <div class="standard-card">
+          <ul class="checklist">
+            <li><i class="fas fa-check"></i> Основные ингредиенты каждого блюда или напитка</li>
+            <li><i class="fas fa-check"></i> Опасные ингредиенты, вызывающие аллергию</li>
+            <li><i class="fas fa-check"></i> Ингредиенты, сильно влияющие на вкус</li>
+            <li><i class="fas fa-check"></i> Способ приготовления</li>
+            <li><i class="fas fa-check"></i> Время приготовления</li>
+            <li><i class="fas fa-check"></i> Вес блюда или объем напитка</li>
+            <li><i class="fas fa-check"></i> Способ подачи</li>
+            <li><i class="fas fa-check"></i> Сочетание блюд</li>
+            <li><i class="fas fa-check"></i> Стоимость</li>
+            <li><i class="fas fa-check"></i> Какие гарниры или дополнительные блюда ты можешь порекомендовать Гостю</li>
+          </ul>
+        </div>
+      </article>
+
+      <article id="13.2">
+        <h2>Завтраки</h2>
+        <div class="tip">
+          <p>Это отдельное меню, с которым работает ресторан с <strong>09:00 до 12:00</strong></p>
+        </div>
+      </article>
+
+      <article id="13.3">
+        <div class="important">
+          <h3><i class="fas fa-exclamation-circle"></i> Важно!</h3>
+          <p>В процессе изучения Меню используй специально разработанное <strong>Учебное Меню</strong>, а также <strong>Методическое Пособие «Помощник в изучении блюд и напитков»</strong></p>
+          <p>Свой вариант Учебного меню и Методического Пособия получи у Менеджера Ресторана</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- Карусель глав -->
+  <div class="chapters-carousel">
+    <div class="carousel-container">
+      <a href="chapter12.html" class="carousel-arrow"><i class="fas fa-chevron-left"></i></a>
+      <div class="carousel-track">
+        <a href="chapter1.html" class="carousel-item">1</a>
+        <!-- Остальные главы -->
+        <a href="chapter13.html" class="carousel-item active">13</a>
+      </div>
+      <a href="chapter14.html" class="carousel-arrow"><i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <!-- Кнопка вверх -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
