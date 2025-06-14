@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Меню — Салаты</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Кнопка-бургер -->
+  <button class="burger" id="burger">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-utensils"></i> Навигация</h2>
+      <button class="close-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+      <li><a href="menu.html" class="active"><i class="fas fa-book-open"></i> Меню</a></li>
+      <li><a href="contacts.html"><i class="fas fa-phone"></i> Контакты</a></li>
+    </ul>
+  </nav>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <section class="container">
+      <h1><i class="fas fa-leaf"></i> Салаты</h1>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-seedling"></i> Вегетарианские салаты</h2>
+
+        <!-- Салат 1 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/salad1.jpg" alt="Зеленый салат с авокадо">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Зеленый салат с авокадо и бобами Эдамаме</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> авокадо, огурцы, цукини, брокколи, бобы Эдамаме, семена льна, шпинат, рукола, масло зеленое, соус Сукияки (мирш, соевый соус, мисо паста, масло оливковое, апельсиновый фреш, специи)</p>
+            </div>
+            <div class="item-description">
+              <p>Салат с нежным авокадо, бобами Эдамаме, свежим огурцом, кабачком, брокколи, миксом салатов и пряным легким соусом на основе лайма и апельсинового сока.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>300г</span>
+              <span>450 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-drumstick-bite"></i> Мясные салаты</h2>
+
+        <!-- Салат 2 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/salad2.jpg" alt="Гриль салат со скерт-стейком">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Гриль салат со скерт-стейком и овощами</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> скерт стейк, цукини, шампиньоны, помидоры Черри, болгарский перец, микс салатов, соус (сладкий Чили + оливковое масло + соевый соус + уксус бальзамический + кинза + чеснок + горчица дижонская), семечки подсолнечника, кинза</p>
+            </div>
+            <div class="item-description">
+              <p>Салат со скерт стейком, овощами гриль, пряным кисло-сладким соусом, кинзой и семенами подсолнечника. Скерт стейк – альтернативный стейк, вырезается из диафрагмы быка.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>300г</span>
+              <span>590 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Салат 3 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/salad3.jpg" alt="Салат с куриной печенью">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Салат с куриной печенью и баклажаном</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> печень куриная (панируется в муке и обжаривается во фритюре), шпинат, огурцы свежие, черри ким-чи, мука пшеничная, пармезан, соус на салат с печенью (мацони, мята, лимонный фреш), соус для печени (соус порто, соус тайский, мед, горчица зернистая)</p>
+            </div>
+            <div class="item-description">
+              <p>Салат из куриной печени, обжаренной до золотистой корочки в сочетании со свежим шпинатом, хрустящими огурцами и ароматными черри ким чи с фирменным соусом.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>270г</span>
+              <span>520 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Салат 4 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/salad4.jpg" alt="Цезарь с курицей">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Цезарь с курицей</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> куриная грудка (гриль), томаты, микс салатов, сыр Пармезан, крутоны, яйцо, соус Цезарь</p>
+            </div>
+            <div class="item-description">
+              <p>Классический салат с куриной грудкой, приготовленной на гриле, миксом салатов, томатами, яйцом. Заправляется соусом Цезарь. Подается с крутонами и сыром Пармезан.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>210г</span>
+              <span>480 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-fish"></i> Салаты с морепродуктами</h2>
+
+        <!-- Салат 5 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/salad5.jpg" alt="Цезарь с креветками">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Цезарь с креветками</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> креветки, кальмар, чеснок (для обжарки), маринованные томаты Ким Чи, шпинат, айоли из манго (желток, оливковое масло, сок лимона, соль, пюре манго), тайский соус (устричный соус, соус сладкий чили, соевый соус, уксус бальзамический, томатный соус, корень хрена, красный лук, чеснок, сахар), Пармезан, фисташка рубленная, кумкват</p>
+            </div>
+            <div class="item-description">
+              <p>Салат с обжаренными морепродуктами с чесноком и тимьяном, шпинатом и маринованными томатами. Заправляется айоли из манго и тайским соусом. Украшается крошкой из Пармезана.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>190г</span>
+              <span>650 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Салат 6 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/salad6.jpg" alt="Неаполитанский салат">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Неаполитанский салат с морепродуктами</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> микс морепродуктов, микс салатов, томаты Черри, оливки, каперсы, пармезан, соус цитрусовый</p>
+            </div>
+            <div class="item-description">
+              <p>Легкий салат с ассорти морепродуктов, свежими овощами и цитрусовой заправкой. Идеальное сочетание морских ароматов и свежести.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>235г</span>
+              <span>680 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-pepper-hot"></i> Острые салаты</h2>
+
+        <!-- Салат 7 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/salad7.jpg" alt="Вяленый перец рамиро">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Вяленый перец рамиро с муссом из тунца</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> перец рамиро запеченный, маринад ким-чи (соевый соус, уксус рисовый, чеснок), лук красный, соус Вителло (сайра, чеснок, ворчестр, каперсы, пармезан, майонез, лайм, шрирача, сыр филадельфия, специи), ворчестр, пармезан, шрирача, сыр филадельфия, специи, зелень (укроп, петрушка), шпинат, каперсы, руккола</p>
+            </div>
+            <div class="item-description">
+              <p>Превосходная закуска для разгона аппетита! Запечённый рамиро, имеющий ярко выраженный вкус и аромат перца, промаркированный маринадом. Подается на подушечки из мусса Вителло с жареными каперсами, шпинатом и рукколой.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>190г</span>
+              <span>550 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Карусель категорий меню -->
+  <div class="chapters-carousel">
+    <div class="carousel-container">
+      <a href="appetizers.html" class="carousel-arrow"><i class="fas fa-chevron-left"></i></a>
+      <div class="carousel-track">
+        <a href="breakfasts.html" class="carousel-item">Завтраки</a>
+        <a href="appetizers.html" class="carousel-item">Закуски</a>
+        <a href="salads.html" class="carousel-item active">Салаты</a>
+        <a href="soups.html" class="carousel-item">Супы</a>
+        <a href="pasta.html" class="carousel-item">Паста</a>
+        <a href="pizza.html" class="carousel-item">Пицца</a>
+        <a href="meat.html" class="carousel-item">Мясо</a>
+        <a href="fish.html" class="carousel-item">Рыба</a>
+        <a href="desserts.html" class="carousel-item">Десерты</a>
+        <a href="lunch.html" class="carousel-item">Ланчи</a>
+      </div>
+      <a href="soups.html" class="carousel-arrow"><i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <!-- Кнопка вверх -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Анимированные столовые приборы -->
+  <div class="cutlery-parallax-container"></div>
+
+  <style>
+    .menu-category {
+      margin-bottom: 40px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 20px;
+    }
+
+    .menu-category h2 {
+      color: #8B4513;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 25px;
+    }
+
+    .menu-item {
+      display: flex;
+      margin-bottom: 30px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .item-photo {
+      width: 250px;
+      position: relative;
+      background: #f5f5f5;
+    }
+
+    .item-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 3rem;
+    }
+
+    .item-details {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .item-details h3 {
+      color: #5a3921;
+      margin-top: 0;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .item-ingredients {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 10px 0;
+    }
+
+    .item-description {
+      font-style: italic;
+      margin: 15px 0;
+      color: #444;
+    }
+
+    .item-weight-price {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      color: #8B4513;
+    }
+
+    @media (max-width: 768px) {
+      .menu-item {
+        flex-direction: column;
+      }
+
+      .item-photo {
+        width: 100%;
+        height: 200px;
+      }
+    }
+  </style>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.cutlery-parallax-container');
+    const types = [
+      'fa-utensils', 'fa-utensil-spoon', 'fa-utensil-fork',
+      'fa-utensil-knife', 'fa-glass-water', 'fa-wine-glass-alt'
+    ];
+
+    const colors = [
+      'rgba(169, 116, 79, 0.7)',
+      'rgba(214, 185, 123, 0.7)',
+      'rgba(201, 148, 99, 0.7)',
+      'rgba(139, 87, 42, 0.7)'
+    ];
+
+    // Создаем 30 элементов
+    for (let i = 0; i < 30; i++) {
+      const type = types[Math.floor(Math.random() * types.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = 50 + Math.random() * 70; // 50-120px
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+      const rotation = Math.random() * 360;
+      const depth = 0.5 + Math.random() * 1.5;
+
+      const item = document.createElement('i');
+      item.className = `cutlery-item fas ${type}`;
+      item.style.cssText = `
+        font-size: ${size}px;
+        color: ${color};
+        left: ${posX}%;
+        top: ${posY}%;
+        transform: rotate(${rotation}deg);
+        --depth: ${depth};
+        opacity: ${0.5 + depth * 0.2};
+      `;
+
+      container.appendChild(item);
+    }
+
+    // Улучшенный обработчик движения мыши
+    container.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const moveX = (mouseX - centerX) / centerX;
+      const moveY = (mouseY - centerY) / centerY;
+
+      document.querySelectorAll('.cutlery-item').forEach(item => {
+        const depth = parseFloat(item.style.getPropertyValue('--depth'));
+
+        const offsetX = moveX * 100 * depth;
+        const offsetY = moveY * 100 * depth;
+        const rotate = moveX * 20 * depth;
+        const scale = 1 + Math.abs(moveX + moveY) * 0.1 * depth;
+
+        item.style.transform = `
+          translate(${offsetX}px, ${offsetY}px)
+          rotate(${rotate}deg)
+          scale(${scale})
+        `;
+      });
+    });
+  });
+  </script>
+
+  <style>
+  .cutlery-parallax-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .cutlery-item {
+    position: absolute;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+    transition: transform 0.5s ease-out;
+    will-change: transform;
+  }
+
+  /* Анимация плавающего эффекта */
+  @keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .cutlery-item:nth-child(odd) {
+    animation: floating 5s ease-in-out infinite;
+  }
+  .cutlery-item:nth-child(even) {
+    animation: floating 7s ease-in-out infinite reverse;
+  }
+  </style>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

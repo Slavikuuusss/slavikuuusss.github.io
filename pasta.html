@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Меню — Паста</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Кнопка-бургер -->
+  <button class="burger" id="burger">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-utensils"></i> Навигация</h2>
+      <button class="close-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+      <li><a href="menu.html" class="active"><i class="fas fa-book-open"></i> Меню</a></li>
+      <li><a href="contacts.html"><i class="fas fa-phone"></i> Контакты</a></li>
+    </ul>
+  </nav>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <section class="container">
+      <h1><i class="fas fa-pasta"></i> Паста</h1>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-utensils"></i> Классические пасты</h2>
+
+        <!-- Паста 1 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/pasta1.jpg" alt="Спагетти карбонара">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Спагетти карбонара</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> спагетти, соус Карбонара (яйцо + соус Бешамель + соль + сахар + специи + сливки), бульон куриный, лук репчатый, бекон (с/к), зеленое масло, Париезан, зелень</p>
+            </div>
+            <div class="item-description">
+              <p>Самая популярная итальянская паста в мире, с обжаренными слайсами бекона, собственного копчения, репчатым луком, яичным желтком, сливками и сыром Париезан.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>260г</span>
+              <span>590 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Паста 2 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/pasta2.jpg" alt="Спагетти нери">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Спагетти нери с морепродуктами</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> паста (черные спагетти), кальмар, креветки, томаты розовые, цукини, соус Маринара, соус Бешамель, бульон куриный, сливки, зеленое масло, Париезан, зелень</p>
+            </div>
+            <div class="item-description">
+              <p>Спагетти нери с тигровыми креветками, кальмаром, розовыми томатами, сливочно-томатным соусом и Париезаном.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>260г</span>
+              <span>650 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Паста 3 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/pasta3.jpg" alt="Римская паста">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Римская паста с томленой говядиной</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> паста Паккери, говядина (томленья, щеки), соус Порто (соус демиглясс + вино + тимьян + сахар + устричный соус + Терилки), мусс перечный (Париезан + сливки + сыр Плавленый, трофельное масло, специи), сливочное масло, трофельное масло, Париезан, перец черный</p>
+            </div>
+            <div class="item-description">
+              <p>Сливочная паста с черным перцем, муссом из Париезана, трофельным маслом, томленой говядиной в соусе Порто. Паста Паккери — традиционная неаполитанская паста с характерной крупной трубчатой формой.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>260г</span>
+              <span>680 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-cheese"></i> Запеченные пасты</h2>
+
+        <!-- Паста 4 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/pasta4.jpg" alt="Лазанья">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Лазанья</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> лазанья (паста + сыр Моцарелла + сыр Пармезан + соус Бешамель + соус Болоньезе (соус на основе томленной рубленной говядины с добавлением овощей (лук, морковь, сельдерей, чеснок) и ароматных специй) + масло сливочное)</p>
+            </div>
+            <div class="item-description">
+              <p>Тонко раскатанное тесто с насыщенным мясным соусом, рубленной телятиной, Моцареллой, запеченное с томатным соусом и сыром Пармезан.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>270г</span>
+              <span>620 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-utensils"></i> Специальные пасты</h2>
+
+        <!-- Паста 5 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/pasta5.jpg" alt="Паста Арабьята">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Паста Арабьята с креветками</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> соус Маринара, сыр Пармезан, масло зеленое, зелень, соус (сливки + вино + демигляс + дробленый перец)</p>
+            </div>
+            <div class="item-description">
+              <p>Маленькие ушки с пряным соусом, пареными тигровыми креветками и тающей во рту страчателлой.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>290г</span>
+              <span>670 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Паста 6 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/pasta6.jpg" alt="Ризотто">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Ризотто с белыми грибами</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> паста (орекъетте), креветки, помидоры черри, чеснок, острый чили (красный, зеленый), вино хаус, масло сливковое, соус томатный с травами, чеснок, страчателла, базилик зеленый</p>
+            </div>
+            <div class="item-description">
+              <p>Традиционное блюдо итальянской кухни с кремособразной текстурой риса аль-Дента под насыщенным грибным вкусом с добавлением тертого пармезана.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>260г</span>
+              <span>650 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Паста 7 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/pasta7.jpg" alt="Ризотто по-милански">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Ризотто по-милански</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> рис Арбормо, вино хаус, специи, сливки 33%, соус тайский (соус устричный, соус чили сладкий, чеснок, соевый соус, уксус бальзамический, соус томатный с травами, хрен корень, красный лук), соус порто, масло сливочное, пармезан, томленые щеки</p>
+            </div>
+            <div class="item-description">
+              <p>Сливочный вкус с кремообразной текстурой риса, придающий золотистый вид и аромат шафран с нежными томленными щеками в мясном соусе.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>270г</span>
+              <span>690 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Карусель категорий меню -->
+  <div class="chapters-carousel">
+    <div class="carousel-container">
+      <a href="soups.html" class="carousel-arrow"><i class="fas fa-chevron-left"></i></a>
+      <div class="carousel-track">
+        <a href="breakfasts.html" class="carousel-item">Завтраки</a>
+        <a href="appetizers.html" class="carousel-item">Закуски</a>
+        <a href="salads.html" class="carousel-item">Салаты</a>
+        <a href="soups.html" class="carousel-item">Супы</a>
+        <a href="pasta.html" class="carousel-item active">Паста</a>
+        <a href="pizza.html" class="carousel-item">Пицца</a>
+        <a href="meat.html" class="carousel-item">Мясо</a>
+        <a href="fish.html" class="carousel-item">Рыба</a>
+        <a href="desserts.html" class="carousel-item">Десерты</a>
+        <a href="lunch.html" class="carousel-item">Ланчи</a>
+      </div>
+      <a href="pizza.html" class="carousel-arrow"><i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <!-- Кнопка вверх -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Анимированные столовые приборы -->
+  <div class="cutlery-parallax-container"></div>
+
+  <style>
+    .menu-category {
+      margin-bottom: 40px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 20px;
+    }
+
+    .menu-category h2 {
+      color: #8B4513;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 25px;
+    }
+
+    .menu-item {
+      display: flex;
+      margin-bottom: 30px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .item-photo {
+      width: 250px;
+      position: relative;
+      background: #f5f5f5;
+    }
+
+    .item-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 3rem;
+    }
+
+    .item-details {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .item-details h3 {
+      color: #5a3921;
+      margin-top: 0;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .item-ingredients {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 10px 0;
+    }
+
+    .item-description {
+      font-style: italic;
+      margin: 15px 0;
+      color: #444;
+    }
+
+    .item-weight-price {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      color: #8B4513;
+    }
+
+    @media (max-width: 768px) {
+      .menu-item {
+        flex-direction: column;
+      }
+
+      .item-photo {
+        width: 100%;
+        height: 200px;
+      }
+    }
+  </style>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.cutlery-parallax-container');
+    const types = [
+      'fa-utensils', 'fa-utensil-spoon', 'fa-utensil-fork',
+      'fa-utensil-knife', 'fa-glass-water', 'fa-wine-glass-alt'
+    ];
+
+    const colors = [
+      'rgba(169, 116, 79, 0.7)',
+      'rgba(214, 185, 123, 0.7)',
+      'rgba(201, 148, 99, 0.7)',
+      'rgba(139, 87, 42, 0.7)'
+    ];
+
+    // Создаем 30 элементов
+    for (let i = 0; i < 30; i++) {
+      const type = types[Math.floor(Math.random() * types.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = 50 + Math.random() * 70; // 50-120px
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+      const rotation = Math.random() * 360;
+      const depth = 0.5 + Math.random() * 1.5;
+
+      const item = document.createElement('i');
+      item.className = `cutlery-item fas ${type}`;
+      item.style.cssText = `
+        font-size: ${size}px;
+        color: ${color};
+        left: ${posX}%;
+        top: ${posY}%;
+        transform: rotate(${rotation}deg);
+        --depth: ${depth};
+        opacity: ${0.5 + depth * 0.2};
+      `;
+
+      container.appendChild(item);
+    }
+
+    // Улучшенный обработчик движения мыши
+    container.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const moveX = (mouseX - centerX) / centerX;
+      const moveY = (mouseY - centerY) / centerY;
+
+      document.querySelectorAll('.cutlery-item').forEach(item => {
+        const depth = parseFloat(item.style.getPropertyValue('--depth'));
+
+        const offsetX = moveX * 100 * depth;
+        const offsetY = moveY * 100 * depth;
+        const rotate = moveX * 20 * depth;
+        const scale = 1 + Math.abs(moveX + moveY) * 0.1 * depth;
+
+        item.style.transform = `
+          translate(${offsetX}px, ${offsetY}px)
+          rotate(${rotate}deg)
+          scale(${scale})
+        `;
+      });
+    });
+  });
+  </script>
+
+  <style>
+  .cutlery-parallax-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .cutlery-item {
+    position: absolute;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+    transition: transform 0.5s ease-out;
+    will-change: transform;
+  }
+
+  /* Анимация плавающего эффекта */
+  @keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .cutlery-item:nth-child(odd) {
+    animation: floating 5s ease-in-out infinite;
+  }
+  .cutlery-item:nth-child(even) {
+    animation: floating 7s ease-in-out infinite reverse;
+  }
+  </style>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
