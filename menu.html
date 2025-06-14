@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ресторан — Меню</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Кнопка-бургер -->
+  <button class="burger" id="burger">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-utensils"></i> Навигация</h2>
+      <button class="close-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+      <li><a href="menu.html" class="active"><i class="fas fa-book-open"></i> Меню</a></li>
+      <li><a href="contacts.html"><i class="fas fa-phone"></i> Контакты</a></li>
+    </ul>
+  </nav>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <section class="container">
+      <h1><i class="fas fa-utensils"></i> Наше меню</h1>
+      <div class="chapter-grid">
+        <a href="breakfasts.html" class="chapter-tile" style="--delay:0s">
+          <i class="fas fa-coffee"></i>
+          <span>Завтраки</span>
+          <small>С 8:00 до 12:00</small>
+        </a>
+        <a href="starters.html" class="chapter-tile" style="--delay:0.05s">
+          <i class="fas fa-cheese"></i>
+          <span>Закуски</span>
+          <small>Холодные и горячие</small>
+        </a>
+        <a href="salads.html" class="chapter-tile" style="--delay:0.1s">
+          <i class="fas fa-leaf"></i>
+          <span>Салаты</span>
+          <small>Свежие и сытные</small>
+        </a>
+        <a href="soups.html" class="chapter-tile" style="--delay:0.15s">
+          <i class="fas fa-bowl-hot"></i>
+          <span>Супы</span>
+          <small>Ароматные и наваристые</small>
+        </a>
+        <a href="pasta.html" class="chapter-tile" style="--delay:0.15s">
+          <i class="fa-solid fa-bowl-food"></i>
+          <span>Паста</span>
+          <small>Итальянские традиции</small>
+        </a>
+        <a href="pizza.html" class="chapter-tile" style="--delay:0.25s">
+          <i class="fas fa-pizza-slice"></i>
+          <span>Пицца</span>
+          <small>На дровяной печи</small>
+        </a>
+        <a href="meat.html" class="chapter-tile" style="--delay:0.3s">
+          <i class="fas fa-drumstick-bite"></i>
+          <span>Мясные блюда</span>
+          <small>Премиальные мясные блюда</small>
+        </a>
+        <a href="fish.html" class="chapter-tile" style="--delay:0.35s">
+          <i class="fas fa-fish"></i>
+          <span>Рыбные блюда</span>
+          <small>Свежайшие морепродукты</small>
+        </a>
+        <a href="desserts.html" class="chapter-tile" style="--delay:0.4s">
+          <i class="fas fa-ice-cream"></i>
+          <span>Десерты</span>
+          <small>Сладкие искушения</small>
+        </a>
+        <a href="lunch.html" class="chapter-tile" style="--delay:0.45s">
+          <i class="fas fa-clock"></i>
+          <span>Ланчи</span>
+          <small>С 12:00 до 16:00</small>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Кнопка вверх -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+  <!-- Анимированные столовые приборы -->
+  <div class="cutlery-parallax-container"></div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.cutlery-parallax-container');
+    const types = [
+      'fa-utensils', 'fa-utensil-spoon', 'fa-utensil-fork',
+      'fa-utensil-knife', 'fa-glass-water', 'fa-wine-glass-alt'
+    ];
+
+    const colors = [
+      'rgba(169, 116, 79, 0.7)',
+      'rgba(214, 185, 123, 0.7)',
+      'rgba(201, 148, 99, 0.7)',
+      'rgba(139, 87, 42, 0.7)'
+    ];
+
+    // Создаем 30 элементов
+    for (let i = 30; i < 80; i++) {
+      const type = types[Math.floor(Math.random() * types.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = 50 + Math.random() * 70; // 50-120px
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+      const rotation = Math.random() * 360;
+      const depth = 0.5 + Math.random() * 1.5;
+
+      const item = document.createElement('i');
+      item.className = `cutlery-item fas ${type}`;
+      item.style.cssText = `
+        font-size: ${size}px;
+        color: ${color};
+        left: ${posX}%;
+        top: ${posY}%;
+        transform: rotate(${rotation}deg);
+        --depth: ${depth};
+        opacity: ${0.5 + depth * 0.2};
+      `;
+
+      container.appendChild(item);
+    }
+
+    // Улучшенный обработчик движения мыши
+    container.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const moveX = (mouseX - centerX) / centerX;
+      const moveY = (mouseY - centerY) / centerY;
+
+      document.querySelectorAll('.cutlery-item').forEach(item => {
+        const depth = parseFloat(item.style.getPropertyValue('--depth'));
+
+        const offsetX = moveX * 100 * depth;
+        const offsetY = moveY * 100 * depth;
+        const rotate = moveX * 20 * depth;
+        const scale = 1 + Math.abs(moveX + moveY) * 0.1 * depth;
+
+        item.style.transform = `
+          translate(${offsetX}px, ${offsetY}px)
+          rotate(${rotate}deg)
+          scale(${scale})
+        `;
+      });
+    });
+  });
+  </script>
+
+  <style>
+  .cutlery-parallax-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .cutlery-item {
+    position: absolute;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+    transition: transform 0.5s ease-out;
+    will-change: transform;
+  }
+
+  /* Анимация плавающего эффекта */
+  @keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .cutlery-item:nth-child(odd) {
+    animation: floating 5s ease-in-out infinite;
+  }
+  .cutlery-item:nth-child(even) {
+    animation: floating 7s ease-in-out infinite reverse;
+  }
+  </style>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

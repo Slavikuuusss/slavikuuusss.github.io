@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Меню — Завтраки</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Кнопка-бургер -->
+  <button class="burger" id="burger">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-utensils"></i> Навигация</h2>
+      <button class="close-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+      <li><a href="menu.html" class="active"><i class="fas fa-book-open"></i> Меню</a></li>
+      <li><a href="contacts.html"><i class="fas fa-phone"></i> Контакты</a></li>
+    </ul>
+  </nav>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <section class="container">
+      <h1><i class="fas fa-coffee"></i> Завтраки</h1>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-egg"></i> Яичные блюда</h2>
+
+        <!-- Блюдо 1 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/breakfast1.jpg" alt="Глазунья с жареной картошкой">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Глазунья с жареной картошкой и сладкими томатами</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> яйцо куриное (2 шт), помидоры, картофель беби, грибы жаренные белые, вешенки, укроп, петрушка, лук красный, масло подсолнечное</p>
+            </div>
+            <div class="item-description">
+              <p>Жареный картофель с зеленью, небольшим количеством чеснока и сочными томатами. Рекомендуется есть, прокалывая картофелем желток и используя его как соус.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>240г</span>
+              <span>390 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Блюдо 2 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/breakfast2.jpg" alt="Омлет со шпинатом">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Омлет со шпинатом, томатами и Страчателлой</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> яйцо (2 шт), специи, соль, помидор, шпинат, масло зеленое, сыр Страчателла</p>
+            </div>
+            <div class="item-description">
+              <p>Омлет с упругой текстурой, со шпинатом, обжаренными томатами и нежным сыром Страчателла.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>220г</span>
+              <span>420 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Блюдо 3 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/breakfast3.jpg" alt="Яйцо Пашот">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Яйцо Пашот с молодым картофелем, ветчиной и беконом</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> яйцо Пашот (2 шт), картофель беби, масло подсолнечное, тимьян, чеснок, ветчина (индейка + курица), голландский соус, зелень</p>
+            </div>
+            <div class="item-description">
+              <p>Обжаренный молодой картофель с беконом, ветчиной, яйцом Пашот и фирменным соусом на основе желтка и сливочного масла.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>280г</span>
+              <span>450 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-bread-slice"></i> Выпечка и сэндвичи</h2>
+
+        <!-- Блюдо 4 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/breakfast4.jpg" alt="Бриошь с беконом">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Бриошь с беконом</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> бриошь сливочная (мука, молоко, яйцо, сахар, дрожжи, масло сливочное), бекон (сырокопченый), сыр плавленый, помидоры, соус Голландский, яйцо Пашот</p>
+            </div>
+            <div class="item-description">
+              <p>Хрустящая бриошь с обжаренным беконом, сочными томатами, яйцом пашот и сливочно-сырным соусом с добавлением желтка и сливочного масла.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>260г</span>
+              <span>380 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Блюдо 5 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/breakfast5.jpg" alt="Вафля с ветчиной">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Вафля с ветчиной и вялеными томатами</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> вафля картофельная (мука, яйцо, сахар, разрыхлитель, масло сливочное, сметана, молоко, картофель беби), ветчина из индейки, сыр Чеддер, бекон (сырокопченый), вяленые томаты, соус сливочный</p>
+            </div>
+            <div class="item-description">
+              <p>Нежная вафля с ветчиной и беконом с добавлением сливочного соуса, вяленых томатов и сыра Чеддер.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>250г</span>
+              <span>410 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-mortar-pestle"></i> Каши</h2>
+
+        <!-- Блюдо 6 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/breakfast6.jpg" alt="Овсяная каша">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Каша овсяная с соусом из манго, орехами и кокосовым молоком</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> геркулес, кокосовое молоко, соль, сахар, манго сушеное, виноград, орехи кешью, миндаль, семена льна, семечки подсолнечника</p>
+            </div>
+            <div class="item-description">
+              <p>Овсяная каша на кокосовом молоке с манго, виноградом, орехами и семенами льна.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>300г</span>
+              <span>350 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Блюдо 7 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/breakfast7.jpg" alt="Гречотто">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Гречотто со щечками</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> зеленая гречка, грибная паста из шампиньонов, масло сливочное, соус Порто, сливки, вешенки, сыр Пармезан, щечки из говядины, яйцо Пашот</p>
+            </div>
+            <div class="item-description">
+              <p>Гречневая каша в стиле ризотто, томленная с добавлением куриного бульона, трюфельной пасты, сливочного масла и Пармезана. При подаче украшается томленой говядиной, жареными вешенками, соусом Порто, яйцом пашот и Пармезаном.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>350г</span>
+              <span>480 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-cheese"></i> Сырники и запеканки</h2>
+
+        <!-- Блюдо 8 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/breakfast8.jpg" alt="Сырники">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Домашние сырники с вишневым компоте</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> творог, сахар, яйцо, манная крупа, ванильный сахар, сметана, компоте из вишни</p>
+            </div>
+            <div class="item-description">
+              <p>Сырники из фермерского творога со сметаной и вишневым компоте.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>150г</span>
+              <span>320 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Блюдо 9 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/breakfast9.jpg" alt="Творожная вафля">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Творожная вафля со сливочным кремом</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> творог, сыр Филадельфия, сливки, ванильный сахар, яйцо, черная смородина</p>
+            </div>
+            <div class="item-description">
+              <p>Воздушная творожная вафля с нежным сливочным кремом на основе сыра филадельфия и свежих сливок. Украшена сочной голубикой и компоте из черной смородины.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>200г</span>
+              <span>360 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Карусель категорий меню -->
+  <div class="chapters-carousel">
+    <div class="carousel-container">
+      <a href="index.html" class="carousel-arrow"><i class="fas fa-chevron-left"></i></a>
+      <div class="carousel-track">
+        <a href="breakfasts.html" class="carousel-item active">Завтраки</a>
+        <a href="starters.html" class="carousel-item">Закуски</a>
+        <a href="salads.html" class="carousel-item">Салаты</a>
+        <a href="soups.html" class="carousel-item">Супы</a>
+        <a href="pasta.html" class="carousel-item">Паста</a>
+        <a href="pizza.html" class="carousel-item">Пицца</a>
+        <a href="meat.html" class="carousel-item">Мясо</a>
+        <a href="fish.html" class="carousel-item">Рыба</a>
+        <a href="desserts.html" class="carousel-item">Десерты</a>
+        <a href="lunch.html" class="carousel-item">Ланчи</a>
+      </div>
+      <a href="starters.html" class="carousel-arrow"><i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <!-- Кнопка вверх -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Анимированные столовые приборы -->
+  <div class="cutlery-parallax-container"></div>
+
+  <style>
+    .menu-category {
+      margin-bottom: 40px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 20px;
+    }
+
+    .menu-category h2 {
+      color: #8B4513;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 25px;
+    }
+
+    .menu-item {
+      display: flex;
+      margin-bottom: 30px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .item-photo {
+      width: 250px;
+      position: relative;
+      background: #f5f5f5;
+    }
+
+    .item-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 3rem;
+    }
+
+    .item-details {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .item-details h3 {
+      color: #5a3921;
+      margin-top: 0;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .item-ingredients {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 10px 0;
+    }
+
+    .item-description {
+      font-style: italic;
+      margin: 15px 0;
+      color: #444;
+    }
+
+    .item-weight-price {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      color: #8B4513;
+    }
+
+    @media (max-width: 768px) {
+      .menu-item {
+        flex-direction: column;
+      }
+
+      .item-photo {
+        width: 100%;
+        height: 200px;
+      }
+    }
+  </style>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.cutlery-parallax-container');
+    const types = [
+      'fa-utensils', 'fa-utensil-spoon', 'fa-utensil-fork',
+      'fa-utensil-knife', 'fa-glass-water', 'fa-wine-glass-alt'
+    ];
+
+    const colors = [
+      'rgba(169, 116, 79, 0.7)',
+      'rgba(214, 185, 123, 0.7)',
+      'rgba(201, 148, 99, 0.7)',
+      'rgba(139, 87, 42, 0.7)'
+    ];
+
+    // Создаем 30 элементов
+    for (let i = 0; i < 30; i++) {
+      const type = types[Math.floor(Math.random() * types.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = 50 + Math.random() * 70; // 50-120px
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+      const rotation = Math.random() * 360;
+      const depth = 0.5 + Math.random() * 1.5;
+
+      const item = document.createElement('i');
+      item.className = `cutlery-item fas ${type}`;
+      item.style.cssText = `
+        font-size: ${size}px;
+        color: ${color};
+        left: ${posX}%;
+        top: ${posY}%;
+        transform: rotate(${rotation}deg);
+        --depth: ${depth};
+        opacity: ${0.5 + depth * 0.2};
+      `;
+
+      container.appendChild(item);
+    }
+
+    // Улучшенный обработчик движения мыши
+    container.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const moveX = (mouseX - centerX) / centerX;
+      const moveY = (mouseY - centerY) / centerY;
+
+      document.querySelectorAll('.cutlery-item').forEach(item => {
+        const depth = parseFloat(item.style.getPropertyValue('--depth'));
+
+        const offsetX = moveX * 100 * depth;
+        const offsetY = moveY * 100 * depth;
+        const rotate = moveX * 20 * depth;
+        const scale = 1 + Math.abs(moveX + moveY) * 0.1 * depth;
+
+        item.style.transform = `
+          translate(${offsetX}px, ${offsetY}px)
+          rotate(${rotate}deg)
+          scale(${scale})
+        `;
+      });
+    });
+  });
+  </script>
+
+  <style>
+  .cutlery-parallax-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .cutlery-item {
+    position: absolute;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+    transition: transform 0.5s ease-out;
+    will-change: transform;
+  }
+
+  /* Анимация плавающего эффекта */
+  @keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .cutlery-item:nth-child(odd) {
+    animation: floating 5s ease-in-out infinite;
+  }
+  .cutlery-item:nth-child(even) {
+    animation: floating 7s ease-in-out infinite reverse;
+  }
+  </style>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

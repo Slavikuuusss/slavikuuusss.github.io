@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Меню — Закуски</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Кнопка-бургер -->
+  <button class="burger" id="burger">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-utensils"></i> Навигация</h2>
+      <button class="close-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+      <li><a href="menu.html" class="active"><i class="fas fa-book-open"></i> Меню</a></li>
+      <li><a href="contacts.html"><i class="fas fa-phone"></i> Контакты</a></li>
+    </ul>
+  </nav>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <section class="container">
+      <h1><i class="fas fa-cheese"></i> Закуски</h1>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-plate-wheat"></i> Мясные закуски</h2>
+
+        <!-- Блюдо 1 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/appetizer1.jpg" alt="Тарелка Антипасто">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Тарелка Антипасто</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> сыр Дорблю, колбаса Чоризо (пикантная), прошутто, вяленые томаты, греческие оливки с костью, Пармезан, маринованный сыр Фетта, утиная грудка холодного копчения, рулет из болгарского перца со сливочным сыром, гриссини, каперсы</p>
+            </div>
+            <div class="item-description">
+              <p>Отличное дополнение к вину для компании: ассорти сыров, вяленые томаты, греческие оливки, утиное филе холодного копчения, рулетики из болгарского перца с сыром, гриссини.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>360г</span>
+              <span>890 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Блюдо 2 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/appetizer2.jpg" alt="Карпаччо из говядины">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Карпаччо из говядины с сыром Пармезан</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> говядина (оковалок), крем бальзамик, пармезан, рукола</p>
+            </div>
+            <div class="item-description">
+              <p>Итальянская закуска, тонко нарезанная в стиле модных нежнейшее мясо говядины, немного заправленное соусом тертым пармезаном и освежающим руколой.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>220г</span>
+              <span>750 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Блюдо 3 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/appetizer3.jpg" alt="Тартар из говядины">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Тартар из говядины со сливочной бриошью и муссом из Пармезана</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> говяжья вырезка, лук шалот, каперсы, яйцо перепелиное, соус Шрирача, соус Ворчестр, масло оливковое, Бриошь, сливочное масло, мусс из черного перца (Пармезан, сливки, сыр плавленый, масло трюфельное, специи), айоли черный чеснок (яйцо куриное, лимонный фреш, паста из черного чеснока, соль, сахар, масло оливковое)</p>
+            </div>
+            <div class="item-description">
+              <p>Тартар из мелконарезанной говяжьей вырезки, с перечным муссом. Подается со сливочной Бриошь.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>220г</span>
+              <span>850 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Блюдо 4 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/appetizer4.jpg" alt="Вителло тоннато">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Вителло тоннато</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> говядина оковалок, тунец, соус Вителло (сайра, чеснок, ворчестр, каперсы, пармезан, майонез, лайм, шрирача, сыр Филадельфия, специи), пармезан, соус шрирача, сыр филадельфия, специи, рукола</p>
+            </div>
+            <div class="item-description">
+              <p>Холодная закуска, тонко нарезанные слайсы говядины, под насыщенным соусом Вителло. Украшается свежей руколой.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>240г</span>
+              <span>780 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-fish"></i> Рыбные закуски</h2>
+
+        <!-- Блюдо 5 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/appetizer5.jpg" alt="Карпаччо из лангустинов">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Карпаччо из лангустинов с сыром Страчателла</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> карпаччо из креветок (пангустины, масло растительное), томатный джем (помидоры, уксус винный, ворчестр, шрирача), страчателла, масло оливковое, соус крем бальзамик, икра тобико, яблоко</p>
+            </div>
+            <div class="item-description">
+              <p>Закуска из тонко нарезанных лангустин имеющий насыщенный слегка сладковатый вкус с плотной текстурой мяса, страчателла придает сливочный и нежный вкус. Приправленная слегка пикантным джемом из томат и освежающим яблоком.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>230г</span>
+              <span>920 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-cheese"></i> Сырные закуски</h2>
+
+        <!-- Блюдо 6 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/appetizer6.jpg" alt="Запеченный камамбер">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Запеченный камамбер с трюфельным медом и черносмородиновым компоте</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> сыр Камамбер, Трюфельный мед (цветочный мед, трюфельное масло, соль, сок лимона), компоте из черной смородины (сахар, черная смородина), масло с петрушкой (сливочное масло, чеснок, петрушка, соль), фисташки, гриссини</p>
+            </div>
+            <div class="item-description">
+              <p>Запеченный Камамбер, покрытый трюфельным медом, компоте из черной смородины, украшенный рубленными фисташками и гриссини.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>260г</span>
+              <span>680 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Блюдо 7 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/appetizer7.jpg" alt="Сырное плато">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Сырное плато</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> сыр Дорблю, Пармезан, Камамбер, Фетта, орехи, мед, фрукты, гриссини</p>
+            </div>
+            <div class="item-description">
+              <p>Ассорти из отборных сыров с орехами, медом и свежими фруктами. Идеально сочетается с красным вином.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>400г</span>
+              <span>1200 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <h2><i class="fas fa-fire"></i> Горячие закуски</h2>
+
+        <!-- Блюдо 8 -->
+        <div class="menu-item">
+          <div class="item-photo">
+            <img src="assets/img/appetizer8.jpg" alt="Картофель фри">
+            <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
+          </div>
+          <div class="item-details">
+            <h3>Картофель фри с трюфельным майонезом и Пармезаном</h3>
+            <div class="item-ingredients">
+              <p><strong>Ингредиенты:</strong> картофель, трюфельный майонез, пармезан, зелень</p>
+            </div>
+            <div class="item-description">
+              <p>Хрустящий картофель фри с ароматным трюфельным майонезом и тертым пармезаном.</p>
+            </div>
+            <div class="item-weight-price">
+              <span>250г</span>
+              <span>450 ₽</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Карусель категорий меню -->
+  <div class="chapters-carousel">
+    <div class="carousel-container">
+      <a href="breakfasts.html" class="carousel-arrow"><i class="fas fa-chevron-left"></i></a>
+      <div class="carousel-track">
+        <a href="breakfasts.html" class="carousel-item">Завтраки</a>
+        <a href="appetizers.html" class="carousel-item active">Закуски</a>
+        <a href="salads.html" class="carousel-item">Салаты</a>
+        <a href="soups.html" class="carousel-item">Супы</a>
+        <a href="pasta.html" class="carousel-item">Паста</a>
+        <a href="pizza.html" class="carousel-item">Пицца</a>
+        <a href="meat.html" class="carousel-item">Мясо</a>
+        <a href="fish.html" class="carousel-item">Рыба</a>
+        <a href="desserts.html" class="carousel-item">Десерты</a>
+        <a href="lunch.html" class="carousel-item">Ланчи</a>
+      </div>
+      <a href="salads.html" class="carousel-arrow"><i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <!-- Кнопка вверх -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Анимированные столовые приборы -->
+  <div class="cutlery-parallax-container"></div>
+
+  <style>
+    .menu-category {
+      margin-bottom: 40px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 20px;
+    }
+
+    .menu-category h2 {
+      color: #8B4513;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 25px;
+    }
+
+    .menu-item {
+      display: flex;
+      margin-bottom: 30px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .item-photo {
+      width: 250px;
+      position: relative;
+      background: #f5f5f5;
+    }
+
+    .item-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 3rem;
+    }
+
+    .item-details {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .item-details h3 {
+      color: #5a3921;
+      margin-top: 0;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .item-ingredients {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 10px 0;
+    }
+
+    .item-description {
+      font-style: italic;
+      margin: 15px 0;
+      color: #444;
+    }
+
+    .item-weight-price {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      color: #8B4513;
+    }
+
+    @media (max-width: 768px) {
+      .menu-item {
+        flex-direction: column;
+      }
+
+      .item-photo {
+        width: 100%;
+        height: 200px;
+      }
+    }
+  </style>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.cutlery-parallax-container');
+    const types = [
+      'fa-utensils', 'fa-utensil-spoon', 'fa-utensil-fork',
+      'fa-utensil-knife', 'fa-glass-water', 'fa-wine-glass-alt'
+    ];
+
+    const colors = [
+      'rgba(169, 116, 79, 0.7)',
+      'rgba(214, 185, 123, 0.7)',
+      'rgba(201, 148, 99, 0.7)',
+      'rgba(139, 87, 42, 0.7)'
+    ];
+
+    // Создаем 30 элементов
+    for (let i = 0; i < 30; i++) {
+      const type = types[Math.floor(Math.random() * types.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = 50 + Math.random() * 70; // 50-120px
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+      const rotation = Math.random() * 360;
+      const depth = 0.5 + Math.random() * 1.5;
+
+      const item = document.createElement('i');
+      item.className = `cutlery-item fas ${type}`;
+      item.style.cssText = `
+        font-size: ${size}px;
+        color: ${color};
+        left: ${posX}%;
+        top: ${posY}%;
+        transform: rotate(${rotation}deg);
+        --depth: ${depth};
+        opacity: ${0.5 + depth * 0.2};
+      `;
+
+      container.appendChild(item);
+    }
+
+    // Улучшенный обработчик движения мыши
+    container.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const moveX = (mouseX - centerX) / centerX;
+      const moveY = (mouseY - centerY) / centerY;
+
+      document.querySelectorAll('.cutlery-item').forEach(item => {
+        const depth = parseFloat(item.style.getPropertyValue('--depth'));
+
+        const offsetX = moveX * 100 * depth;
+        const offsetY = moveY * 100 * depth;
+        const rotate = moveX * 20 * depth;
+        const scale = 1 + Math.abs(moveX + moveY) * 0.1 * depth;
+
+        item.style.transform = `
+          translate(${offsetX}px, ${offsetY}px)
+          rotate(${rotate}deg)
+          scale(${scale})
+        `;
+      });
+    });
+  });
+  </script>
+
+  <style>
+  .cutlery-parallax-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .cutlery-item {
+    position: absolute;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+    transition: transform 0.5s ease-out;
+    will-change: transform;
+  }
+
+  /* Анимация плавающего эффекта */
+  @keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .cutlery-item:nth-child(odd) {
+    animation: floating 5s ease-in-out infinite;
+  }
+  .cutlery-item:nth-child(even) {
+    animation: floating 7s ease-in-out infinite reverse;
+  }
+  </style>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
