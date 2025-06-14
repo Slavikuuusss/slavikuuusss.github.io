@@ -23,7 +23,7 @@
     </div>
     <ul class="sidebar-menu">
       <li><a href="index.html" class="active"><i class="fas fa-book"></i> Step by step</a></li>
-      <li><a href="chapter1.html"><i class="fas fa-book"></i> Меню</a></li>
+      <li><a href="menu.html"><i class="fas fa-book"></i> Меню</a></li>
       <li><a href="chapter2.html"><i class="fas fa-book"></i> Бар</a></li>
     </ul>
   </nav>
@@ -104,275 +104,111 @@
 
   <!-- Кнопка вверх -->
   <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+  <!-- Анимированные столовые приборы -->
+  <!-- Добавьте перед закрывающим </body> -->
+  <div class="cutlery-parallax-container"></div>
 
-  <script src="assets/js/script.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.cutlery-parallax-container');
+    const types = [
+      'fa-utensils', 'fa-utensil-spoon', 'fa-utensil-fork',
+      'fa-utensil-knife', 'fa-glass-water', 'fa-wine-glass-alt'
+    ];
+
+    const colors = [
+      'rgba(169, 116, 79, 0.7)',
+      'rgba(214, 185, 123, 0.7)',
+      'rgba(201, 148, 99, 0.7)',
+      'rgba(139, 87, 42, 0.7)'
+    ];
+
+    // Создаем 30 элементов
+    for (let i = 30; i < 80; i++) {
+      const type = types[Math.floor(Math.random() * types.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = 50 + Math.random() * 70; // 50-120px
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+      const rotation = Math.random() * 360;
+      const depth = 0.5 + Math.random() * 1.5;
+
+      const item = document.createElement('i');
+      item.className = `cutlery-item fas ${type}`;
+      item.style.cssText = `
+        font-size: ${size}px;
+        color: ${color};
+        left: ${posX}%;
+        top: ${posY}%;
+        transform: rotate(${rotation}deg);
+        --depth: ${depth};
+        opacity: ${0.5 + depth * 0.2};
+      `;
+
+      container.appendChild(item);
+    }
+
+    // Улучшенный обработчик движения мыши
+    container.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const moveX = (mouseX - centerX) / centerX;
+      const moveY = (mouseY - centerY) / centerY;
+
+      document.querySelectorAll('.cutlery-item').forEach(item => {
+        const depth = parseFloat(item.style.getPropertyValue('--depth'));
+
+        const offsetX = moveX * 100 * depth;
+        const offsetY = moveY * 100 * depth;
+        const rotate = moveX * 20 * depth;
+        const scale = 1 + Math.abs(moveX + moveY) * 0.1 * depth;
+
+        item.style.transform = `
+          translate(${offsetX}px, ${offsetY}px)
+          rotate(${rotate}deg)
+          scale(${scale})
+        `;
+      });
+    });
+  });
+  </script>
+
   <style>
-  /* Полный хаос - все элементы двигаются независимо */
-  .total-chaos-mode {
-    overflow: hidden !important;
-    background: #000 !important;
-    perspective: 1000px;
-  }
-
-  .total-chaos-mode * {
-    animation: none !important;
-    transition: none !important;
-    transform-style: preserve-3d !important;
-    will-change: transform, background, color;
-  }
-
-  /* Уникальные анимации для каждого типа элементов */
-  .total-chaos-mode .chapter-tile {
-    position: fixed !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 200px !important;
-    height: 200px !important;
-    animation:
-      chaoticMove 30s infinite linear,
-      colorChaos 7s infinite linear,
-      sizePulse 3s infinite ease-in-out,
-      rotate3D 15s infinite linear !important;
-    z-index: 10000 !important;
-    border: 4px dashed currentColor !important;
-    box-shadow: 0 0 40px currentColor !important;
-    border-radius: 50% !important;
-    padding: 15px !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    font-size: 18px !important;
-    text-align: center;
-    text-shadow: 0 0 10px currentColor;
-    transform-origin: center center;
-  }
-
-  /* Сайдбар и другие элементы */
-  .total-chaos-mode #sidebar,
-  .total-chaos-mode #burger,
-  .total-chaos-mode .back-to-top,
-  .total-chaos-mode .main-content,
-  .total-chaos-mode .container {
-    position: fixed !important;
-    animation:
-      chaoticFloat 45s infinite linear,
-      rainbowColors 9s infinite linear,
-      shake 1.5s infinite ease-in-out !important;
-    z-index: 10001 !important;
-    transform-origin: center center;
-    border: 3px solid currentColor !important;
-    box-shadow: 0 0 30px currentColor !important;
-    border-radius: 20px !important;
-    padding: 20px !important;
-  }
-
-  /* Уникальные пути для каждого элемента */
-  @keyframes chaoticMove {
-    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-    20% { transform: translate(150px, -80px) rotate(72deg) scale(1.3); }
-    40% { transform: translate(-120px, 100px) rotate(144deg) scale(0.7); }
-    60% { transform: translate(90px, 120px) rotate(216deg) scale(1.2); }
-    80% { transform: translate(-70px, -90px) rotate(288deg) scale(0.9); }
-    100% { transform: translate(0, 0) rotate(360deg) scale(1); }
-  }
-
-  @keyframes chaoticFloat {
-    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-    25% { transform: translate(200px, 50px) rotate(90deg) scale(1.4); }
-    50% { transform: translate(-150px, 150px) rotate(180deg) scale(0.6); }
-    75% { transform: translate(100px, -100px) rotate(270deg) scale(1.1); }
-    100% { transform: translate(0, 0) rotate(360deg) scale(1); }
-  }
-
-  /* Цветовые эффекты */
-  @keyframes colorChaos {
-    0%, 100% { color: #f00; background: #0ff; border-color: #f0f; }
-    20% { color: #0f0; background: #f0f; border-color: #00f; }
-    40% { color: #00f; background: #ff0; border-color: #0f0; }
-    60% { color: #ff0; background: #f00; border-color: #0ff; }
-    80% { color: #f0f; background: #00f; border-color: #ff0; }
-  }
-
-  @keyframes rainbowColors {
-    0% { color: #ff0000; background: #0000ff; }
-    20% { color: #ffff00; background: #ff00ff; }
-    40% { color: #00ff00; background: #ff0000; }
-    60% { color: #00ffff; background: #ffff00; }
-    80% { color: #ff00ff; background: #00ff00; }
-    100% { color: #ff0000; background: #0000ff; }
-  }
-
-  /* Дополнительные эффекты */
-  .disco-overlay {
+  .cutlery-parallax-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, transparent 60%, rgba(255,255,255,0.1) 100%);
-    animation: bgFlash 0.15s infinite alternate;
-    z-index: 9998;
+    z-index: -1;
     pointer-events: none;
+    overflow: hidden;
   }
 
-  .disco-ball {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    font-size: 200px;
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-    animation:
-      spin 2s infinite linear,
-      pulse 0.5s infinite alternate;
-    filter: drop-shadow(0 0 50px #fff);
-    text-shadow: 0 0 30px #fff;
+  .cutlery-item {
+    position: absolute;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+    transition: transform 0.5s ease-out;
+    will-change: transform;
   }
 
-  .laser-beam {
-    position: fixed;
-    height: 100vh;
-    width: 4px;
-    background: linear-gradient(to bottom,
-      transparent,
-      var(--laser-color),
-      transparent);
-    top: 0;
-    z-index: 9997;
-    animation:
-      laserSweep 5s infinite linear,
-      laserColorChange 3s infinite alternate;
-    box-shadow: 0 0 40px var(--laser-color);
-    filter: blur(1px);
+  /* Анимация плавающего эффекта */
+  @keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
   }
-</style>
 
-<script>
-  (function() {
-    // Konami Code: ↑↑↓↓←→←→BA
-    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
-                       'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
-                       'b', 'a'];
-    let position = 0;
-    let chaosMode = false;
-    let soundInterval;
-
-    // Звуковые эффекты
-    const sounds = [
-      'https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3',
-      'https://assets.mixkit.co/sfx/preview/mixkit-arcade-retro-game-over-213.mp3',
-      'https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3',
-      'https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3',
-      'https://assets.mixkit.co/sfx/preview/mixkit-extra-bonus-in-a-game-2055.mp3'
-    ].map(url => {
-      const audio = new Audio(url);
-      audio.volume = 0.5;
-      return audio;
-    });
-
-    // Генератор случайных путей
-    function generateChaoticAnimation(name, count) {
-      const keyframes = [];
-      for (let i = 0; i <= count; i++) {
-        const percentage = (i * (100/count));
-        const translateX = (Math.random() * 500 - 250) + 'px';
-        const translateY = (Math.random() * 500 - 250) + 'px';
-        const rotate = (Math.random() * 360) + 'deg';
-        const scale = (Math.random() * 0.8 + 0.6);
-
-        keyframes.push(`
-          ${percentage}% {
-            transform: translate(${translateX}, ${translateY}) rotate(${rotate}) scale(${scale});
-          }
-        `);
-      }
-
-      const style = document.createElement('style');
-      style.textContent = `
-        @keyframes ${name} {
-          ${keyframes.join('')}
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    // Генерация уникальных анимаций
-    generateChaoticAnimation('chaoticMove1', 8);
-    generateChaoticAnimation('chaoticMove2', 6);
-    generateChaoticAnimation('chaoticMove3', 7);
-    generateChaoticAnimation('chaoticMove4', 5);
-
-    document.addEventListener('keydown', function(e) {
-      const expectedKey = konamiCode[position];
-      const isMatch = e.key === expectedKey ||
-                     (expectedKey.length === 1 &&
-                      e.key.toLowerCase() === expectedKey.toLowerCase());
-
-      if (isMatch) {
-        position++;
-        if (position === konamiCode.length) {
-          toggleChaosMode();
-          position = 0;
-        }
-      } else {
-        position = 0;
-      }
-    });
-
-    function toggleChaosMode() {
-      chaosMode = !chaosMode;
-
-      if (chaosMode) {
-        // Включаем режим
-        document.body.classList.add('total-chaos-mode');
-
-        // Диско-эффекты
-        const overlay = document.createElement('div');
-        overlay.className = 'disco-overlay';
-        document.body.appendChild(overlay);
-
-        // Диско-шар
-        const ball = document.createElement('div');
-        ball.className = 'disco-ball';
-        ball.innerHTML = '🪩';
-        document.body.appendChild(ball);
-
-        // Лазеры (8 штук)
-        for (let i = 0; i < 8; i++) {
-          const laser = document.createElement('div');
-          laser.className = 'laser-beam';
-          laser.style.setProperty('--laser-color', `hsl(${i * 45}, 100%, 50%)`);
-          laser.style.left = (Math.random() * 100) + '%';
-          laser.style.animationDuration = (3 + Math.random() * 7) + 's';
-          document.body.appendChild(laser);
-        }
-
-        // Назначаем уникальные анимации элементам
-        document.querySelectorAll('.chapter-tile').forEach((tile, i) => {
-          tile.style.animationName = `chaoticMove${(i % 4) + 1}, colorChaos, sizePulse, rotate3D`;
-          tile.style.left = (Math.random() * 80 + 10) + '%';
-          tile.style.top = (Math.random() * 80 + 10) + '%';
-        });
-
-        // Звуки (каждые 300мс)
-        soundInterval = setInterval(() => {
-          sounds[Math.floor(Math.random() * sounds.length)].play().catch(e => {});
-        }, 300);
-
-        // Автовыключение через 3 минуты
-        setTimeout(() => {
-          if (chaosMode) toggleChaosMode();
-        }, 180000);
-
-      } else {
-        // Выключаем режим
-        document.body.classList.remove('total-chaos-mode');
-        document.querySelectorAll('.disco-overlay, .disco-ball, .laser-beam').forEach(el => el.remove());
-        clearInterval(soundInterval);
-      }
-    }
-  })();
-</script>
+  .cutlery-item:nth-child(odd) {
+    animation: floating 5s ease-in-out infinite;
+  }
+  .cutlery-item:nth-child(even) {
+    animation: floating 7s ease-in-out infinite reverse;
+  }
+  </style>
+  <script src="assets/js/script.js"></script>
 </body>
 </html>00
