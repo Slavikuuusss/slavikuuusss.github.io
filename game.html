@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step by Step — Игра "Официант-Профи"</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    /* Стили для игры */
+    .game-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .game-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .game-title {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .game-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+    }
+
+    .game-progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      flex-grow: 1;
+      height: 10px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+      margin: 0 15px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .question-container {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding: 25px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .question-text {
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      font-weight: 500;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .option-btn {
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      background: white;
+      text-align: left;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-btn:hover {
+      border-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .option-btn.correct {
+      background-color: rgba(76, 175, 80, 0.1);
+      border-color: #4CAF50;
+      color: #2E7D32;
+    }
+
+    .option-btn.incorrect {
+      background-color: rgba(244, 67, 54, 0.1);
+      border-color: #F44336;
+      color: #C62828;
+    }
+
+    .option-icon {
+      margin-right: 10px;
+    }
+
+    .game-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      background: white;
+      border-radius: var(--radius);
+      padding: 15px;
+      text-align: center;
+      flex: 1;
+      margin: 0 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 5px 0;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .game-feedback {
+      background: rgba(214, 185, 123, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .feedback-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+
+    .feedback-icon {
+      margin-right: 8px;
+    }
+
+    .next-btn {
+      background: linear-gradient(135deg, var(--primary), #8b5a3c);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      transition: transform 0.2s ease;
+    }
+
+    .next-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .game-complete {
+      text-align: center;
+      padding: 30px;
+      display: none;
+    }
+
+    .complete-title {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .complete-badge {
+      font-size: 5rem;
+      color: gold;
+      margin: 20px 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      animation: bounce 1s infinite alternate;
+    }
+
+    .complete-stats {
+      margin: 30px 0;
+    }
+
+    .restart-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .chapter-tag {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .timer-container {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+    }
+
+    .timer-circle {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .timer-bg {
+      fill: none;
+      stroke: #f0f0f0;
+      stroke-width: 6;
+    }
+
+    .timer-progress {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 188;
+      stroke-dashoffset: 188;
+      transition: stroke-dashoffset 1s linear;
+    }
+
+    .timer-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .streak-counter {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 100;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .streak-fire {
+      position: absolute;
+      color: var(--accent);
+      font-size: 1.5rem;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-15px); }
+    }
+
+    /* Анимации */
+    @keyframes confetti {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: var(--accent);
+      opacity: 0;
+      z-index: 999;
+      animation: confetti 3s ease-out forwards;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .game-stats {
+        flex-direction: column;
+      }
+
+      .stat-box {
+        margin: 5px 0;
+      }
+
+      .question-text {
+        font-size: 1.1rem;
+      }
+
+      .option-btn {
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Кнопка-бургер -->
+  <button class="burger" id="burger">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-book-open"></i>Обучалка</h2>
+      <button class="close-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html"><i class="fas fa-book"></i> Step by step</a></li>
+      <li><a href="chapter1.html"><i class="fas fa-book"></i> Меню</a></li>
+      <li><a href="chapter2.html"><i class="fas fa-book"></i> Бар</a></li>
+      <li><a href="game.html" class="active"><i class="fas fa-gamepad"></i> Официант-Профи</a></li>
+    </ul>
+  </nav>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <section class="container">
+      <div class="game-container">
+        <div class="game-header">
+          <h1 class="game-title"><i class="fas fa-trophy"></i> Официант-Профи</h1>
+          <p class="game-subtitle">Проверь свои знания и стань настоящим профессионалом!</p>
+        </div>
+
+        <div class="game-stats">
+          <div class="stat-box">
+            <div class="stat-value" id="score">0</div>
+            <div class="stat-label">Очки</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="streak">0</div>
+            <div class="stat-label">Серия</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="correct-count">0</div>
+            <div class="stat-label">Правильно</div>
+          </div>
+        </div>
+
+        <div class="streak-counter" id="streak-display" style="display: none;">
+          <i class="fas fa-fire streak-fire"></i>
+          <span id="streak-value">0</span>
+        </div>
+
+        <div class="timer-container">
+          <svg class="timer-circle" viewBox="0 0 64 64">
+            <circle class="timer-bg" cx="32" cy="32" r="30"></circle>
+            <circle class="timer-progress" cx="32" cy="32" r="30"></circle>
+          </svg>
+          <div class="timer-text" id="timer">15</div>
+        </div>
+
+        <div class="question-container" id="question-container">
+          <div class="chapter-tag" id="chapter-tag">Глава 1</div>
+          <div class="question-text" id="question-text">Загружаем вопросы...</div>
+          <div class="options-grid" id="options-container">
+            <!-- Варианты ответов будут здесь -->
+          </div>
+        </div>
+
+        <div class="game-feedback" id="feedback-container">
+          <div class="feedback-title">
+            <i class="fas fa-info-circle feedback-icon"></i>
+            <span id="feedback-title">Правильный ответ!</span>
+          </div>
+          <div id="feedback-text">Объяснение правильного ответа будет здесь.</div>
+        </div>
+
+        <button class="next-btn" id="next-btn" style="display: none;">Следующий вопрос <i class="fas fa-arrow-right"></i></button>
+
+        <div class="game-complete" id="game-complete">
+          <div class="complete-title">Тест завершен!</div>
+          <div class="complete-badge">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <div class="complete-stats">
+            <p>Твой результат: <span id="final-score">0</span> очков</p>
+            <p>Правильных ответов: <span id="final-correct">0</span>/<span id="total-questions">0</span></p>
+            <p>Самая длинная серия: <span id="final-streak">0</span></p>
+          </div>
+          <button class="restart-btn" id="restart-btn"><i class="fas fa-redo"></i> Играть снова</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+
+  <!-- Кнопка вверх -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Добавьте перед закрывающим </body> -->
+  <div class="cutlery-parallax-container"></div>
+
+  <!-- Подключаем файл с вопросами -->
+  <script src="assets/data/questions.js"></script>
+
+  <script>
+    // Инициализация игры
+    document.addEventListener('DOMContentLoaded', function() {
+      const questionText = document.getElementById('question-text');
+      const optionsContainer = document.getElementById('options-container');
+      const nextBtn = document.getElementById('next-btn');
+      const feedbackContainer = document.getElementById('feedback-container');
+      const feedbackTitle = document.getElementById('feedback-title');
+      const feedbackText = document.getElementById('feedback-text');
+      const scoreElement = document.getElementById('score');
+      const correctCountElement = document.getElementById('correct-count');
+      const streakElement = document.getElementById('streak');
+      const streakDisplay = document.getElementById('streak-display');
+      const streakValue = document.getElementById('streak-value');
+      const gameComplete = document.getElementById('game-complete');
+      const finalScore = document.getElementById('final-score');
+      const finalCorrect = document.getElementById('final-correct');
+      const finalStreak = document.getElementById('final-streak');
+      const totalQuestions = document.getElementById('total-questions');
+      const restartBtn = document.getElementById('restart-btn');
+      const progressFill = document.querySelector('.progress-fill');
+      const chapterTag = document.getElementById('chapter-tag');
+      const timerText = document.getElementById('timer');
+      const timerProgress = document.querySelector('.timer-progress');
+
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let correctAnswers = 0;
+      let currentStreak = 0;
+      let maxStreak = 0;
+      let shuffledQuestions = [];
+      let timer;
+      let timeLeft = 15;
+      let isAnswered = false;
+
+      // Начало игры
+      function startGame() {
+        // Используем вопросы из подключенного файла questions.js
+        shuffledQuestions = shuffleArray([...window.gameQuestions]);
+        currentQuestionIndex = 0;
+        score = 0;
+        correctAnswers = 0;
+        currentStreak = 0;
+        maxStreak = 0;
+        updateStats();
+        loadQuestion();
+        gameComplete.style.display = 'none';
+        document.getElementById('question-container').style.display = 'block';
+        streakDisplay.style.display = 'none';
+      }
+
+      // Загрузка вопроса
+      function loadQuestion() {
+        isAnswered = false;
+        timeLeft = 15;
+        updateTimerDisplay();
+
+        if (currentQuestionIndex >= shuffledQuestions.length) {
+          endGame();
+          return;
+        }
+
+        const question = shuffledQuestions[currentQuestionIndex];
+        questionText.textContent = question.question;
+        chapterTag.textContent = question.chapter;
+
+        // Очищаем предыдущие варианты
+        optionsContainer.innerHTML = '';
+
+        // Добавляем новые варианты
+        question.options.forEach((option, index) => {
+          const optionBtn = document.createElement('button');
+          optionBtn.className = 'option-btn';
+          optionBtn.innerHTML = `<i class="fas fa-circle option-icon"></i> ${option}`;
+          optionBtn.addEventListener('click', () => selectAnswer(index));
+          optionsContainer.appendChild(optionBtn);
+        });
+
+        // Обновляем прогресс
+        progressFill.style.width = `${(currentQuestionIndex / shuffledQuestions.length) * 100}%`;
+
+        // Запускаем таймер
+        startTimer();
+      }
+
+      // Таймер для вопроса
+      function startTimer() {
+        clearInterval(timer);
+        timeLeft = 15;
+        updateTimerDisplay();
+
+        timer = setInterval(() => {
+          timeLeft--;
+          updateTimerDisplay();
+
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            if (!isAnswered) {
+              handleTimeOut();
+            }
+          }
+        }, 1000);
+      }
+
+      function updateTimerDisplay() {
+        timerText.textContent = timeLeft;
+        const offset = 188 - (timeLeft / 15) * 188;
+        timerProgress.style.strokeDashoffset = offset;
+
+        // Меняем цвет при малом времени
+        if (timeLeft <= 5) {
+          timerProgress.style.stroke = '#F44336';
+          timerText.style.color = '#F44336';
+        } else {
+          timerProgress.style.stroke = 'var(--accent)';
+          timerText.style.color = 'var(--primary)';
+        }
+      }
+
+      function handleTimeOut() {
+        isAnswered = true;
+        clearInterval(timer);
+
+        const question = shuffledQuestions[currentQuestionIndex];
+        feedbackTitle.textContent = 'Время вышло!';
+        feedbackText.textContent = `Правильный ответ: ${question.options[question.correctAnswer]}`;
+        feedbackContainer.style.display = 'block';
+
+        // Помечаем правильный ответ
+        const options = optionsContainer.querySelectorAll('.option-btn');
+        options[question.correctAnswer].classList.add('correct');
+
+        // Сбрасываем серию
+        currentStreak = 0;
+        updateStreakDisplay();
+
+        nextBtn.style.display = 'block';
+      }
+
+      // Выбор ответа
+      function selectAnswer(selectedIndex) {
+        if (isAnswered) return;
+
+        isAnswered = true;
+        clearInterval(timer);
+
+        const question = shuffledQuestions[currentQuestionIndex];
+        const options = optionsContainer.querySelectorAll('.option-btn');
+
+        // Проверяем ответ
+        if (selectedIndex === question.correctAnswer) {
+          // Правильный ответ
+          options[selectedIndex].classList.add('correct');
+          feedbackTitle.textContent = 'Правильно!';
+          feedbackTitle.innerHTML = '<i class="fas fa-check-circle feedback-icon"></i> Правильно!';
+          feedbackContainer.style.backgroundColor = 'rgba(76, 175, 80, 0.1)';
+
+          // Начисляем очки (чем быстрее ответил, тем больше очков)
+          const points = 100 + (timeLeft * 5);
+          score += points;
+
+          // Увеличиваем счетчик правильных ответов
+          correctAnswers++;
+
+          // Увеличиваем серию
+          currentStreak++;
+          if (currentStreak > maxStreak) {
+            maxStreak = currentStreak;
+          }
+
+          // Показываем анимацию для серии
+          if (currentStreak >= 3) {
+            showStreakAnimation();
+          }
+        } else {
+          // Неправильный ответ
+          options[selectedIndex].classList.add('incorrect');
+          options[question.correctAnswer].classList.add('correct');
+          feedbackTitle.textContent = 'Неверно!';
+          feedbackTitle.innerHTML = '<i class="fas fa-times-circle feedback-icon"></i> Неверно!';
+          feedbackContainer.style.backgroundColor = 'rgba(244, 67, 54, 0.1)';
+
+          // Сбрасываем серию
+          currentStreak = 0;
+        }
+
+        // Показываем объяснение
+        feedbackText.textContent = question.explanation;
+        feedbackContainer.style.display = 'block';
+
+        // Обновляем статистику
+        updateStats();
+        updateStreakDisplay();
+
+        // Показываем кнопку "Далее"
+        nextBtn.style.display = 'block';
+      }
+
+      // Обновление статистики
+      function updateStats() {
+        scoreElement.textContent = score;
+        correctCountElement.textContent = correctAnswers;
+        streakElement.textContent = currentStreak;
+      }
+
+      // Обновление отображения серии
+      function updateStreakDisplay() {
+        if (currentStreak >= 3) {
+          streakDisplay.style.display = 'flex';
+          streakValue.textContent = currentStreak;
+        } else {
+          streakDisplay.style.display = 'none';
+        }
+      }
+
+      // Анимация для серии правильных ответов
+      function showStreakAnimation() {
+        createConfetti();
+
+        // Анимация огня для серии
+        const fire = document.querySelector('.streak-fire');
+        fire.style.animation = 'none';
+        void fire.offsetWidth; // Trigger reflow
+        fire.style.animation = 'pulse 0.5s infinite';
+      }
+
+      // Создание конфетти
+      function createConfetti() {
+        const colors = ['#FF5252', '#FFEB3B', '#4CAF50', '#2196F3', '#9C27B0'];
+
+        for (let i = 0; i < 50; i++) {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.width = Math.random() * 10 + 5 + 'px';
+          confetti.style.height = Math.random() * 10 + 5 + 'px';
+          confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+          confetti.style.animationDelay = Math.random() * 2 + 's';
+
+          document.body.appendChild(confetti);
+
+          // Удаляем конфетти после анимации
+          setTimeout(() => {
+            confetti.remove();
+          }, 5000);
+        }
+      }
+
+      // Завершение игры
+      function endGame() {
+        document.getElementById('question-container').style.display = 'none';
+        feedbackContainer.style.display = 'none';
+        nextBtn.style.display = 'none';
+        streakDisplay.style.display = 'none';
+
+        finalScore.textContent = score;
+        finalCorrect.textContent = correctAnswers;
+        finalStreak.textContent = maxStreak;
+        totalQuestions.textContent = shuffledQuestions.length;
+
+        gameComplete.style.display = 'block';
+
+        // Большая анимация конфетти при завершении
+        for (let i = 0; i < 100; i++) {
+          setTimeout(() => {
+            createConfetti();
+          }, i * 50);
+        }
+      }
+
+      // Перемешиваем вопросы для разнообразия
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      // Обработчик кнопки "Далее"
+      nextBtn.addEventListener('click', () => {
+        currentQuestionIndex++;
+        feedbackContainer.style.display = 'none';
+        nextBtn.style.display = 'none';
+        loadQuestion();
+      });
+
+      // Обработчик кнопки "Играть снова"
+      restartBtn.addEventListener('click', startGame);
+
+      // Начинаем игру
+      startGame();
+    });
+  </script>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
