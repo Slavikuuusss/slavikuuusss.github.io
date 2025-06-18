@@ -1,0 +1,1379 @@
+# Игра "Завтрак за 30 минут" для изучения меню
+
+Я создал для вас интерактивную игру в стиле вашего сайта, которая поможет изучить меню завтраков за 30 минут. Игра включает несколько режимов для эффективного запоминания.
+
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Игра — Изучаем завтраки</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    /* Основные стили из оригинальной страницы */
+    .menu-category {
+      margin-bottom: 40px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 20px;
+    }
+
+    .menu-category h2 {
+      color: #8B4513;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 25px;
+    }
+
+    .menu-item {
+      display: flex;
+      margin-bottom: 30px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .item-photo {
+      width: 250px;
+      position: relative;
+      background: #f5f5f5;
+    }
+
+    .item-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 3rem;
+    }
+
+    .item-details {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .item-details h3 {
+      color: #5a3921;
+      margin-top: 0;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .item-ingredients {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 10px 0;
+    }
+
+    .item-description {
+      font-style: italic;
+      margin: 15px 0;
+      color: #444;
+    }
+
+    .item-weight-price {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      color: #8B4513;
+    }
+
+    @media (max-width: 768px) {
+      .menu-item {
+        flex-direction: column;
+      }
+
+      .item-photo {
+        width: 100%;
+        height: 200px;
+      }
+    }
+
+    /* Стили для игры */
+    .game-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .game-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .game-header h1 {
+      color: #8B4513;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 10px;
+    }
+
+    .game-modes {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .game-mode-btn {
+      background: #8B4513;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+
+    .game-mode-btn:hover {
+      background: #5a3921;
+      transform: translateY(-2px);
+    }
+
+    .game-mode-btn.active {
+      background: #5a3921;
+      box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.3);
+    }
+
+    .game-content {
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .game-question {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .game-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .game-options {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .game-option {
+      background: #f8f4f0;
+      border: 2px solid #e0d6cc;
+      border-radius: 8px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .game-option:hover {
+      background: #f0e6dc;
+      border-color: #d0c0b0;
+    }
+
+    .game-option.correct {
+      background: #e8f5e9;
+      border-color: #a5d6a7;
+    }
+
+    .game-option.incorrect {
+      background: #ffebee;
+      border-color: #ef9a9a;
+    }
+
+    .game-feedback {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .game-feedback.correct {
+      background: #e8f5e9;
+      color: #2e7d32;
+      display: block;
+    }
+
+    .game-feedback.incorrect {
+      background: #ffebee;
+      color: #c62828;
+      display: block;
+    }
+
+    .game-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .game-progress {
+      height: 10px;
+      background: #f0e6dc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .game-progress-bar {
+      height: 100%;
+      background: #8B4513;
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    .game-timer {
+      font-size: 1.2rem;
+      color: #8B4513;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .game-next-btn {
+      background: #8B4513;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: block;
+      margin: 0 auto;
+      font-size: 1rem;
+    }
+
+    .game-next-btn:hover {
+      background: #5a3921;
+      transform: translateY(-2px);
+    }
+
+    .game-results {
+      text-align: center;
+      display: none;
+    }
+
+    .game-results h2 {
+      color: #8B4513;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 20px;
+    }
+
+    .game-score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #5a3921;
+      margin-bottom: 20px;
+    }
+
+    .game-restart-btn {
+      background: #8B4513;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    .game-restart-btn:hover {
+      background: #5a3921;
+      transform: translateY(-2px);
+    }
+
+    .flashcard {
+      perspective: 1000px;
+      width: 100%;
+      height: 300px;
+      margin: 0 auto 30px;
+    }
+
+    .flashcard-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .flashcard.flipped .flashcard-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-front, .flashcard-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      padding: 30px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .flashcard-front {
+      background: #f8f4f0;
+      border: 2px solid #e0d6cc;
+    }
+
+    .flashcard-back {
+      background: #8B4513;
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .flashcard-content {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .flashcard-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .flashcard-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .flashcard-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .flashcard-flip-btn {
+      position: absolute;
+      bottom: 20px;
+      background: rgba(0,0,0,0.1);
+      color: #5a3921;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .flashcard-flip-btn:hover {
+      background: rgba(0,0,0,0.2);
+    }
+
+    .matching-game {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .matching-game {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .matching-column {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .matching-item {
+      background: #f8f4f0;
+      border: 2px solid #e0d6cc;
+      border-radius: 8px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .matching-item:hover {
+      background: #f0e6dc;
+      border-color: #d0c0b0;
+    }
+
+    .matching-item.matched {
+      background: #e8f5e9;
+      border-color: #a5d6a7;
+      cursor: default;
+    }
+
+    .matching-item.selected {
+      background: #d7ccc8;
+      border-color: #a1887f;
+    }
+
+    .ingredients-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .ingredient-tag {
+      background: #f0e6dc;
+      color: #5a3921;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .ingredient-tag.selected {
+      background: #8B4513;
+      color: white;
+    }
+
+    .ingredient-tag.correct {
+      background: #a5d6a7;
+      color: #2e7d32;
+    }
+
+    .ingredient-tag.incorrect {
+      background: #ef9a9a;
+      color: #c62828;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Кнопка-бургер -->
+  <button class="burger" id="burger">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-utensils"></i> Навигация</h2>
+      <button class="close-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+      <li><a href="menu.html"><i class="fas fa-book-open"></i> Меню</a></li>
+      <li><a href="breakfasts.html"><i class="fas fa-coffee"></i> Завтраки</a></li>
+      <li><a href="contacts.html"><i class="fas fa-phone"></i> Контакты</a></li>
+    </ul>
+  </nav>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <div class="game-container">
+      <div class="game-header">
+        <h1><i class="fas fa-gamepad"></i> Завтрак за 30 минут</h1>
+        <p>Изучите меню завтраков быстро и эффективно!</p>
+      </div>
+
+      <div class="game-modes">
+        <button class="game-mode-btn active" data-mode="quiz">Викторина</button>
+        <button class="game-mode-btn" data-mode="flashcards">Карточки</button>
+        <button class="game-mode-btn" data-mode="matching">Сопоставление</button>
+        <button class="game-mode-btn" data-mode="ingredients">Ингредиенты</button>
+      </div>
+
+      <div class="game-stats">
+        <div class="game-score-display">Верно: <span id="correct-count">0</span>/<span id="total-questions">0</span></div>
+        <div class="game-time">Осталось: <span id="time-left">30:00</span></div>
+      </div>
+
+      <div class="game-progress">
+        <div class="game-progress-bar" id="progress-bar"></div>
+      </div>
+
+      <div class="game-timer">
+        <i class="fas fa-clock"></i> <span id="timer">30:00</span>
+      </div>
+
+      <!-- Режим викторины -->
+      <div class="game-content" id="quiz-mode">
+        <div class="game-question" id="quiz-question"></div>
+        <div class="game-feedback" id="quiz-feedback"></div>
+        <div class="game-options" id="quiz-options"></div>
+        <button class="game-next-btn" id="quiz-next">Следующий вопрос</button>
+      </div>
+
+      <!-- Режим карточек -->
+      <div class="game-content" id="flashcards-mode" style="display: none;">
+        <div class="flashcard" id="flashcard">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <h3 class="flashcard-title" id="flashcard-front-title"></h3>
+              <div class="flashcard-content" id="flashcard-front-content"></div>
+              <button class="flashcard-flip-btn"><i class="fas fa-sync-alt"></i></button>
+            </div>
+            <div class="flashcard-back">
+              <h3 class="flashcard-title" id="flashcard-back-title"></h3>
+              <div class="flashcard-content" id="flashcard-back-content"></div>
+              <div class="flashcard-nav">
+                <button class="flashcard-btn" id="flashcard-prev"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button class="flashcard-btn" id="flashcard-next">Далее <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Режим сопоставления -->
+      <div class="game-content" id="matching-mode" style="display: none;">
+        <div class="game-question">Сопоставьте блюдо с его описанием:</div>
+        <div class="matching-game" id="matching-game"></div>
+        <button class="game-next-btn" id="matching-next">Следующая пара</button>
+      </div>
+
+      <!-- Режим ингредиентов -->
+      <div class="game-content" id="ingredients-mode" style="display: none;">
+        <div class="game-question" id="ingredients-question"></div>
+        <div class="ingredients-list" id="ingredients-list"></div>
+        <div class="game-feedback" id="ingredients-feedback"></div>
+        <button class="game-next-btn" id="ingredients-check">Проверить</button>
+        <button class="game-next-btn" id="ingredients-next" style="display: none;">Следующее блюдо</button>
+      </div>
+
+      <!-- Результаты -->
+      <div class="game-results" id="game-results">
+        <h2>Игра завершена!</h2>
+        <div class="game-score">Ваш результат: <span id="final-score">0</span>/<span id="final-total">0</span></div>
+        <p id="results-message"></p>
+        <button class="game-restart-btn" id="restart-btn">Играть снова</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Карусель категорий меню -->
+  <div class="chapters-carousel">
+    <div class="carousel-container">
+      <a href="index.html" class="carousel-arrow"><i class="fas fa-chevron-left"></i></a>
+      <div class="carousel-track">
+        <a href="breakfasts.html" class="carousel-item">Завтраки</a>
+        <a href="starters.html" class="carousel-item">Закуски</a>
+        <a href="salads.html" class="carousel-item">Салаты</a>
+        <a href="soups.html" class="carousel-item">Супы</a>
+        <a href="pasta.html" class="carousel-item">Паста</a>
+        <a href="pizza.html" class="carousel-item">Пицца</a>
+        <a href="meat.html" class="carousel-item">Мясо</a>
+        <a href="fish.html" class="carousel-item">Рыба</a>
+        <a href="desserts.html" class="carousel-item">Десерты</a>
+        <a href="lunch.html" class="carousel-item">Ланчи</a>
+      </div>
+      <a href="starters.html" class="carousel-arrow"><i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <!-- Кнопка вверх -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Анимированные столовые приборы -->
+  <div class="cutlery-parallax-container"></div>
+
+  <script>
+    // Данные меню завтраков
+    const breakfastMenu = [
+      {
+        name: "Глазунья с жареной картошкой и сладкими томатами",
+        ingredients: "яйцо куриное (2 шт), помидоры, картофель беби, грибы жаренные белые, вешенки, укроп, петрушка, лук красный, масло подсолнечное",
+        description: "Жареный картофель с зеленью, небольшим количеством чеснока и сочными томатами. Рекомендуется есть, прокалывая картофелем желток и используя его как соус.",
+        weight: "240г",
+        price: "390 ₽"
+      },
+      {
+        name: "Омлет со шпинатом, томатами и Страчателлой",
+        ingredients: "яйцо (2 шт), специи, соль, помидор, шпинат, масло зеленое, сыр Страчателла",
+        description: "Омлет с упругой текстурой, со шпинатом, обжаренными томатами и нежным сыром Страчателла.",
+        weight: "220г",
+        price: "420 ₽"
+      },
+      {
+        name: "Яйцо Пашот с молодым картофелем, ветчиной и беконом",
+        ingredients: "яйцо Пашот (2 шт), картофель беби, масло подсолнечное, тимьян, чеснок, ветчина (индейка + курица), голландский соус, зелень",
+        description: "Обжаренный молодой картофель с беконом, ветчиной, яйцом Пашот и фирменным соусом на основе желтка и сливочного масла.",
+        weight: "280г",
+        price: "450 ₽"
+      },
+      {
+        name: "Бриошь с беконом",
+        ingredients: "бриошь сливочная (мука, молоко, яйцо, сахар, дрожжи, масло сливочное), бекон (сырокопченый), сыр плавленый, помидоры, соус Голландский, яйцо Пашот",
+        description: "Хрустящая бриошь с обжаренным беконом, сочными томатами, яйцом пашот и сливочно-сырным соусом с добавлением желтка и сливочного масла.",
+        weight: "260г",
+        price: "380 ₽"
+      },
+      {
+        name: "Вафля с ветчиной и вялеными томатами",
+        ingredients: "вафля картофельная (мука, яйцо, сахар, разрыхлитель, масло сливочное, сметана, молоко, картофель беби), ветчина из индейки, сыр Чеддер, бекон (сырокопченый), вяленые томаты, соус сливочный",
+        description: "Нежная вафля с ветчиной и беконом с добавлением сливочного соуса, вяленых томатов и сыра Чеддер.",
+        weight: "250г",
+        price: "410 ₽"
+      },
+      {
+        name: "Каша овсяная с соусом из манго, орехами и кокосовым молоком",
+        ingredients: "геркулес, кокосовое молоко, соль, сахар, манго сушеное, виноград, орехи кешью, миндаль, семена льна, семечки подсолнечника",
+        description: "Овсяная каша на кокосовом молоке с манго, виноградом, орехами и семенами льна.",
+        weight: "300г",
+        price: "350 ₽"
+      },
+      {
+        name: "Гречотто со щечками",
+        ingredients: "зеленая гречка, грибная паста из шампиньонов, масло сливочное, соус Порто, сливки, вешенки, сыр Пармезан, щечки из говядины, яйцо Пашот",
+        description: "Гречневая каша в стиле ризотто, томленная с добавлением куриного бульона, трюфельной пасты, сливочного масла и Пармезана. При подаче украшается томленой говядиной, жареными вешенками, соусом Порто, яйцом пашот и Пармезаном.",
+        weight: "350г",
+        price: "480 ₽"
+      },
+      {
+        name: "Домашние сырники с вишневым компоте",
+        ingredients: " творог, сахар, яйцо, манная крупа, ванильный сахар, сметана, компоте из вишни",
+        description: "Сырники из фермерского творога со сметаной и вишневым компоте.",
+        weight: "150г",
+        price: "320 ₽"
+      },
+      {
+        name: "Творожная вафля со сливочным кремом",
+        ingredients: "творог, сыр Филадельфия, сливки, ванильный сахар, яйцо, черная смородина",
+        description: "Воздушная творожная вафля с нежным сливочным кремом на основе сыра филадельфия и свежих сливок. Украшена сочной голубикой и компоте из черной смородины.",
+        weight: "200г",
+        price: "360 ₽"
+      }
+    ];
+
+    // Переменные игры
+    let currentMode = 'quiz';
+    let currentQuestionIndex = 0;
+    let correctAnswers = 0;
+    let totalQuestions = 0;
+    let timeLeft = 30 * 60; // 30 минут в секундах
+    let timerInterval;
+    let usedQuestions = [];
+    let usedFlashcards = [];
+    let usedMatchingPairs = [];
+    let currentFlashcardIndex = 0;
+    let selectedIngredients = [];
+
+    // DOM элементы
+    const gameModes = document.querySelectorAll('.game-mode-btn');
+    const quizMode = document.getElementById('quiz-mode');
+    const flashcardsMode = document.getElementById('flashcards-mode');
+    const matchingMode = document.getElementById('matching-mode');
+    const ingredientsMode = document.getElementById('ingredients-mode');
+    const gameResults = document.getElementById('game-results');
+    const quizQuestion = document.getElementById('quiz-question');
+    const quizOptions = document.getElementById('quiz-options');
+    const quizFeedback = document.getElementById('quiz-feedback');
+    const quizNextBtn = document.getElementById('quiz-next');
+    const flashcard = document.getElementById('flashcard');
+    const flashcardFrontTitle = document.getElementById('flashcard-front-title');
+    const flashcardFrontContent = document.getElementById('flashcard-front-content');
+    const flashcardBackTitle = document.getElementById('flashcard-back-title');
+    const flashcardBackContent = document.getElementById('flashcard-back-content');
+    const flashcardPrevBtn = document.getElementById('flashcard-prev');
+    const flashcardNextBtn = document.getElementById('flashcard-next');
+    const flashcardFlipBtn = document.querySelector('.flashcard-flip-btn');
+    const matchingGame = document.getElementById('matching-game');
+    const matchingNextBtn = document.getElementById('matching-next');
+    const ingredientsQuestion = document.getElementById('ingredients-question');
+    const ingredientsList = document.getElementById('ingredients-list');
+    const ingredientsFeedback = document.getElementById('ingredients-feedback');
+    const ingredientsCheckBtn = document.getElementById('ingredients-check');
+    const ingredientsNextBtn = document.getElementById('ingredients-next');
+    const correctCount = document.getElementById('correct-count');
+    const totalQuestionsSpan = document.getElementById('total-questions');
+    const timeLeftSpan = document.getElementById('time-left');
+    const timer = document.getElementById('timer');
+    const progressBar = document.getElementById('progress-bar');
+    const finalScore = document.getElementById('final-score');
+    const finalTotal = document.getElementById('final-total');
+    const resultsMessage = document.getElementById('results-message');
+    const restartBtn = document.getElementById('restart-btn');
+
+    // Инициализация игры
+    function initGame() {
+      currentMode = 'quiz';
+      currentQuestionIndex = 0;
+      correctAnswers = 0;
+      totalQuestions = 0;
+      timeLeft = 30 * 60;
+      usedQuestions = [];
+      usedFlashcards = [];
+      usedMatchingPairs = [];
+      currentFlashcardIndex = 0;
+      selectedIngredients = [];
+
+      updateStats();
+      startTimer();
+      setActiveMode('quiz');
+      loadQuizQuestion();
+    }
+
+    // Запуск таймера
+    function startTimer() {
+      clearInterval(timerInterval);
+      updateTimerDisplay();
+      
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          endGame();
+        }
+      }, 1000);
+    }
+
+    // Обновление отображения таймера
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      timeLeftSpan.textContent = timeString;
+      timer.textContent = timeString;
+      
+      // Обновление прогресс-бара
+      const totalTime = 30 * 60;
+      const progress = ((totalTime - timeLeft) / totalTime) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+
+    // Обновление статистики
+    function updateStats() {
+      correctCount.textContent = correctAnswers;
+      totalQuestionsSpan.textContent = totalQuestions;
+    }
+
+    // Установка активного режима игры
+    function setActiveMode(mode) {
+      currentMode = mode;
+      
+      // Обновление кнопок режимов
+      gameModes.forEach(btn => {
+        if (btn.dataset.mode === mode) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      
+      // Показать активный режим
+      quizMode.style.display = mode === 'quiz' ? 'block' : 'none';
+      flashcardsMode.style.display = mode === 'flashcards' ? 'block' : 'none';
+      matchingMode.style.display = mode === 'matching' ? 'block' : 'none';
+      ingredientsMode.style.display = mode === 'ingredients' ? 'block' : 'none';
+      gameResults.style.display = 'none';
+      
+      // Загрузить контент для выбранного режима
+      switch (mode) {
+        case 'quiz':
+          loadQuizQuestion();
+          break;
+        case 'flashcards':
+          loadFlashcard();
+          break;
+        case 'matching':
+          loadMatchingGame();
+          break;
+        case 'ingredients':
+          loadIngredientsGame();
+          break;
+      }
+    }
+
+    // Загрузка вопроса викторины
+    function loadQuizQuestion() {
+      if (usedQuestions.length >= breakfastMenu.length) {
+        usedQuestions = [];
+      }
+      
+      // Выбрать случайное блюдо, которое еще не использовалось
+      let availableQuestions = breakfastMenu.filter((_, index) => !usedQuestions.includes(index));
+      if (availableQuestions.length === 0) {
+        availableQuestions = [...breakfastMenu];
+        usedQuestions = [];
+      }
+      
+      const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+      const questionItem = availableQuestions[randomIndex];
+      const questionIndex = breakfastMenu.indexOf(questionItem);
+      usedQuestions.push(questionIndex);
+      
+      // Выбрать тип вопроса (название по описанию или описание по названию)
+      const questionType = Math.random() > 0.5 ? 'name' : 'description';
+      
+      if (questionType === 'name') {
+        quizQuestion.textContent = questionItem.description;
+        quizQuestion.dataset.correctAnswer = questionItem.name;
+      } else {
+        quizQuestion.textContent = questionItem.name;
+        quizQuestion.dataset.correctAnswer = questionItem.description;
+      }
+      
+      // Создать варианты ответов
+      quizOptions.innerHTML = '';
+      
+      // Собрать все возможные варианты ответов
+      let allAnswers;
+      if (questionType === 'name') {
+        allAnswers = breakfastMenu.map(item => item.name);
+      } else {
+        allAnswers = breakfastMenu.map(item => item.description);
+      }
+      
+      // Удалить правильный ответ из списка всех ответов
+      const correctAnswer = questionType === 'name' ? questionItem.name : questionItem.description;
+      allAnswers = allAnswers.filter(answer => answer !== correctAnswer);
+      
+      // Выбрать 3 случайных неправильных ответа
+      const wrongAnswers = [];
+      for (let i = 0; i < 3; i++) {
+        const randomIndex = Math.floor(Math.random() * allAnswers.length);
+        wrongAnswers.push(allAnswers[randomIndex]);
+        allAnswers.splice(randomIndex, 1);
+      }
+      
+      // Создать массив всех вариантов (правильный + неправильные) и перемешать
+      const allOptions = [correctAnswer, ...wrongAnswers];
+      shuffleArray(allOptions);
+      
+      // Создать элементы вариантов ответов
+      allOptions.forEach(option => {
+        const optionElement = document.createElement('div');
+        optionElement.className = 'game-option';
+        optionElement.textContent = option;
+        
+        optionElement.addEventListener('click', () => {
+          if (optionElement.classList.contains('selected')) return;
+          
+          // Убрать выделение с других вариантов
+          document.querySelectorAll('.game-option').forEach(el => {
+            el.classList.remove('selected');
+          });
+          
+          optionElement.classList.add('selected');
+          
+          // Проверить ответ
+          const isCorrect = option === correctAnswer;
+          
+          if (isCorrect) {
+            optionElement.classList.add('correct');
+            quizFeedback.textContent = 'Верно! ' + getRandomCongratulation();
+            quizFeedback.className = 'game-feedback correct';
+          } else {
+            optionElement.classList.add('incorrect');
+            quizFeedback.textContent = `Неверно. Правильный ответ: ${correctAnswer}`;
+            quizFeedback.className = 'game-feedback incorrect';
+            
+            // Показать правильный ответ
+            document.querySelectorAll('.game-option').forEach(el => {
+              if (el.textContent === correctAnswer) {
+                el.classList.add('correct');
+              }
+            });
+          }
+          
+          // Обновить статистику
+          if (isCorrect) {
+            correctAnswers++;
+          }
+          totalQuestions++;
+          updateStats();
+        });
+        
+        quizOptions.appendChild(optionElement);
+      });
+      
+      quizFeedback.className = 'game-feedback';
+      quizFeedback.textContent = '';
+      quizNextBtn.style.display = 'block';
+    }
+
+    // Загрузка карточки
+    function loadFlashcard() {
+      if (usedFlashcards.length >= breakfastMenu.length) {
+        usedFlashcards = [];
+        currentFlashcardIndex = 0;
+      }
+      
+      // Выбрать следующее блюдо для карточки
+      const flashcardItem = breakfastMenu[currentFlashcardIndex];
+      usedFlashcards.push(currentFlashcardIndex);
+      
+      // Установить содержимое карточки
+      flashcardFrontTitle.textContent = flashcardItem.name;
+      flashcardFrontContent.textContent = 'Нажмите на кнопку, чтобы перевернуть карточку и увидеть детали блюда';
+      
+      flashcardBackTitle.textContent = flashcardItem.name;
+      flashcardBackContent.innerHTML = `
+        <p><strong>Ингредиенты:</strong> ${flashcardItem.ingredients}</p>
+        <p><strong>Описание:</strong> ${flashcardItem.description}</p>
+        <p><strong>Вес:</strong> ${flashcardItem.weight} | <strong>Цена:</strong> ${flashcardItem.price}</p>
+      `;
+      
+      // Сбросить состояние карточки
+      flashcard.classList.remove('flipped');
+      
+      // Обновить индекс для следующей карточки
+      currentFlashcardIndex = (currentFlashcardIndex + 1) % breakfastMenu.length;
+    }
+
+    // Загрузка игры на сопоставление
+    function loadMatchingGame() {
+      if (usedMatchingPairs.length >= Math.floor(breakfastMenu.length / 2)) {
+        usedMatchingPairs = [];
+      }
+      
+      // Выбрать 4 случайных блюда (2 пары)
+      let availableItems = breakfastMenu.filter((_, index) => !usedMatchingPairs.includes(index));
+      if (availableItems.length < 4) {
+        availableItems = [...breakfastMenu];
+        usedMatchingPairs = [];
+      }
+      
+      shuffleArray(availableItems);
+      const selectedItems = availableItems.slice(0, 4);
+      usedMatchingPairs.push(...selectedItems.map(item => breakfastMenu.indexOf(item)));
+      
+      // Создать массив названий и описаний
+      const names = selectedItems.map(item => item.name);
+      const descriptions = selectedItems.map(item => item.description);
+      shuffleArray(descriptions);
+      
+      // Очистить игровое поле
+      matchingGame.innerHTML = '';
+      
+      // Создать колонку с названиями
+      const namesColumn = document.createElement('div');
+      namesColumn.className = 'matching-column';
+      
+      names.forEach(name => {
+        const nameElement = document.createElement('div');
+        nameElement.className = 'matching-item';
+        nameElement.textContent = name;
+        nameElement.dataset.type = 'name';
+        nameElement.dataset.value = name;
+        
+        nameElement.addEventListener('click', handleMatchingClick);
+        namesColumn.appendChild(nameElement);
+      });
+      
+      // Создать колонку с описаниями
+      const descColumn = document.createElement('div');
+      descColumn.className = 'matching-column';
+      
+      descriptions.forEach(desc => {
+        const descElement = document.createElement('div');
+        descElement.className = 'matching-item';
+        descElement.textContent = desc;
+        descElement.dataset.type = 'description';
+        descElement.dataset.value = desc;
+        
+        descElement.addEventListener('click', handleMatchingClick);
+        descColumn.appendChild(descElement);
+      });
+      
+      matchingGame.appendChild(namesColumn);
+      matchingGame.appendChild(descColumn);
+      
+      // Скрыть кнопку "Далее" пока не будут найдены все пары
+      matchingNextBtn.style.display = 'none';
+    }
+
+    // Обработчик клика в игре на сопоставление
+    function handleMatchingClick() {
+      if (this.classList.contains('matched')) return;
+      
+      // Если уже выбрано 2 элемента, ничего не делать
+      const selectedItems = document.querySelectorAll('.matching-item.selected');
+      if (selectedItems.length >= 2 && !this.classList.contains('selected')) return;
+      
+      this.classList.toggle('selected');
+      
+      // Проверить, есть ли 2 выбранных элемента
+      const currentSelected = document.querySelectorAll('.matching-item.selected');
+      if (currentSelected.length === 2) {
+        const [first, second] = currentSelected;
+        
+        // Найти блюдо, которое соответствует выбранному названию или описанию
+        const item = breakfastMenu.find(dish => 
+          (dish.name === first.dataset.value && dish.description === second.dataset.value) ||
+          (dish.name === second.dataset.value && dish.description === first.dataset.value)
+        );
+        
+        if (item) {
+          // Правильное сопоставление
+          first.classList.add('matched');
+          second.classList.add('matched');
+          first.classList.remove('selected');
+          second.classList.remove('selected');
+          
+          // Обновить статистику
+          correctAnswers++;
+          totalQuestions++;
+          updateStats();
+          
+          // Проверить, все ли пары найдены
+          const unmatchedItems = document.querySelectorAll('.matching-item:not(.matched)');
+          if (unmatchedItems.length === 0) {
+            matchingNextBtn.style.display = 'block';
+          }
+        } else {
+          // Неправильное сопоставление
+          setTimeout(() => {
+            first.classList.remove('selected');
+            second.classList.remove('selected');
+          }, 1000);
+          
+          // Обновить статистику
+          totalQuestions++;
+          updateStats();
+        }
+      }
+    }
+
+    // Загрузка игры на ингредиенты
+    function loadIngredientsGame() {
+      if (usedQuestions.length >= breakfastMenu.length) {
+        usedQuestions = [];
+      }
+      
+      // Выбрать случайное блюдо, которое еще не использовалось
+      let availableQuestions = breakfastMenu.filter((_, index) => !usedQuestions.includes(index));
+      if (availableQuestions.length === 0) {
+        availableQuestions = [...breakfastMenu];
+        usedQuestions = [];
+      }
+      
+      const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+      const questionItem = availableQuestions[randomIndex];
+      const questionIndex = breakfastMenu.indexOf(questionItem);
+      usedQuestions.push(questionIndex);
+      
+      // Установить вопрос
+      ingredientsQuestion.textContent = `Какие ингредиенты входят в состав "${questionItem.name}"?`;
+      ingredientsQuestion.dataset.correctAnswer = questionItem.ingredients.replace(/<strong>Ингредиенты:<\/strong>\s*/i, '');
+      
+      // Создать список всех ингредиентов из всех блюд
+      const allIngredients = [];
+      breakfastMenu.forEach(item => {
+        const ingredients = item.ingredients.split(', ').map(ing => ing.trim());
+        ingredients.forEach(ing => {
+          if (!allIngredients.includes(ing) && ing !== '') {
+            allIngredients.push(ing);
+          }
+        });
+      });
+      
+      // Получить правильные ингредиенты для текущего блюда
+      const correctIngredients = questionItem.ingredients.split(', ').map(ing => ing.trim());
+      
+      // Выбрать 5-7 случайных неправильных ингредиентов
+      const wrongIngredients = allIngredients.filter(ing => !correctIngredients.includes(ing));
+      shuffleArray(wrongIngredients);
+      const selectedWrongIngredients = wrongIngredients.slice(0, Math.min(7, wrongIngredients.length));
+      
+      // Создать массив всех ингредиентов (правильные + неправильные) и перемешать
+      const allOptions = [...correctIngredients, ...selectedWrongIngredients];
+      shuffleArray(allOptions);
+      
+      // Очистить список ингредиентов
+      ingredientsList.innerHTML = '';
+      selectedIngredients = [];
+      
+      // Создать элементы ингредиентов
+      allOptions.forEach(ingredient => {
+        const ingredientElement = document.createElement('div');
+        ingredientElement.className = 'ingredient-tag';
+        ingredientElement.textContent = ingredient;
+        
+        ingredientElement.addEventListener('click', () => {
+          ingredientElement.classList.toggle('selected');
+          
+          // Обновить список выбранных ингредиентов
+          if (ingredientElement.classList.contains('selected')) {
+            selectedIngredients.push(ingredient);
+          } else {
+            selectedIngredients = selectedIngredients.filter(ing => ing !== ingredient);
+          }
+        });
+        
+        ingredientsList.appendChild(ingredientElement);
+      });
+      
+      ingredientsFeedback.className = 'game-feedback';
+      ingredientsFeedback.textContent = '';
+      ingredientsCheckBtn.style.display = 'block';
+      ingredientsNextBtn.style.display = 'none';
+    }
+
+    // Проверка ответа в игре на ингредиенты
+    function checkIngredientsAnswer() {
+      const correctAnswer = ingredientsQuestion.dataset.correctAnswer.split(', ');
+      let isCorrect = true;
+      
+      // Проверить, что все выбранные ингредиенты правильные
+      const hasWrongSelected = selectedIngredients.some(ing => !correctAnswer.includes(ing));
+      
+      // Проверить, что все правильные ингредиенты выбраны
+      const hasMissingCorrect = correctAnswer.some(ing => !selectedIngredients.includes(ing));
+      
+      isCorrect = !hasWrongSelected && !hasMissingCorrect;
+      
+      // Показать результат
+      if (isCorrect) {
+        ingredientsFeedback.textContent = 'Верно! ' + getRandomCongratulation();
+        ingredientsFeedback.className = 'game-feedback correct';
+        correctAnswers++;
+      } else {
+        ingredientsFeedback.textContent = 'Неверно. Правильные ингредиенты: ' + correctAnswer.join(', ');
+        ingredientsFeedback.className = 'game-feedback incorrect';
+        
+        // Подсветить правильные и неправильные ингредиенты
+        document.querySelectorAll('.ingredient-tag').forEach(tag => {
+          if (correctAnswer.includes(tag.textContent)) {
+            tag.classList.add('correct');
+          } else if (selectedIngredients.includes(tag.textContent)) {
+            tag.classList.add('incorrect');
+          }
+        });
+      }
+      
+      totalQuestions++;
+      updateStats();
+      
+      ingredientsCheckBtn.style.display = 'none';
+      ingredientsNextBtn.style.display = 'block';
+    }
+
+    // Завершение игры
+    function endGame() {
+      clearInterval(timerInterval);
+      
+      // Показать результаты
+      quizMode.style.display = 'none';
+      flashcardsMode.style.display = 'none';
+      matchingMode.style.display = 'none';
+      ingredientsMode.style.display = 'none';
+      gameResults.style.display = 'block';
+      
+      finalScore.textContent = correctAnswers;
+      finalTotal.textContent = totalQuestions;
+      
+      // Сформировать сообщение с результатами
+      const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+      let message;
+      
+      if (percentage >= 90) {
+        message = 'Отличный результат! Вы прекрасно знаете меню завтраков!';
+      } else if (percentage >= 70) {
+        message = 'Хороший результат! Вы хорошо знаете меню, но есть куда расти.';
+      } else if (percentage >= 50) {
+        message = 'Неплохо, но стоит повторить меню еще раз.';
+      } else {
+        message = 'Попробуйте еще раз, чтобы лучше запомнить меню.';
+      }
+      
+      resultsMessage.textContent = message;
+    }
+
+    // Перемешивание массива
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Случайное поздравление
+    function getRandomCongratulation() {
+      const congrats = [
+        'Отлично!',
+        'Превосходно!',
+        'Замечательно!',
+        'Идеально!',
+        'Правильно!',
+        'Так держать!',
+        'Вы знаток меню!',
+        'Браво!'
+      ];
+      return congrats[Math.floor(Math.random() * congrats.length)];
+    }
+
+    // Обработчики событий
+    gameModes.forEach(btn => {
+      btn.addEventListener('click', () => setActiveMode(btn.dataset.mode));
+    });
+    
+    quizNextBtn.addEventListener('click', loadQuizQuestion);
+    
+    flashcardFlipBtn.addEventListener('click', () => {
+      flashcard.classList.toggle('flipped');
+    });
+    
+    flashcardPrevBtn.addEventListener('click', () => {
+      currentFlashcardIndex = (currentFlashcardIndex - 2 + breakfastMenu.length) % breakfastMenu.length;
+      loadFlashcard();
+    });
+    
+    flashcardNextBtn.addEventListener('click', loadFlashcard);
+    
+    matchingNextBtn.addEventListener('click', loadMatchingGame);
+    
+    ingredientsCheckBtn.addEventListener('click', checkIngredientsAnswer);
+    ingredientsNextBtn.addEventListener('click', loadIngredientsGame);
+    
+    restartBtn.addEventListener('click', initGame);
+
+    // Инициализация игры при загрузке страницы
+    document.addEventListener('DOMContentLoaded', initGame);
+
+    // Параллакс эффект для столовых приборов (из оригинального кода)
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.querySelector('.cutlery-parallax-container');
+      const types = [
+        'fa-utensils', 'fa-utensil-spoon', 'fa-utensil-fork',
+        'fa-utensil-knife', 'fa-glass-water', 'fa-wine-glass-alt'
+      ];
+
+      const colors = [
+        'rgba(169, 116, 79, 0.7)',
+        'rgba(214, 185, 123, 0.7)',
+        'rgba(201, 148, 99, 0.7)',
+        'rgba(139, 87, 42, 0.7)'
+      ];
+
+      // Создаем 30 элементов
+      for (let i = 0; i < 30; i++) {
+        const type = types[Math.floor(Math.random() * types.length)];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const size = 50 + Math.random() * 70; // 50-120px
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const rotation = Math.random() * 360;
+        const depth = 0.5 + Math.random() * 1.5;
+
+        const item = document.createElement('i');
+        item.className = `cutlery-item fas ${type}`;
+        item.style.cssText = `
+          font-size: ${size}px;
+          color: ${color};
+          left: ${posX}%;
+          top: ${posY}%;
+          transform: rotate(${rotation}deg);
+          --depth: ${depth};
+          opacity: ${0.5 + depth * 0.2};
+        `;
+
+        container.appendChild(item);
+      }
+
+      // Улучшенный обработчик движения мыши
+      container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const moveX = (mouseX - centerX) / centerX;
+        const moveY = (mouseY - centerY) / centerY;
+
+        document.querySelectorAll('.cutlery-item').forEach(item => {
+          const depth = parseFloat(item.style.getPropertyValue('--depth'));
+
+          const offsetX = moveX * 100 * depth;
+          const offsetY = moveY * 100 * depth;
+          const rotate = moveX * 20 * depth;
+          const scale = 1 + Math.abs(moveX + moveY) * 0.1 * depth;
+
+          item.style.transform = `
+            translate(${offsetX}px, ${offsetY}px)
+            rotate(${rotate}deg)
+            scale(${scale})
+          `;
+        });
+      });
+    });
+  </script>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
+```
+
+## Особенности игры:
+
+1. **4 режима обучения**:
+   - Викторина (угадать блюдо по описанию или наоборот)
+   - Карточки (изучение информации о блюдах с переворотом)
+   - Сопоставление (соединить название блюда с его описанием)
+   - Ингредиенты (выбрать правильные ингредиенты для блюда)
+
+2. **Таймер на 30 минут**:
+   - Отсчет времени с прогресс-баром
+   - Автоматическое завершение игры по истечении времени
+
+3. **Статистика**:
+   - Количество правильных ответов
+   - Общее количество вопросов
+   - Процент правильных ответов в конце
+
+4. **Адаптивный дизайн**:
+   - Полностью соответствует стилю оригинального сайта
+   - Работает на мобильных устройствах
+
+5. **Интерактивные элементы**:
+   - Анимации карточек
+   - Параллакс-эффект с кухонными принадлежностями
+   - Визуальная обратная связь при ответах
+
+6. **Система повторения**:
+   - Вопросы не повторяются, пока не будут пройдены все
+   - Случайный порядок вопросов и вариантов ответов
+
+Игра поможет быстро и эффективно изучить меню завтраков за 30 минут в увлекательной форме!
