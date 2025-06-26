@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Официант-Профи: Обучение завтракам</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Стили остаются без изменений */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .game-container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      margin-top: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      color: #8e6c88;
+      margin-bottom: 10px;
+    }
+
+    .progress-container {
+      margin-bottom: 25px;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: #f0f0f0;
+      border-radius: 5px;
+      margin-bottom: 5px;
+    }
+
+    .progress {
+      height: 100%;
+      background: #8e6c88;
+      border-radius: 5px;
+      transition: width 0.3s;
+    }
+
+    .dish-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .dish-header h2 {
+      font-size: 1.3em;
+      color: #8e6c88;
+      margin: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .dish-icon {
+      margin-right: 10px;
+      color: #8e6c88;
+    }
+
+    .plate-area {
+      min-height: 150px;
+      border: 2px dashed #8e6c88;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: rgba(142, 108, 136, 0.05);
+    }
+
+    .plate-area p {
+      margin: 0;
+      color: #888;
+      width: 100%;
+    }
+
+    .plate-ingredient {
+      padding: 8px 12px;
+      background: #8e6c88;
+      color: white;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.9em;
+    }
+
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .ingredient-card {
+      padding: 12px;
+      background: #f9f9f9;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      border: 1px solid #eee;
+      font-size: 0.9em;
+    }
+
+    .ingredient-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .ingredient-card.selected {
+      background: #8e6c88;
+      color: white;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: #8e6c88;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #7a5a74;
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+    }
+
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .feedback {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 5px;
+      display: none;
+    }
+
+    .success {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #a5d6a7;
+    }
+
+    .error {
+      background: #ffebee;
+      color: #c62828;
+      border: 1px solid #ef9a9a;
+    }
+
+    .test-results {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 5px;
+    }
+
+    .test-results h3 {
+      margin-top: 0;
+      color: #8e6c88;
+    }
+
+    @media (max-width: 768px) {
+      .ingredients-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1><i class="fas fa-graduation-cap"></i> Обучение меню завтраков</h1>
+      <p>Постепенное изучение блюд с повторением</p>
+    </div>
+
+    <div class="game-container" id="learningView">
+      <div class="dish-header">
+        <h2><i class="fas fa-book dish-icon"></i> <span id="dishName">Загрузка...</span></h2>
+        <span id="progressText">Блюдо 1 из 1</span>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress" id="progressBar" style="width: 0%"></div>
+        </div>
+        <div id="progressDescription">Изучаем первое блюдо</div>
+      </div>
+
+      <div id="studyMode">
+        <h3>Изучите ингредиенты этого блюда:</h3>
+        <div class="ingredients-grid" id="ingredientsList"></div>
+
+        <div class="controls">
+          <button class="btn-primary" id="btnReadyToTest">
+            <i class="fas fa-check"></i> Я запомнил(а)
+          </button>
+        </div>
+      </div>
+
+      <div id="testMode" style="display: none;">
+        <h3 id="testTitle">Выберите ингредиенты, которые входят в состав этого блюда:</h3>
+        <div class="ingredients-grid" id="testIngredients"></div>
+
+        <div class="controls">
+          <button class="btn-primary" id="btnCheckTest">
+            <i class="fas fa-check-circle"></i> Проверить
+          </button>
+        </div>
+
+        <div class="test-results" id="testResults" style="display: none;">
+          <h3>Результаты проверки</h3>
+          <div id="correctAnswers"></div>
+          <div id="wrongAnswers"></div>
+
+          <div class="controls">
+            <button class="btn-primary" id="btnContinue">
+              <i class="fas fa-arrow-right"></i> Продолжить обучение
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Полный список блюд с ингредиентами
+    const dishes = [
+      {
+        name: "Каша овсяная/рисовая с соусом из манго, орехами и кокосовым молоком",
+        ingredients: ["Геркулес", "Кокосовое молоко", "Соль, сахар", "Манго сушеное", "Виноград", "Орехи кешью, миндаль", "Семена льна, семечки подсолнечника"]
+      },
+      {
+        name: "Гречетто со щечками",
+        ingredients: ["Зеленая гречка", "Грибная паста из шампиньонов", "Масло сливочное", "Соус Порто", "Сливки", "Вешенки", "Сыр Пармезан", "Щечки из говядины", "Яйцо Пашот"]
+      },
+      {
+        name: "Шакшука со свежей зеленью и тостами",
+        ingredients: ["Яйцо куриное (3 шт)", "Томаты, перец болгарский, чеснок, лук", "Соус Тайский", "Масло подсолнечное", "Кориандр, зира", "Моцарелла", "Чиабатта", "Сливочный крем (сыр Милетто, мягкий сыр, Мацони)", "Перец Чилотле"]
+      },
+      {
+        name: "Омлет со шпинатом, томатами и Страчателлой",
+        ingredients: ["Яйцо (2 шт)", "Специи, соль", "Помидор", "Страчателла", "Соус медово-горчичный", "Шпинат, масло зеленое"]
+      },
+      {
+        name: "Омлет с жареными грибами и зеленью",
+        ingredients: ["Яйцо куриное", "Грибы жареные (вешенки, белые грибы, лук репчатый, чеснок, петрушка, укроп)", "Микс салатов", "Зеленая сальса (Митцукан, соевый соус, кинза, лук репчатый, чеснок)", "Микс семечек (подсолнечные, тыквенные)"]
+      },
+      {
+        name: "Яйцо Пашот с молодым картофелем, ветчиной и беконом",
+        ingredients: ["Яйцо Пашот (2 шт)", "Картофель беби", "Масло подсолнечное", "Тимьян, чеснок", "Ветчина (индейка, курица)", "Голландский соус", "Зелень"]
+      },
+      {
+        name: "Скрембл с креветкой и сырным кремом",
+        ingredients: ["Яйцо куриное", "Креветки", "Сырный крем (Пармезан, сливки, молоко, яйцо куриное)", "Петрушка", "Лимонный фреш", "Масло сливочное"]
+      },
+      {
+        name: "Глазунья с жареной картошкой и сладкими томатами",
+        ingredients: ["Яйцо куриное (2 шт)", "Помидоры", "Картофель беби", "Грибы жареные (белые, вешенки)", "Укроп, петрушка", "Лук красный", "Масло подсолнечное"]
+      },
+      {
+        name: "Пара сосисок с яйцом",
+        ingredients: ["Сосиски", "Яйцо", "Хрустящая булочка с кремовым сыром", "Хашбраун", "Шампиньоны", "Соус песто"]
+      },
+      {
+        name: "Брюшь с беконом",
+        ingredients: ["Вафля картофельная (мука, яйцо, сахар, разрыхлитель, масло сливочное, сметана, молоко, картофель беби)", "Ветчина из индейки", "Сыр Чеддер", "Бекон", "Вяленые томаты", "Соус сливочный"]
+      },
+      {
+        name: "Вафли с лососем",
+        ingredients: ["Вафля картофельная (мука, разрыхлитель, яйцо, масло, сахар, соль, сметана, картофель беби)", "Сыр Филадельфия", "Соус песто", "Авокадо", "Семга слабосоленая", "Крем сырный (сметана, сыр Милетто, каперсы, лук, соевый соус)"]
+      },
+      {
+        name: "Вафля картофельная с курицей и грибами",
+        ingredients: ["Вафли картофельные (картофель беби, масло растительное, специи, чеснок, яйцо, сметана, мука пшеничная)", "Куриная грудка", "Грибной микс (шампиньоны, вешенки)", "Соус бешамель", "Моцарелла", "Соус голландский"]
+      },
+      {
+        name: "Сендвич с индейкой",
+        ingredients: ["Бриошь сливочный", "Филе индейки", "Шпинат", "Соус песто", "Сыр Филадельфия", "Моцарелла", "Ветчина из индейки"]
+      },
+      {
+        name: "Блины с сыром",
+        ingredients: ["Блины (масло растительное, молоко, мука, сахар, соль, яйцо)", "Сыр супутни", "Моцарелла", "Соус бешамель"]
+      },
+      {
+        name: "Домашний творог с вишневым компоте",
+        ingredients: ["Творог", "Взбитая сметана", "Компоте из вишни", "Грецкие орехи"]
+      },
+      {
+        name: "Домашние сырники с вишневым компоте / Сырники с облепиховой сгущенкой",
+        ingredients: ["Сырники (творог, сахар, яйцо, манная крупа, ванильный сахар)", "Сметана", "Компоте из вишни", "Облепиховая сгущенка"]
+      },
+      {
+        name: "Творожная запеканка с черносмородиновым компоте",
+        ingredients: ["Творожная запеканка (творог, сыр Кременте, ванильный сахар, сливки, яйцо, крахмал кукурузный)", "Соус Англез (молоко, сливки, ванильный сахар, яйцо, крахмал кукурузный)", "Черная смородина", "Фисташка рубленная"]
+      },
+      {
+        name: "Творожная вафля со сливочным кремом",
+        ingredients: ["Вафли творожные (творог, масло, яйцо, сахар, разрыхлитель, ванильный сахар, соль, мука)", "Сыр Филадельфия/Кременте", "Сливки 33%", "Сахарный сироп", "Голубика свежая", "Компоте из черной смородины"]
+      }
+    ];
+
+    // Текущее состояние
+    let currentDishIndex = 0;
+    let learnedDishes = [];
+    let selectedIngredients = [];
+    let currentTestIndex = 0; // Индекс текущего тестируемого блюда
+
+    // Инициализация при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+      // Назначение обработчиков кнопок
+      document.getElementById('btnReadyToTest').addEventListener('click', startTest);
+      document.getElementById('btnCheckTest').addEventListener('click', checkTest);
+      document.getElementById('btnContinue').addEventListener('click', continueLearning);
+
+      // Начинаем обучение
+      loadDish();
+    });
+
+    // Загрузка блюда для изучения
+    function loadDish() {
+      const dish = dishes[currentDishIndex];
+      document.getElementById('dishName').textContent = dish.name;
+      document.getElementById('progressText').textContent = `Блюдо ${currentDishIndex + 1} из ${dishes.length}`;
+
+      // Обновляем прогресс
+      const progressPercent = ((currentDishIndex + 1) / dishes.length) * 100;
+      document.getElementById('progressBar').style.width = `${progressPercent}%`;
+      document.getElementById('progressDescription').textContent =
+        `Изучаем ${currentDishIndex === 0 ? 'первое' : 'следующее'} блюдо`;
+
+      // Заполняем список ингредиентов
+      const ingredientsList = document.getElementById('ingredientsList');
+      ingredientsList.innerHTML = '';
+
+      dish.ingredients.forEach(ing => {
+        const card = document.createElement('div');
+        card.className = 'ingredient-card';
+        card.textContent = ing;
+        ingredientsList.appendChild(card);
+      });
+
+      // Показываем режим изучения
+      document.getElementById('studyMode').style.display = 'block';
+      document.getElementById('testMode').style.display = 'none';
+      document.getElementById('testResults').style.display = 'none';
+    }
+
+    // Начать тестирование
+    function startTest() {
+      // Добавляем текущее блюдо в изученные, если его там еще нет
+      if (!learnedDishes.includes(currentDishIndex)) {
+        learnedDishes.push(currentDishIndex);
+      }
+
+      // Начинаем тестирование с первого изученного блюда
+      currentTestIndex = 0;
+      prepareTestForDish(learnedDishes[currentTestIndex]);
+    }
+
+    // Подготовить тест для конкретного блюда
+    function prepareTestForDish(dishIndex) {
+      const dish = dishes[dishIndex];
+      const correctIngredients = dish.ingredients;
+
+      // Собираем все ингредиенты для теста
+      let testIngredients = [];
+
+      // Добавляем случайные неверные ингредиенты
+      const allIngredients = dishes.flatMap(d => d.ingredients);
+      const uniqueIngredients = [...new Set(allIngredients)];
+      const incorrectIngredients = uniqueIngredients.filter(i => !correctIngredients.includes(i));
+      const randomIncorrect = shuffleArray([...incorrectIngredients]).slice(0, Math.min(5, incorrectIngredients.length));
+
+      testIngredients = shuffleArray([...correctIngredients, ...randomIncorrect]);
+
+      // Заполняем тестовый список
+      const testContainer = document.getElementById('testIngredients');
+      testContainer.innerHTML = '';
+
+      testIngredients.forEach(ing => {
+        const card = document.createElement('div');
+        card.className = 'ingredient-card';
+        card.textContent = ing;
+        card.dataset.correct = correctIngredients.includes(ing);
+
+        card.addEventListener('click', function() {
+          this.classList.toggle('selected');
+
+          if (this.classList.contains('selected')) {
+            if (!selectedIngredients.includes(ing)) {
+              selectedIngredients.push(ing);
+            }
+          } else {
+            selectedIngredients = selectedIngredients.filter(i => i !== ing);
+          }
+        });
+
+        testContainer.appendChild(card);
+      });
+
+      // Обновляем заголовок теста
+      document.getElementById('testTitle').textContent =
+        `Выберите ингредиенты для блюда: ${dish.name}`;
+
+      // Обновляем описание теста
+      document.getElementById('progressDescription').textContent =
+        `Проверка знаний (${currentTestIndex + 1} из ${learnedDishes.length})`;
+
+      // Переключаемся в режим тестирования
+      document.getElementById('studyMode').style.display = 'none';
+      document.getElementById('testMode').style.display = 'block';
+      document.getElementById('testResults').style.display = 'none';
+
+      // Очищаем предыдущий выбор
+      selectedIngredients = [];
+    }
+
+    // Проверить тест
+    function checkTest() {
+      const dish = dishes[learnedDishes[currentTestIndex]];
+      const correctIngredients = dish.ingredients;
+
+      // Определяем правильные и неправильные ответы
+      const correctSelected = selectedIngredients.filter(ing => correctIngredients.includes(ing));
+      const wrongSelected = selectedIngredients.filter(ing => !correctIngredients.includes(ing));
+      const missed = correctIngredients.filter(ing => !selectedIngredients.includes(ing));
+
+      // Показываем результаты
+      const resultsContainer = document.getElementById('testResults');
+      const correctAnswersDiv = document.getElementById('correctAnswers');
+      const wrongAnswersDiv = document.getElementById('wrongAnswers');
+
+      correctAnswersDiv.innerHTML = `
+        <p><strong>Правильно выбрано (${correctSelected.length}/${correctIngredients.length}):</strong></p>
+        <ul>${correctSelected.map(ing => `<li>${ing}</li>`).join('')}</ul>
+        ${missed.length > 0 ? `
+          <p><strong>Пропущенные ингредиенты:</strong></p>
+          <ul>${missed.map(ing => `<li>${ing}</li>`).join('')}</ul>
+        ` : ''}
+      `;
+
+      wrongAnswersDiv.innerHTML = wrongSelected.length > 0 ? `
+        <p><strong>Ошибочно выбрано:</strong></p>
+        <ul>${wrongSelected.map(ing => `<li>${ing}</li>`).join('')}</ul>
+      ` : '<p>Вы не выбрали ни одного лишнего ингредиента. Отлично!</p>';
+
+      resultsContainer.style.display = 'block';
+    }
+
+    // Продолжить обучение
+    function continueLearning() {
+      // Если есть еще блюда для тестирования, переходим к следующему
+      if (currentTestIndex < learnedDishes.length - 1) {
+        currentTestIndex++;
+        prepareTestForDish(learnedDishes[currentTestIndex]);
+      } else {
+        // Если все блюда протестированы, переходим к следующему блюду для изучения
+        if (currentDishIndex < dishes.length - 1) {
+          currentDishIndex++;
+          loadDish();
+        } else {
+          // Если все блюда изучены, начинаем сначала
+          alert('Вы изучили все блюда! Теперь будем повторять весь материал.');
+          currentDishIndex = 0;
+          loadDish();
+        }
+      }
+    }
+
+    // Вспомогательные функции
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+  </script>
+</body>
+</html>
