@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Финансовый планировщик</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #560bad;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .app-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .app-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+        }
+        
+        .btn-danger:hover {
+            background-color: #d11466;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .result-label {
+            font-weight: 600;
+        }
+        
+        .result-value {
+            font-weight: 700;
+        }
+        
+        .total {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-top: 10px;
+        }
+        
+        .chart-container {
+            height: 200px;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .history-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .history-date {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+        
+        .history-amount {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .history-details {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .expense-category {
+            margin-bottom: 15px;
+        }
+        
+        .category-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            cursor: pointer;
+            padding: 8px;
+            background: #f0f2f5;
+            border-radius: 6px;
+        }
+        
+        .category-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 4px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-title {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .positive {
+            color: #28a745;
+        }
+        
+        .negative {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Финансовый планировщик</h1>
+            <p class="subtitle">Учет доходов и расходов с аналитикой</p>
+        </header>
+        
+        <div class="app-content">
+            <div class="section">
+                <h2 class="section-title">Учет доходов</h2>
+                
+                <div class="form-group">
+                    <label for="salary">Основная зарплата (руб)</label>
+                    <input type="number" id="salary" value="64000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bonus">Премия (% от оклада)</label>
+                    <input type="number" id="bonus" value="24">
+                </div>
+                
+                <div class="form-group">
+                    <label for="extraDays">Дни подработки</label>
+                    <input type="number" id="extraDays" value="0" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="extraRate">Оплата за день подработки (руб)</label>
+                    <input type="number" id="extraRate" value="6000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="otherIncome">Другие доходы (руб)</label>
+                    <input type="number" id="otherIncome" value="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="tax">Налог НДФЛ (%)</label>
+                    <input type="number" id="tax" value="13">
+                </div>
+                
+                <button class="btn btn-block" onclick="calculateFinance()">Рассчитать</button>
+                
+                <div class="results" id="incomeResults" style="display: none;">
+                    <div class="result-item">
+                        <span class="result-label">Начислено (до налогов):</span>
+                        <span class="result-value" id="grossSalary"></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Налог:</span>
+                        <span class="result-value" id="taxAmount"></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">На руки:</span>
+                        <span class="result-value" id="netSalary"></span>
+                    </div>
+                    <div class="result-item total">
+                        <span class="result-label">Доход после налогов:</span>
+                        <span class="result-value" id="totalIncome"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Учет расходов</h2>
+                
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('fixed')">Постоянные</div>
+                    <div class="tab" onclick="switchTab('variable')">Переменные</div>
+                </div>
+                
+                <div class="tab-content active" id="fixedExpenses">
+                    <div class="expense-category">
+                        <div class="form-group">
+                            <label for="housing">Жилье (аренда/ипотека)</label>
+                            <input type="number" id="housing" value="0">
+                        </div>
+                    </div>
+                    
+                    <div class="expense-category">
+                        <div class="form-group">
+                            <label for="utilities">Коммунальные услуги</label>
+                            <input type="number" id="utilities" value="0">
+                        </div>
+                    </div>
+                    
+                    <div class="expense-category">
+                        <div class="form-group">
+                            <label for="transport">Транспорт</label>
+                            <input type="number" id="transport" value="0">
+                        </div>
+                    </div>
+                    
+                    <div class="expense-category">
+                        <div class="form-group">
+                            <label for="internet">Интернет/Телефон</label>
+                            <input type="number" id="internet" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="variableExpenses">
+                    <div class="expense-category">
+                        <div class="form-group">
+                            <label for="food">Продукты питания</label>
+                            <input type="number" id="food" value="0">
+                        </div>
+                    </div>
+                    
+                    <div class="expense-category">
+                        <div class="form-group">
+                            <label for="entertainment">Развлечения</label>
+                            <input type="number" id="entertainment" value="0">
+                        </div>
+                    </div>
+                    
+                    <div class="expense-category">
+                        <div class="form-group">
+                            <label for="health">Здоровье</label>
+                            <input type="number" id="health" value="0">
+                        </div>
+                    </div>
+                    
+                    <div class="expense-category">
+                        <div class="form-group">
+                            <label for="otherExpenses">Другие расходы</label>
+                            <input type="number" id="otherExpenses" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-block" onclick="calculateExpenses()">Рассчитать расходы</button>
+                
+                <div class="results" id="expenseResults" style="display: none;">
+                    <div class="result-item">
+                        <span class="result-label">Постоянные расходы:</span>
+                        <span class="result-value" id="fixedExpensesTotal"></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Переменные расходы:</span>
+                        <span class="result-value" id="variableExpensesTotal"></span>
+                    </div>
+                    <div class="result-item total">
+                        <span class="result-label">Всего расходов:</span>
+                        <span class="result-value" id="totalExpenses"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Финансовый результат</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-title">Доход</div>
+                        <div class="stat-value positive" id="statIncome">0 ₽</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Расходы</div>
+                        <div class="stat-value negative" id="statExpenses">0 ₽</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Баланс</div>
+                        <div class="stat-value" id="statBalance">0 ₽</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Сбережения</div>
+                        <div class="stat-value positive" id="statSavings">0 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="financeChart"></canvas>
+                </div>
+                
+                <button class="btn btn-block" onclick="saveCalculation()" style="margin-top: 20px;">Сохранить расчет</button>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">История расчетов</h2>
+                
+                <div id="historyList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Инициализация Chart.js
+        let financeChart;
+        
+        // Загружаем историю при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            loadHistory();
+            initChart();
+        });
+        
+        function initChart() {
+            const ctx = document.getElementById('financeChart').getContext('2d');
+            financeChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Доход', 'Расходы', 'Баланс'],
+                    datasets: [{
+                        data: [0, 0, 0],
+                        backgroundColor: [
+                            '#4cc9f0',
+                            '#f72585',
+                            '#4361ee'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+        
+        function switchTab(tabId) {
+            // Убираем активный класс у всех вкладок
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Добавляем активный класс к выбранной вкладке
+            if (tabId === 'fixed') {
+                document.querySelector('.tab:nth-child(1)').classList.add('active');
+                document.getElementById('fixedExpenses').classList.add('active');
+            } else {
+                document.querySelector('.tab:nth-child(2)').classList.add('active');
+                document.getElementById('variableExpenses').classList.add('active');
+            }
+        }
+        
+        function calculateFinance() {
+            // Рассчитываем доходы
+            const salary = parseFloat(document.getElementById('salary').value) || 0;
+            const bonusPercent = parseFloat(document.getElementById('bonus').value) || 0;
+            const extraDays = parseInt(document.getElementById('extraDays').value) || 0;
+            const extraRate = parseFloat(document.getElementById('extraRate').value) || 0;
+            const otherIncome = parseFloat(document.getElementById('otherIncome').value) || 0;
+            const taxPercent = parseFloat(document.getElementById('tax').value) || 0;
+            
+            const bonus = salary * (bonusPercent / 100);
+            const extraSalary = extraDays * extraRate;
+            const grossSalary = salary + bonus + extraSalary + otherIncome;
+            const taxAmount = grossSalary * (taxPercent / 100);
+            const netSalary = grossSalary - taxAmount;
+            
+            // Отображаем результаты доходов
+            document.getElementById('grossSalary').textContent = formatMoney(grossSalary);
+            document.getElementById('taxAmount').textContent = formatMoney(taxAmount);
+            document.getElementById('netSalary').textContent = formatMoney(netSalary);
+            document.getElementById('totalIncome').textContent = formatMoney(netSalary);
+            document.getElementById('incomeResults').style.display = 'block';
+            
+            // Обновляем статистику
+            updateStats(netSalary, 0, netSalary);
+        }
+        
+        function calculateExpenses() {
+            // Постоянные расходы
+            const housing = parseFloat(document.getElementById('housing').value) || 0;
+            const utilities = parseFloat(document.getElementById('utilities').value) || 0;
+            const transport = parseFloat(document.getElementById('transport').value) || 0;
+            const internet = parseFloat(document.getElementById('internet').value) || 0;
+            
+            // Переменные расходы
+            const food = parseFloat(document.getElementById('food').value) || 0;
+            const entertainment = parseFloat(document.getElementById('entertainment').value) || 0;
+            const health = parseFloat(document.getElementById('health').value) || 0;
+            const otherExpenses = parseFloat(document.getElementById('otherExpenses').value) || 0;
+            
+            const fixedExpenses = housing + utilities + transport + internet;
+            const variableExpenses = food + entertainment + health + otherExpenses;
+            const totalExpenses = fixedExpenses + variableExpenses;
+            
+            // Отображаем результаты расходов
+            document.getElementById('fixedExpensesTotal').textContent = formatMoney(fixedExpenses);
+            document.getElementById('variableExpensesTotal').textContent = formatMoney(variableExpenses);
+            document.getElementById('totalExpenses').textContent = formatMoney(totalExpenses);
+            document.getElementById('expenseResults').style.display = 'block';
+            
+            // Рассчитываем баланс
+            const netIncome = parseFloat(document.getElementById('netSalary').textContent.replace(/[^\d.]/g, '')) || 0;
+            const balance = netIncome - totalExpenses;
+            
+            // Обновляем статистику
+            updateStats(netIncome, totalExpenses, balance);
+        }
+        
+        function updateStats(income, expenses, balance) {
+            document.getElementById('statIncome').textContent = formatMoney(income);
+            document.getElementById('statExpenses').textContent = formatMoney(expenses);
+            
+            const balanceElement = document.getElementById('statBalance');
+            balanceElement.textContent = formatMoney(balance);
+            
+            if (balance >= 0) {
+                balanceElement.classList.add('positive');
+                balanceElement.classList.remove('negative');
+                document.getElementById('statSavings').textContent = formatMoney(balance);
+            } else {
+                balanceElement.classList.add('negative');
+                balanceElement.classList.remove('positive');
+                document.getElementById('statSavings').textContent = '0 ₽';
+            }
+            
+            // Обновляем график
+            updateChart(income, expenses, Math.max(0, balance));
+        }
+        
+        function updateChart(income, expenses, balance) {
+            financeChart.data.datasets[0].data = [income, expenses, balance];
+            financeChart.update();
+        }
+        
+        function saveCalculation() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+            
+            // Собираем данные о доходах
+            const incomeData = {
+                salary: parseFloat(document.getElementById('salary').value) || 0,
+                bonus: parseFloat(document.getElementById('bonus').value) || 0,
+                extraDays: parseInt(document.getElementById('extraDays').value) || 0,
+                extraRate: parseFloat(document.getElementById('extraRate').value) || 0,
+                otherIncome: parseFloat(document.getElementById('otherIncome').value) || 0,
+                tax: parseFloat(document.getElementById('tax').value) || 0,
+                gross: parseFloat(document.getElementById('grossSalary').textContent.replace(/[^\d.]/g, '')) || 0,
+                net: parseFloat(document.getElementById('netSalary').textContent.replace(/[^\d.]/g, '')) || 0
+            };
+            
+            // Собираем данные о расходах
+            const expenseData = {
+                fixed: {
+                    housing: parseFloat(document.getElementById('housing').value) || 0,
+                    utilities: parseFloat(document.getElementById('utilities').value) || 0,
+                    transport: parseFloat(document.getElementById('transport').value) || 0,
+                    internet: parseFloat(document.getElementById('internet').value) || 0,
+                    total: parseFloat(document.getElementById('fixedExpensesTotal').textContent.replace(/[^\d.]/g, '')) || 0
+                },
+                variable: {
+                    food: parseFloat(document.getElementById('food').value) || 0,
+                    entertainment: parseFloat(document.getElementById('entertainment').value) || 0,
+                    health: parseFloat(document.getElementById('health').value) || 0,
+                    other: parseFloat(document.getElementById('otherExpenses').value) || 0,
+                    total: parseFloat(document.getElementById('variableExpensesTotal').textContent.replace(/[^\d.]/g, '')) || 0
+                },
+                total: parseFloat(document.getElementById('totalExpenses').textContent.replace(/[^\d.]/g, '')) || 0
+            };
+            
+            // Собираем итоговые данные
+            const calculation = {
+                date: dateStr,
+                income: incomeData,
+                expenses: expenseData,
+                balance: parseFloat(document.getElementById('statBalance').textContent.replace(/[^\d.]/g, '')) || 0
+            };
+            
+            // Сохраняем в LocalStorage
+            let history = JSON.parse(localStorage.getItem('financeHistory')) || [];
+            history.push(calculation);
+            localStorage.setItem('financeHistory', JSON.stringify(history));
+            
+            // Обновляем историю
+            loadHistory();
+            
+            alert('Расчет успешно сохранен!');
+        }
+        
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('financeHistory')) || [];
+            const historyList = document.getElementById('historyList');
+            
+            historyList.innerHTML = '';
+            
+            if (history.length === 0) {
+                historyList.innerHTML = '<p>Нет сохраненных расчетов</p>';
+                return;
+            }
+            
+            // Отображаем историю в обратном порядке (новые сверху)
+            history.reverse().forEach((item, index) => {
+                const realIndex = history.length - 1 - index; // Для правильного удаления
+                
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                
+                const balanceClass = item.balance >= 0 ? 'positive' : 'negative';
+                
+                div.innerHTML = `
+                    <div class="history-date">${item.date}</div>
+                    <div class="history-amount ${balanceClass}">${formatMoney(item.balance)}</div>
+                    <div class="history-details">
+                        <div>Доход: ${formatMoney(item.income.net)}</div>
+                        <div>Расходы: ${formatMoney(item.expenses.total)}</div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteCalculation(${realIndex})">×</button>
+                `;
+                
+                historyList.appendChild(div);
+            });
+        }
+        
+        function deleteCalculation(index) {
+            let history = JSON.parse(localStorage.getItem('financeHistory')) || [];
+            
+            if (index >= 0 && index < history.length) {
+                history.splice(index, 1);
+                localStorage.setItem('financeHistory', JSON.stringify(history));
+                loadHistory();
+            }
+        }
+        
+        function formatMoney(amount) {
+            return new Intl.NumberFormat('ru-RU', {
+                style: 'currency',
+                currency: 'RUB',
+                minimumFractionDigits: 2
+            }).format(amount);
+        }
+    </script>
+</body>
+</html>
