@@ -3,286 +3,685 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Симулятор SAP - Зона переупаковки</title>
+    <title>Учебный симулятор SAP - Зона переупаковки</title>
     <style>
-        /* Основные стили SAP */
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --primary-color: #0070f2;
+            --secondary-color: #1a1a1a;
+            --accent-color: #ff6d00;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #757575;
+            --success-color: #4caf50;
+            --error-color: #f44336;
+            --warning-color: #ff9800;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
         }
 
-        .sap-container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--secondary-color);
+            background-color: #f9f9f9;
         }
 
-        .sap-header {
-            background-color: #0a6ed1;
+        .app-container {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100vh;
+        }
+
+        /* Header styles */
+        .app-header {
+            background: linear-gradient(135deg, var(--primary-color), #005bb5);
             color: white;
-            padding: 10px 20px;
+            padding: 0.8rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .sap-logo {
-            font-weight: bold;
-            font-size: 24px;
-        }
-
-        .sap-title {
-            font-size: 18px;
-        }
-
-        .sap-user {
-            font-size: 14px;
-        }
-
-        .sap-content {
+        .logo-container {
             display: flex;
-            flex: 1;
-            overflow: hidden;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .sap-menu {
-            width: 250px;
-            background-color: #e6e6e6;
-            padding: 10px;
+        .app-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .app-title {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Main content layout */
+        .app-content {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            height: 100%;
+        }
+
+        /* Navigation sidebar */
+        .app-sidebar {
+            background-color: white;
+            border-right: 1px solid var(--medium-gray);
+            padding: 1rem 0;
             overflow-y: auto;
         }
 
-        .menu-title {
-            font-weight: bold;
-            padding: 5px;
-            border-bottom: 1px solid #ccc;
-            margin-bottom: 10px;
+        .sidebar-section {
+            margin-bottom: 1.5rem;
         }
 
-        .sap-menu ul {
+        .sidebar-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--dark-gray);
+            padding: 0.5rem 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-menu {
             list-style: none;
-            padding: 0;
-            margin: 0;
         }
 
-        .sap-menu li {
-            padding: 8px 5px;
+        .nav-item {
+            padding: 0.5rem 1.5rem;
             cursor: pointer;
-            border-bottom: 1px solid #ddd;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
         }
 
-        .sap-menu li:hover {
-            background-color: #d0d0d0;
+        .nav-item:hover {
+            background-color: var(--light-gray);
         }
 
-        .sap-workarea {
+        .nav-item.active {
+            background-color: rgba(0, 112, 242, 0.1);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .nav-item .transaction-code {
+            font-family: 'Consolas', monospace;
+            font-weight: bold;
+            color: var(--primary-color);
+            width: 50px;
+            display: inline-block;
+        }
+
+        .nav-item .transaction-desc {
             flex: 1;
-            padding: 15px;
+        }
+
+        /* Main work area */
+        .work-area {
+            padding: 1.5rem;
             background-color: white;
             overflow-y: auto;
         }
 
-        .transaction-header {
+        /* Transaction input bar */
+        .transaction-bar {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
+            gap: 1rem;
+            padding: 0.8rem;
+            background-color: var(--light-gray);
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
         }
 
-        .transaction-code {
-            margin-right: 15px;
+        .transaction-label {
+            font-weight: 500;
+            white-space: nowrap;
         }
 
-        #transaction-input {
-            padding: 5px;
-            width: 100px;
+        .transaction-input {
+            flex: 1;
+            max-width: 120px;
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 1rem;
         }
 
-        #execute-btn {
-            padding: 5px 15px;
-            background-color: #0a6ed1;
+        .transaction-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 112, 242, 0.2);
+        }
+
+        .execute-btn {
+            padding: 0.5rem 1.2rem;
+            background-color: var(--primary-color);
             color: white;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
         }
 
-        #execute-btn:hover {
-            background-color: #085caf;
+        .execute-btn:hover {
+            background-color: #005bb5;
         }
 
+        /* Welcome screen */
         .welcome-screen {
             text-align: center;
-            padding: 50px;
+            padding: 3rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .sap-tips {
-            margin-top: 30px;
+        .welcome-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .quick-guide {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
             text-align: left;
-            background-color: #f8f8f8;
-            padding: 15px;
-            border-radius: 5px;
         }
 
-        .sap-footer {
-            background-color: #e6e6e6;
-            padding: 5px 20px;
+        .guide-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .guide-title svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--primary-color);
+        }
+
+        .guide-list {
+            list-style: none;
+        }
+
+        .guide-item {
+            padding: 0.5rem 0;
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .guide-item-code {
+            font-family: 'Consolas', monospace;
+            font-weight: bold;
+            color: var(--primary-color);
+            width: 60px;
+            flex-shrink: 0;
+        }
+
+        /* Transaction forms */
+        .transaction-form {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .form-title .transaction-code {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .form-row {
+            display: flex;
+            margin-bottom: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .form-label {
+            width: 200px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .form-label.required:after {
+            content: '*';
+            color: var(--error-color);
+            margin-left: 4px;
+        }
+
+        .form-control {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 112, 242, 0.2);
+        }
+
+        .form-select {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            background-color: white;
+        }
+
+        .form-textarea {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            min-height: 80px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .form-buttons {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .form-btn-primary:hover {
+            background-color: #005bb5;
+        }
+
+        .form-btn-secondary {
+            background-color: white;
+            color: var(--secondary-color);
+            border: 1px solid var(--medium-gray);
+        }
+
+        .form-btn-secondary:hover {
+            background-color: var(--light-gray);
+        }
+
+        /* Results and messages */
+        .result-container {
+            margin-top: 1.5rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .message-success {
+            background-color: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid var(--success-color);
+            color: var(--secondary-color);
+        }
+
+        .message-error {
+            background-color: rgba(244, 67, 54, 0.1);
+            border-left: 4px solid var(--error-color);
+            color: var(--secondary-color);
+        }
+
+        .message-warning {
+            background-color: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid var(--warning-color);
+            color: var(--secondary-color);
+        }
+
+        .message-icon {
+            flex-shrink: 0;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-table th {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: left;
+            padding: 0.8rem 1rem;
+            font-weight: 500;
+        }
+
+        .data-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .data-table tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(0, 112, 242, 0.05);
+        }
+
+        /* Learning tips */
+        .learning-tip {
+            background-color: rgba(0, 112, 242, 0.05);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .tip-content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .app-footer {
+            background-color: white;
+            border-top: 1px solid var(--medium-gray);
+            padding: 0.8rem 1.5rem;
+            font-size: 0.85rem;
+            color: var(--dark-gray);
         }
 
         .status-bar {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
         }
 
-        /* Стили для форм транзакций */
-        .transaction-form {
-            display: none;
-        }
-
-        .form-title {
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #0a6ed1;
-        }
-
-        .form-row {
+        .status-item {
             display: flex;
-            margin-bottom: 10px;
             align-items: center;
+            gap: 0.5rem;
         }
 
-        .form-label {
-            width: 200px;
-            font-weight: bold;
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--success-color);
         }
 
-        .form-input {
-            padding: 5px;
-            width: 250px;
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .app-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .app-sidebar {
+                display: none;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .form-control, .form-select, .form-textarea {
+                width: 100%;
+                min-width: auto;
+            }
         }
 
-        .form-select {
-            padding: 5px;
-            width: 260px;
-        }
-
-        .form-button {
-            padding: 5px 15px;
-            background-color: #0a6ed1;
-            color: white;
-            border: none;
-            cursor: pointer;
-            margin-right: 10px;
-        }
-
-        .form-button:hover {
-            background-color: #085caf;
-        }
-
-        .form-buttons {
-            margin-top: 20px;
-        }
-
-        .result-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .result-table th, .result-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        .result-table th {
-            background-color: #f2f2f2;
-        }
-
-        .result-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .error-message {
-            color: red;
-            margin-top: 10px;
-        }
-
-        .success-message {
-            color: green;
-            margin-top: 10px;
+        /* Icons (simplified for this example) */
+        .icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
         }
     </style>
 </head>
 <body>
-    <div class="sap-container">
-        <header class="sap-header">
-            <div class="sap-logo">SAP</div>
-            <div class="sap-title">Зона переупаковки</div>
-            <div class="sap-user">Пользователь: OPERATOR_01</div>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo-container">
+                <div class="app-logo">SAP Learning</div>
+                <div class="app-title">Зона переупаковки</div>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">OP</div>
+                <span>OPERATOR_01</span>
+            </div>
         </header>
 
-        <div class="sap-content">
-            <nav class="sap-menu">
-                <div class="menu-title">Транзакции</div>
-                <ul>
-                    <li data-transaction="PKMC">PKMC - Просмотр канбан-цикла</li>
-                    <li data-transaction="LT09">LT09 - Перемещение EO внутри склада</li>
-                    <li data-transaction="LT10">LT10 - Массовое перемещение EO</li>
-                    <li data-transaction="HUMO">HUMO - Управление EO</li>
-                </ul>
+        <div class="app-content">
+            <nav class="app-sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Основные транзакции</div>
+                    <ul class="nav-menu">
+                        <li class="nav-item" data-transaction="PKMC">
+                            <span class="transaction-code">PKMC</span>
+                            <span class="transaction-desc">Просмотр канбан-цикла</span>
+                        </li>
+                        <li class="nav-item" data-transaction="LT09">
+                            <span class="transaction-code">LT09</span>
+                            <span class="transaction-desc">Перемещение EO внутри склада</span>
+                        </li>
+                        <li class="nav-item" data-transaction="LT10">
+                            <span class="transaction-code">LT10</span>
+                            <span class="transaction-desc">Массовое перемещение EO</span>
+                        </li>
+                        <li class="nav-item" data-transaction="HUMO">
+                            <span class="transaction-code">HUMO</span>
+                            <span class="transaction-desc">Управление EO</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Обучение</div>
+                    <ul class="nav-menu">
+                        <li class="nav-item" id="show-tutorial">
+                            <span>📚 Руководство по работе</span>
+                        </li>
+                        <li class="nav-item" id="show-glossary">
+                            <span>📖 Глоссарий терминов</span>
+                        </li>
+                        <li class="nav-item" id="show-cheatsheet">
+                            <span>📝 Шпаргалка по транзакциям</span>
+                        </li>
+                    </ul>
+                </div>
             </nav>
 
-            <main class="sap-workarea">
-                <div class="transaction-header">
-                    <div class="transaction-code">Окно ввода транзакции: <input type="text" id="transaction-input"></div>
-                    <button id="execute-btn">Выполнить</button>
+            <main class="work-area">
+                <div class="transaction-bar">
+                    <span class="transaction-label">Введите транзакцию:</span>
+                    <input type="text" class="transaction-input" id="transaction-input" placeholder="Например: PKMC">
+                    <button class="execute-btn" id="execute-btn">
+                        <span>Выполнить</span>
+                    </button>
                 </div>
 
                 <div id="transaction-content">
                     <div class="welcome-screen">
-                        <h2>Добро пожаловать в симулятор SAP</h2>
-                        <p>Выберите транзакцию из меню или введите код вручную</p>
-                        <div class="sap-tips">
-                            <h3>Основные транзакции:</h3>
-                            <ul>
-                                <li><strong>PKMC</strong> - Просмотр канбан-цикла материала</li>
-                                <li><strong>LT09</strong> - Перемещение единиц обработки (EO)</li>
-                                <li><strong>LT10</strong> - Массовое перемещение EO</li>
-                                <li><strong>HUMO</strong> - Просмотр и блокировка EO</li>
+                        <h1 class="welcome-title">Добро пожаловать в учебный симулятор SAP</h1>
+                        <p class="welcome-subtitle">
+                            Этот тренажер поможет вам освоить основные транзакции системы SAP, используемые в зоне переупаковки.
+                            Выберите транзакцию из меню слева или введите код вручную.
+                        </p>
+                        
+                        <div class="quick-guide">
+                            <h3 class="guide-title">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                </svg>
+                                Быстрый старт
+                            </h3>
+                            <ul class="guide-list">
+                                <li class="guide-item">
+                                    <span class="guide-item-code">PKMC</span>
+                                    <span>Проверка канбан-цикла материала перед переупаковкой</span>
+                                </li>
+                                <li class="guide-item">
+                                    <span class="guide-item-code">LT09</span>
+                                    <span>Перемещение единицы обработки (EO) на другое складское место</span>
+                                </li>
+                                <li class="guide-item">
+                                    <span class="guide-item-code">LT10</span>
+                                    <span>Массовое перемещение нескольких EO при переупаковке партии</span>
+                                </li>
+                                <li class="guide-item">
+                                    <span class="guide-item-code">HUMO</span>
+                                    <span>Проверка статуса EO или ее блокировка при проблемах</span>
+                                </li>
                             </ul>
                         </div>
                     </div>
 
                     <!-- Форма PKMC -->
                     <div id="PKMC-form" class="transaction-form">
-                        <div class="form-title">PKMC - Просмотр канбан-цикла материала</div>
+                        <h2 class="form-title">
+                            <span class="transaction-code">PKMC</span>
+                            Просмотр канбан-цикла материала
+                        </h2>
+                        
+                        <div class="learning-tip">
+                            <div class="tip-title">📌 Когда использовать</div>
+                            <div class="tip-content">
+                                Транзакция PKMC используется для проверки канбан-цикла материала перед началом переупаковки. 
+                                Здесь вы можете увидеть, куда должен быть перемещен материал после переупаковки, 
+                                его текущее местоположение и параметры упаковки.
+                            </div>
+                        </div>
+                        
                         <div class="form-row">
-                            <div class="form-label">Завод:</div>
-                            <input type="text" class="form-input" id="pkmc-plant" value="5610">
+                            <label for="pkmc-plant" class="form-label required">Завод:</label>
+                            <input type="text" class="form-control" id="pkmc-plant" value="5610">
                         </div>
                         <div class="form-row">
-                            <div class="form-label">Материал:</div>
-                            <input type="text" class="form-input" id="pkmc-material" placeholder="Введите номер материала">
+                            <label for="pkmc-material" class="form-label required">Материал:</label>
+                            <input type="text" class="form-control" id="pkmc-material" placeholder="Введите номер материала">
                         </div>
                         <div class="form-buttons">
-                            <button class="form-button" id="pkmc-execute">Выполнить</button>
+                            <button class="form-btn form-btn-primary" id="pkmc-execute">
+                                <span>Выполнить</span>
+                            </button>
+                            <button class="form-btn form-btn-secondary" id="pkmc-reset">
+                                <span>Сбросить</span>
+                            </button>
                         </div>
-                        <div id="pkmc-result"></div>
+                        <div id="pkmc-result" class="result-container"></div>
                     </div>
 
                     <!-- Форма LT09 -->
                     <div id="LT09-form" class="transaction-form">
-                        <div class="form-title">LT09 - Перемещение EO внутри склада</div>
+                        <h2 class="form-title">
+                            <span class="transaction-code">LT09</span>
+                            Перемещение EO внутри склада
+                        </h2>
+                        
+                        <div class="learning-tip">
+                            <div class="tip-title">📌 Когда использовать</div>
+                            <div class="tip-content">
+                                Транзакция LT09 используется для перемещения одной единицы обработки (EO) в пределах склада. 
+                                После переупаковки материала используйте эту транзакцию, чтобы переместить EO 
+                                на соответствующее складское место согласно канбан-циклу.
+                            </div>
+                        </div>
+                        
                         <div class="form-row">
-                            <div class="form-label">Номер EO:</div>
-                            <input type="text" class="form-input" id="lt09-eo" placeholder="Введите номер EO">
+                            <label for="lt09-eo" class="form-label required">Номер EO:</label>
+                            <input type="text" class="form-control" id="lt09-eo" placeholder="Введите номер EO">
                         </div>
                         <div class="form-row">
-                            <div class="form-label">Вид движения:</div>
+                            <label for="lt09-movement" class="form-label required">Вид движения:</label>
                             <select class="form-select" id="lt09-movement">
                                 <option value="999">999 - С печатью этикетки</option>
                                 <option value="998">998 - Без печати</option>
@@ -290,52 +689,88 @@
                             </select>
                         </div>
                         <div class="form-row">
-                            <div class="form-label">Тип склада назначения:</div>
-                            <input type="text" class="form-input" id="lt09-target-type" placeholder="Например, GLF">
+                            <label for="lt09-target-type" class="form-label required">Тип склада назначения:</label>
+                            <input type="text" class="form-control" id="lt09-target-type" placeholder="Например: GLF">
                         </div>
                         <div class="form-buttons">
-                            <button class="form-button" id="lt09-execute">Выполнить</button>
+                            <button class="form-btn form-btn-primary" id="lt09-execute">
+                                <span>Выполнить</span>
+                            </button>
+                            <button class="form-btn form-btn-secondary" id="lt09-reset">
+                                <span>Сбросить</span>
+                            </button>
                         </div>
-                        <div id="lt09-result"></div>
+                        <div id="lt09-result" class="result-container"></div>
                     </div>
 
                     <!-- Форма LT10 -->
                     <div id="LT10-form" class="transaction-form">
-                        <div class="form-title">LT10 - Массовое перемещение EO</div>
+                        <h2 class="form-title">
+                            <span class="transaction-code">LT10</span>
+                            Массовое перемещение EO
+                        </h2>
+                        
+                        <div class="learning-tip">
+                            <div class="tip-title">📌 Когда использовать</div>
+                            <div class="tip-content">
+                                Транзакция LT10 используется для одновременного перемещения нескольких единиц обработки (EO). 
+                                Применяйте ее, когда нужно переместить целую партию переупакованных материалов. 
+                                Это экономит время по сравнению с индивидуальным перемещением каждой EO через LT09.
+                            </div>
+                        </div>
+                        
                         <div class="form-row">
-                            <div class="form-label">Номер склада:</div>
-                            <input type="text" class="form-input" id="lt10-plant" value="MKA">
+                            <label for="lt10-plant" class="form-label required">Номер склада:</label>
+                            <input type="text" class="form-control" id="lt10-plant" value="MKA">
                         </div>
                         <div class="form-row">
-                            <div class="form-label">Тип склада (откуда):</div>
-                            <input type="text" class="form-input" id="lt10-source-type" placeholder="Например, 923">
+                            <label for="lt10-source-type" class="form-label required">Тип склада (откуда):</label>
+                            <input type="text" class="form-control" id="lt10-source-type" placeholder="Например: 923">
                         </div>
                         <div class="form-row">
-                            <div class="form-label">Вид движения:</div>
+                            <label for="lt10-movement" class="form-label required">Вид движения:</label>
                             <select class="form-select" id="lt10-movement">
                                 <option value="999">999 - С печатью этикетки</option>
                                 <option value="998">998 - Без печати</option>
                             </select>
                         </div>
                         <div class="form-row">
-                            <div class="form-label">Номера EO (через запятую):</div>
-                            <textarea class="form-input" id="lt10-eo-list" rows="3" placeholder="Введите номера EO через запятую"></textarea>
+                            <label for="lt10-eo-list" class="form-label required">Номера EO (через запятую):</label>
+                            <textarea class="form-textarea" id="lt10-eo-list" placeholder="Введите номера EO через запятую"></textarea>
                         </div>
                         <div class="form-buttons">
-                            <button class="form-button" id="lt10-execute">Выполнить</button>
+                            <button class="form-btn form-btn-primary" id="lt10-execute">
+                                <span>Выполнить</span>
+                            </button>
+                            <button class="form-btn form-btn-secondary" id="lt10-reset">
+                                <span>Сбросить</span>
+                            </button>
                         </div>
-                        <div id="lt10-result"></div>
+                        <div id="lt10-result" class="result-container"></div>
                     </div>
 
                     <!-- Форма HUMO -->
                     <div id="HUMO-form" class="transaction-form">
-                        <div class="form-title">HUMO - Управление EO</div>
+                        <h2 class="form-title">
+                            <span class="transaction-code">HUMO</span>
+                            Управление EO
+                        </h2>
+                        
+                        <div class="learning-tip">
+                            <div class="tip-title">📌 Когда использовать</div>
+                            <div class="tip-content">
+                                Транзакция HUMO используется для проверки статуса единицы обработки (EO), 
+                                ее блокировки при обнаружении проблем (например, поврежденная упаковка) 
+                                или разблокировки после устранения проблем.
+                            </div>
+                        </div>
+                        
                         <div class="form-row">
-                            <div class="form-label">Номер EO:</div>
-                            <input type="text" class="form-input" id="humo-eo" placeholder="Введите номер EO">
+                            <label for="humo-eo" class="form-label required">Номер EO:</label>
+                            <input type="text" class="form-control" id="humo-eo" placeholder="Введите номер EO">
                         </div>
                         <div class="form-row">
-                            <div class="form-label">Действие:</div>
+                            <label for="humo-action" class="form-label required">Действие:</label>
                             <select class="form-select" id="humo-action">
                                 <option value="view">Просмотр EO</option>
                                 <option value="block">Блокировка EO</option>
@@ -343,30 +778,103 @@
                             </select>
                         </div>
                         <div class="form-buttons">
-                            <button class="form-button" id="humo-execute">Выполнить</button>
+                            <button class="form-btn form-btn-primary" id="humo-execute">
+                                <span>Выполнить</span>
+                            </button>
+                            <button class="form-btn form-btn-secondary" id="humo-reset">
+                                <span>Сбросить</span>
+                            </button>
                         </div>
-                        <div id="humo-result"></div>
+                        <div id="humo-result" class="result-container"></div>
+                    </div>
+                    
+                    <!-- Обучающие материалы -->
+                    <div id="tutorial-content" class="transaction-form" style="display: none;">
+                        <h2 class="form-title">Руководство по работе в зоне переупаковки</h2>
+                        
+                        <div class="learning-tip">
+                            <div class="tip-title">📚 Основной процесс переупаковки</div>
+                            <div class="tip-content">
+                                <ol>
+                                    <li>Проверьте канбан-цикл материала (PKMC) - куда его нужно переместить после переупаковки</li>
+                                    <li>Выполните переупаковку материала согласно стандартам</li>
+                                    <li>Обновите этикетку (если требуется)</li>
+                                    <li>Переместите EO на целевое складское место (LT09 для одной EO или LT10 для нескольких)</li>
+                                    <li>При обнаружении проблем заблокируйте EO (HUMO) и сообщите руководителю</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <h3>Частые ошибки и их решение</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Проблема</th>
+                                    <th>Причина</th>
+                                    <th>Решение</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Материал не находится в системе</td>
+                                    <td>Неверный номер материала или EO</td>
+                                    <td>Проверьте правильность ввода, сверьтесь с физической этикеткой</td>
+                                </tr>
+                                <tr>
+                                    <td>Транзакция не выполняется</td>
+                                    <td>EO заблокирована или уже перемещена</td>
+                                    <td>Проверьте статус EO через HUMO, сообщите руководителю</td>
+                                </tr>
+                                <tr>
+                                    <td>Неверное складское место</td>
+                                    <td>Изменение канбан-цикла без обновления системы</td>
+                                    <td>Проверьте актуальный канбан-цикл через PKMC</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </main>
         </div>
 
-        <footer class="sap-footer">
+        <footer class="app-footer">
             <div class="status-bar">
-                <span>Завод: 5610</span>
-                <span>Склад: MKA</span>
-                <span>Статус: Готов</span>
+                <div class="status-item">
+                    <span class="status-indicator"></span>
+                    <span>Завод: 5610</span>
+                </div>
+                <div class="status-item">
+                    <span>Склад: MKA</span>
+                </div>
+                <div class="status-item">
+                    <span>Статус: Готов</span>
+                </div>
+                <div class="status-item">
+                    <span>Учебный режим</span>
+                </div>
             </div>
         </footer>
     </div>
 
     <script>
         // Обработка выбора транзакции из меню
-        document.querySelectorAll('.sap-menu li').forEach(item => {
+        document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
+                // Удаляем активный класс у всех элементов
+                document.querySelectorAll('.nav-item').forEach(el => {
+                    el.classList.remove('active');
+                });
+                
+                // Добавляем активный класс текущему элементу
+                this.classList.add('active');
+                
                 const transaction = this.getAttribute('data-transaction');
-                document.getElementById('transaction-input').value = transaction;
-                loadTransaction(transaction);
+                if (transaction) {
+                    document.getElementById('transaction-input').value = transaction;
+                    loadTransaction(transaction);
+                } else if (this.id === 'show-tutorial') {
+                    showTutorial();
+                }
             });
         });
 
@@ -388,17 +896,16 @@
             }
         });
 
+        // Показать учебное пособие
+        function showTutorial() {
+            hideAllForms();
+            document.getElementById('tutorial-content').style.display = 'block';
+        }
+
         // Загрузка формы транзакции
         function loadTransaction(transaction) {
-            // Скрыть все формы
-            document.querySelectorAll('.transaction-form').forEach(form => {
-                form.style.display = 'none';
-            });
-
-            // Скрыть экран приветствия
-            document.querySelector('.welcome-screen').style.display = 'none';
-
-            // Показать выбранную форму
+            hideAllForms();
+            
             const formId = transaction + '-form';
             const form = document.getElementById(formId);
             
@@ -406,9 +913,34 @@
                 form.style.display = 'block';
             } else {
                 document.querySelector('.welcome-screen').style.display = 'block';
-                document.getElementById('transaction-content').innerHTML += 
-                    `<div class="error-message">Транзакция "${transaction}" не найдена</div>`;
+                showMessage('error', `Транзакция "${transaction}" не найдена`);
             }
+        }
+
+        // Скрыть все формы
+        function hideAllForms() {
+            document.querySelector('.welcome-screen').style.display = 'none';
+            document.querySelectorAll('.transaction-form').forEach(form => {
+                form.style.display = 'none';
+            });
+        }
+
+        // Показать сообщение
+        function showMessage(type, text) {
+            const message = document.createElement('div');
+            message.className = `message message-${type}`;
+            message.innerHTML = `
+                <div class="message-icon">${type === 'error' ? '❌' : type === 'success' ? '✅' : '⚠️'}</div>
+                <div>${text}</div>
+            `;
+            
+            const container = document.getElementById('transaction-content');
+            container.appendChild(message);
+            
+            // Автоматическое удаление сообщения через 5 секунд
+            setTimeout(() => {
+                message.remove();
+            }, 5000);
         }
 
         // Обработчики для форм транзакций
@@ -419,8 +951,7 @@
             const material = document.getElementById('pkmc-material').value;
             
             if (!material) {
-                document.getElementById('pkmc-result').innerHTML = 
-                    '<div class="error-message">Введите номер материала</div>';
+                showMessage('error', 'Введите номер материала');
                 return;
             }
 
@@ -434,7 +965,9 @@
                     kanbanCycle: 'KBN0012',
                     route: 'Маршрут 5',
                     packaging: 'A21',
-                    quantity: '20 шт'
+                    quantity: '20 шт',
+                    targetStorage: 'GLF-12',
+                    targetBin: 'B-05-22'
                 },
                 {
                     material: '1K0407357D',
@@ -444,42 +977,77 @@
                     kanbanCycle: 'KBN0045',
                     route: 'Маршрут 3',
                     packaging: 'B15',
-                    quantity: '30 шт'
+                    quantity: '30 шт',
+                    targetStorage: 'GLF-08',
+                    targetBin: 'A-12-15'
                 }
             ];
 
             const result = mockData.find(item => item.material === material);
+            const resultDiv = document.getElementById('pkmc-result');
             
             if (result) {
                 let html = `
-                    <table class="result-table">
-                        <tr>
-                            <th>Материал</th>
-                            <th>Описание</th>
-                            <th>Завод</th>
-                            <th>Складское место</th>
-                            <th>Канбан-цикл</th>
-                            <th>Маршрут</th>
-                            <th>Упаковка</th>
-                            <th>Количество</th>
-                        </tr>
-                        <tr>
-                            <td>${result.material}</td>
-                            <td>${result.description}</td>
-                            <td>${result.plant}</td>
-                            <td>${result.storageLocation}</td>
-                            <td>${result.kanbanCycle}</td>
-                            <td>${result.route}</td>
-                            <td>${result.packaging}</td>
-                            <td>${result.quantity}</td>
-                        </tr>
+                    <div class="message message-success">
+                        <div class="message-icon">ℹ️</div>
+                        <div>Канбан-цикл для материала ${material} успешно загружен</div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Информация о канбан-цикле</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Материал</td>
+                                <td><strong>${result.material}</strong> - ${result.description}</td>
+                            </tr>
+                            <tr>
+                                <td>Текущее местоположение</td>
+                                <td>${result.storageLocation}</td>
+                            </tr>
+                            <tr>
+                                <td>Канбан-цикл</td>
+                                <td>${result.kanbanCycle}</td>
+                            </tr>
+                            <tr>
+                                <td>Маршрут</td>
+                                <td>${result.route}</td>
+                            </tr>
+                            <tr>
+                                <td>Упаковка</td>
+                                <td>${result.packaging} (${result.quantity})</td>
+                            </tr>
+                            <tr>
+                                <td>Целевое складское место</td>
+                                <td><strong>${result.targetStorage}</strong>, ячейка ${result.targetBin}</td>
+                            </tr>
+                        </tbody>
                     </table>
+                    <div class="learning-tip">
+                        <div class="tip-title">💡 Подсказка</div>
+                        <div class="tip-content">
+                            После переупаковки этого материала используйте транзакцию <strong>LT09</strong> или <strong>LT10</strong> 
+                            для перемещения на указанное складское место <strong>${result.targetStorage}</strong>.
+                        </div>
+                    </div>
                 `;
-                document.getElementById('pkmc-result').innerHTML = html;
+                resultDiv.innerHTML = html;
             } else {
-                document.getElementById('pkmc-result').innerHTML = 
-                    `<div class="error-message">Материал ${material} не найден</div>`;
+                resultDiv.innerHTML = `
+                    <div class="message message-error">
+                        <div class="message-icon">❌</div>
+                        <div>Материал ${material} не найден в системе. Проверьте правильность ввода.</div>
+                    </div>
+                `;
             }
+        });
+
+        // Сброс формы PKMC
+        document.getElementById('pkmc-reset').addEventListener('click', function() {
+            document.getElementById('pkmc-material').value = '';
+            document.getElementById('pkmc-result').innerHTML = '';
         });
 
         // LT09 - Перемещение EO
@@ -489,23 +1057,40 @@
             const targetType = document.getElementById('lt09-target-type').value;
             
             if (!eo || !targetType) {
-                document.getElementById('lt09-result').innerHTML = 
-                    '<div class="error-message">Заполните все обязательные поля</div>';
+                showMessage('error', 'Заполните все обязательные поля');
                 return;
             }
 
             // Имитация выполнения
             const transportOrder = 'TO' + Math.floor(Math.random() * 1000000000);
-            let message = `Транспортный заказ ${transportOrder} создан. `;
+            let message = `Транспортный заказ <strong>${transportOrder}</strong> создан. `;
             
             if (movement === '999' || movement === '951') {
                 message += 'Этикетка распечатана. ';
             }
             
-            message += `EO ${eo} перемещена на тип склада ${targetType}.`;
+            message += `EO <strong>${eo}</strong> перемещена на тип склада <strong>${targetType}</strong>.`;
             
-            document.getElementById('lt09-result').innerHTML = 
-                `<div class="success-message">${message}</div>`;
+            document.getElementById('lt09-result').innerHTML = `
+                <div class="message message-success">
+                    <div class="message-icon">✅</div>
+                    <div>${message}</div>
+                </div>
+                <div class="learning-tip">
+                    <div class="tip-title">📌 Что дальше?</div>
+                    <div class="tip-content">
+                        Отнесите перемещенную EO на указанное складское место. Если этикетка была распечатана, 
+                        убедитесь, что она правильно размещена на упаковке.
+                    </div>
+                </div>
+            `;
+        });
+
+        // Сброс формы LT09
+        document.getElementById('lt09-reset').addEventListener('click', function() {
+            document.getElementById('lt09-eo').value = '';
+            document.getElementById('lt09-target-type').value = '';
+            document.getElementById('lt09-result').innerHTML = '';
         });
 
         // LT10 - Массовое перемещение EO
@@ -516,46 +1101,90 @@
             const eoList = document.getElementById('lt10-eo-list').value;
             
             if (!sourceType || !eoList) {
-                document.getElementById('lt10-result').innerHTML = 
-                    '<div class="error-message">Заполните все обязательные поля</div>';
+                showMessage('error', 'Заполните все обязательные поля');
                 return;
             }
 
             const eos = eoList.split(',').map(eo => eo.trim()).filter(eo => eo);
             
             if (eos.length === 0) {
-                document.getElementById('lt10-result').innerHTML = 
-                    '<div class="error-message">Введите хотя бы один номер EO</div>';
+                showMessage('error', 'Введите хотя бы один номер EO');
                 return;
             }
 
             let html = `
-                <div class="success-message">Массовое перемещение выполнено:</div>
-                <table class="result-table">
-                    <tr>
-                        <th>EO</th>
-                        <th>Статус</th>
-                    </tr>
+                <div class="message message-success">
+                    <div class="message-icon">✅</div>
+                    <div>Массовое перемещение выполнено:</div>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>EO</th>
+                            <th>Статус</th>
+                            <th>Транспортный заказ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
             `;
             
             eos.forEach(eo => {
                 const status = Math.random() > 0.1 ? 'Успешно' : 'Ошибка: срок годности не указан';
-                const rowClass = status === 'Успешно' ? '' : 'style="color:red"';
+                const transportOrder = status === 'Успешно' ? 'TO' + Math.floor(Math.random() * 1000000000) : '-';
+                
                 html += `
-                    <tr ${rowClass}>
+                    <tr class="${status !== 'Успешно' ? 'error-row' : ''}">
                         <td>${eo}</td>
                         <td>${status}</td>
+                        <td>${transportOrder}</td>
                     </tr>
                 `;
             });
             
-            html += `</table>`;
+            html += `</tbody></table>`;
             
             if (movement === '999') {
-                html += `<div class="success-message">Этикетки распечатаны.</div>`;
+                html += `
+                    <div class="message message-success">
+                        <div class="message-icon">🖨️</div>
+                        <div>Этикетки для успешно перемещенных EO распечатаны.</div>
+                    </div>
+                `;
+            }
+            
+            // Добавим информацию об ошибках, если они есть
+            if (eos.length > 3 && Math.random() > 0.5) {
+                html += `
+                    <div class="message message-warning">
+                        <div class="message-icon">⚠️</div>
+                        <div>
+                            <strong>Обратите внимание:</strong> Некоторые EO не были перемещены. 
+                            Проверьте правильность введенных данных и статус EO через транзакцию HUMO.
+                        </div>
+                    </div>
+                `;
             }
             
             document.getElementById('lt10-result').innerHTML = html;
+            
+            // Добавим стили для строк с ошибками
+            const style = document.createElement('style');
+            style.textContent = `
+                .error-row {
+                    background-color: rgba(244, 67, 54, 0.1) !important;
+                }
+                .error-row td {
+                    color: var(--error-color);
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // Сброс формы LT10
+        document.getElementById('lt10-reset').addEventListener('click', function() {
+            document.getElementById('lt10-source-type').value = '';
+            document.getElementById('lt10-eo-list').value = '';
+            document.getElementById('lt10-result').innerHTML = '';
         });
 
         // HUMO - Управление EO
@@ -564,8 +1193,7 @@
             const action = document.getElementById('humo-action').value;
             
             if (!eo) {
-                document.getElementById('humo-result').innerHTML = 
-                    '<div class="error-message">Введите номер EO</div>';
+                showMessage('error', 'Введите номер EO');
                 return;
             }
 
@@ -582,60 +1210,94 @@
                     status: Math.random() > 0.5 ? 'Свободен' : 'Заблокирован',
                     storageType: '923',
                     storageBin: 'REPACK',
-                    expiryDate: '31.12.2025'
+                    expiryDate: '31.12.2025',
+                    createdDate: '15.06.2024',
+                    createdBy: 'PACKER_03'
                 };
                 
                 html = `
-                    <table class="result-table">
-                        <tr>
-                            <th>Параметр</th>
-                            <th>Значение</th>
-                        </tr>
-                        <tr>
-                            <td>Номер EO</td>
-                            <td>${mockEO.id}</td>
-                        </tr>
-                        <tr>
-                            <td>Материал</td>
-                            <td>${mockEO.material}</td>
-                        </tr>
-                        <tr>
-                            <td>Описание</td>
-                            <td>${mockEO.description}</td>
-                        </tr>
-                        <tr>
-                            <td>Количество</td>
-                            <td>${mockEO.quantity}</td>
-                        </tr>
-                        <tr>
-                            <td>Упаковка</td>
-                            <td>${mockEO.packaging}</td>
-                        </tr>
-                        <tr>
-                            <td>Статус</td>
-                            <td>${mockEO.status}</td>
-                        </tr>
-                        <tr>
-                            <td>Тип склада</td>
-                            <td>${mockEO.storageType}</td>
-                        </tr>
-                        <tr>
-                            <td>Складское место</td>
-                            <td>${mockEO.storageBin}</td>
-                        </tr>
-                        <tr>
-                            <td>Срок годности</td>
-                            <td>${mockEO.expiryDate}</td>
-                        </tr>
+                    <div class="message message-success">
+                        <div class="message-icon">ℹ️</div>
+                        <div>Информация о EO ${eo} успешно загружена</div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Детали единицы обработки</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Номер EO</td>
+                                <td><strong>${mockEO.id}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Материал</td>
+                                <td><strong>${mockEO.material}</strong> - ${mockEO.description}</td>
+                            </tr>
+                            <tr>
+                                <td>Количество</td>
+                                <td>${mockEO.quantity}</td>
+                            </tr>
+                            <tr>
+                                <td>Упаковка</td>
+                                <td>${mockEO.packaging}</td>
+                            </tr>
+                            <tr>
+                                <td>Статус</td>
+                                <td><strong>${mockEO.status}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Текущее местоположение</td>
+                                <td>Тип склада: ${mockEO.storageType}, ячейка: ${mockEO.storageBin}</td>
+                            </tr>
+                            <tr>
+                                <td>Срок годности</td>
+                                <td>${mockEO.expiryDate}</td>
+                            </tr>
+                            <tr>
+                                <td>Создано</td>
+                                <td>${mockEO.createdDate} пользователем ${mockEO.createdBy}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 `;
             } else if (action === 'block') {
-                html = `<div class="success-message">EO ${eo} заблокирована. Статус: S (Заблокирован)</div>`;
+                html = `
+                    <div class="message message-success">
+                        <div class="message-icon">🔒</div>
+                        <div>EO <strong>${eo}</strong> заблокирована. Статус: <strong>S (Заблокирован)</strong></div>
+                    </div>
+                    <div class="learning-tip">
+                        <div class="tip-title">❗ Важно</div>
+                        <div class="tip-content">
+                            Заблокированная EO не может быть перемещена или использована в производстве. 
+                            Для разблокировки после устранения проблемы используйте действие "Разблокировка EO".
+                        </div>
+                    </div>
+                `;
             } else if (action === 'unblock') {
-                html = `<div class="success-message">EO ${eo} разблокирована. Статус: Свободен</div>`;
+                html = `
+                    <div class="message message-success">
+                        <div class="message-icon">🔓</div>
+                        <div>EO <strong>${eo}</strong> разблокирована. Статус: <strong>Свободен</strong></div>
+                    </div>
+                    <div class="learning-tip">
+                        <div class="tip-title">💡 Подсказка</div>
+                        <div class="tip-content">
+                            Теперь EO можно перемещать с помощью транзакций <strong>LT09</strong> или <strong>LT10</strong>.
+                        </div>
+                    </div>
+                `;
             }
             
             document.getElementById('humo-result').innerHTML = html;
+        });
+
+        // Сброс формы HUMO
+        document.getElementById('humo-reset').addEventListener('click', function() {
+            document.getElementById('humo-eo').value = '';
+            document.getElementById('humo-result').innerHTML = '';
         });
     </script>
 </body>
