@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Симулятор SAP - Зона переупаковки</title>
+    <style>
+        /* Основные стили SAP */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .sap-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .sap-header {
+            background-color: #0a6ed1;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sap-logo {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .sap-title {
+            font-size: 18px;
+        }
+
+        .sap-user {
+            font-size: 14px;
+        }
+
+        .sap-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sap-menu {
+            width: 250px;
+            background-color: #e6e6e6;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .menu-title {
+            font-weight: bold;
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        .sap-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sap-menu li {
+            padding: 8px 5px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .sap-menu li:hover {
+            background-color: #d0d0d0;
+        }
+
+        .sap-workarea {
+            flex: 1;
+            padding: 15px;
+            background-color: white;
+            overflow-y: auto;
+        }
+
+        .transaction-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .transaction-code {
+            margin-right: 15px;
+        }
+
+        #transaction-input {
+            padding: 5px;
+            width: 100px;
+        }
+
+        #execute-btn {
+            padding: 5px 15px;
+            background-color: #0a6ed1;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #execute-btn:hover {
+            background-color: #085caf;
+        }
+
+        .welcome-screen {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .sap-tips {
+            margin-top: 30px;
+            text-align: left;
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .sap-footer {
+            background-color: #e6e6e6;
+            padding: 5px 20px;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+
+        /* Стили для форм транзакций */
+        .transaction-form {
+            display: none;
+        }
+
+        .form-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #0a6ed1;
+        }
+
+        .form-row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .form-label {
+            width: 200px;
+            font-weight: bold;
+        }
+
+        .form-input {
+            padding: 5px;
+            width: 250px;
+        }
+
+        .form-select {
+            padding: 5px;
+            width: 260px;
+        }
+
+        .form-button {
+            padding: 5px 15px;
+            background-color: #0a6ed1;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .form-button:hover {
+            background-color: #085caf;
+        }
+
+        .form-buttons {
+            margin-top: 20px;
+        }
+
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .result-table th, .result-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .result-table th {
+            background-color: #f2f2f2;
+        }
+
+        .result-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sap-container">
+        <header class="sap-header">
+            <div class="sap-logo">SAP</div>
+            <div class="sap-title">Зона переупаковки</div>
+            <div class="sap-user">Пользователь: OPERATOR_01</div>
+        </header>
+
+        <div class="sap-content">
+            <nav class="sap-menu">
+                <div class="menu-title">Транзакции</div>
+                <ul>
+                    <li data-transaction="PKMC">PKMC - Просмотр канбан-цикла</li>
+                    <li data-transaction="LT09">LT09 - Перемещение EO внутри склада</li>
+                    <li data-transaction="LT10">LT10 - Массовое перемещение EO</li>
+                    <li data-transaction="HUMO">HUMO - Управление EO</li>
+                </ul>
+            </nav>
+
+            <main class="sap-workarea">
+                <div class="transaction-header">
+                    <div class="transaction-code">Окно ввода транзакции: <input type="text" id="transaction-input"></div>
+                    <button id="execute-btn">Выполнить</button>
+                </div>
+
+                <div id="transaction-content">
+                    <div class="welcome-screen">
+                        <h2>Добро пожаловать в симулятор SAP</h2>
+                        <p>Выберите транзакцию из меню или введите код вручную</p>
+                        <div class="sap-tips">
+                            <h3>Основные транзакции:</h3>
+                            <ul>
+                                <li><strong>PKMC</strong> - Просмотр канбан-цикла материала</li>
+                                <li><strong>LT09</strong> - Перемещение единиц обработки (EO)</li>
+                                <li><strong>LT10</strong> - Массовое перемещение EO</li>
+                                <li><strong>HUMO</strong> - Просмотр и блокировка EO</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Форма PKMC -->
+                    <div id="PKMC-form" class="transaction-form">
+                        <div class="form-title">PKMC - Просмотр канбан-цикла материала</div>
+                        <div class="form-row">
+                            <div class="form-label">Завод:</div>
+                            <input type="text" class="form-input" id="pkmc-plant" value="5610">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Материал:</div>
+                            <input type="text" class="form-input" id="pkmc-material" placeholder="Введите номер материала">
+                        </div>
+                        <div class="form-buttons">
+                            <button class="form-button" id="pkmc-execute">Выполнить</button>
+                        </div>
+                        <div id="pkmc-result"></div>
+                    </div>
+
+                    <!-- Форма LT09 -->
+                    <div id="LT09-form" class="transaction-form">
+                        <div class="form-title">LT09 - Перемещение EO внутри склада</div>
+                        <div class="form-row">
+                            <div class="form-label">Номер EO:</div>
+                            <input type="text" class="form-input" id="lt09-eo" placeholder="Введите номер EO">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Вид движения:</div>
+                            <select class="form-select" id="lt09-movement">
+                                <option value="999">999 - С печатью этикетки</option>
+                                <option value="998">998 - Без печати</option>
+                                <option value="951">951 - Предсерийный материал</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Тип склада назначения:</div>
+                            <input type="text" class="form-input" id="lt09-target-type" placeholder="Например, GLF">
+                        </div>
+                        <div class="form-buttons">
+                            <button class="form-button" id="lt09-execute">Выполнить</button>
+                        </div>
+                        <div id="lt09-result"></div>
+                    </div>
+
+                    <!-- Форма LT10 -->
+                    <div id="LT10-form" class="transaction-form">
+                        <div class="form-title">LT10 - Массовое перемещение EO</div>
+                        <div class="form-row">
+                            <div class="form-label">Номер склада:</div>
+                            <input type="text" class="form-input" id="lt10-plant" value="MKA">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Тип склада (откуда):</div>
+                            <input type="text" class="form-input" id="lt10-source-type" placeholder="Например, 923">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Вид движения:</div>
+                            <select class="form-select" id="lt10-movement">
+                                <option value="999">999 - С печатью этикетки</option>
+                                <option value="998">998 - Без печати</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Номера EO (через запятую):</div>
+                            <textarea class="form-input" id="lt10-eo-list" rows="3" placeholder="Введите номера EO через запятую"></textarea>
+                        </div>
+                        <div class="form-buttons">
+                            <button class="form-button" id="lt10-execute">Выполнить</button>
+                        </div>
+                        <div id="lt10-result"></div>
+                    </div>
+
+                    <!-- Форма HUMO -->
+                    <div id="HUMO-form" class="transaction-form">
+                        <div class="form-title">HUMO - Управление EO</div>
+                        <div class="form-row">
+                            <div class="form-label">Номер EO:</div>
+                            <input type="text" class="form-input" id="humo-eo" placeholder="Введите номер EO">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Действие:</div>
+                            <select class="form-select" id="humo-action">
+                                <option value="view">Просмотр EO</option>
+                                <option value="block">Блокировка EO</option>
+                                <option value="unblock">Разблокировка EO</option>
+                            </select>
+                        </div>
+                        <div class="form-buttons">
+                            <button class="form-button" id="humo-execute">Выполнить</button>
+                        </div>
+                        <div id="humo-result"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="sap-footer">
+            <div class="status-bar">
+                <span>Завод: 5610</span>
+                <span>Склад: MKA</span>
+                <span>Статус: Готов</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Обработка выбора транзакции из меню
+        document.querySelectorAll('.sap-menu li').forEach(item => {
+            item.addEventListener('click', function() {
+                const transaction = this.getAttribute('data-transaction');
+                document.getElementById('transaction-input').value = transaction;
+                loadTransaction(transaction);
+            });
+        });
+
+        // Обработка кнопки "Выполнить"
+        document.getElementById('execute-btn').addEventListener('click', function() {
+            const transaction = document.getElementById('transaction-input').value.trim().toUpperCase();
+            if (transaction) {
+                loadTransaction(transaction);
+            }
+        });
+
+        // Обработка ввода транзакции по Enter
+        document.getElementById('transaction-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const transaction = this.value.trim().toUpperCase();
+                if (transaction) {
+                    loadTransaction(transaction);
+                }
+            }
+        });
+
+        // Загрузка формы транзакции
+        function loadTransaction(transaction) {
+            // Скрыть все формы
+            document.querySelectorAll('.transaction-form').forEach(form => {
+                form.style.display = 'none';
+            });
+
+            // Скрыть экран приветствия
+            document.querySelector('.welcome-screen').style.display = 'none';
+
+            // Показать выбранную форму
+            const formId = transaction + '-form';
+            const form = document.getElementById(formId);
+            
+            if (form) {
+                form.style.display = 'block';
+            } else {
+                document.querySelector('.welcome-screen').style.display = 'block';
+                document.getElementById('transaction-content').innerHTML += 
+                    `<div class="error-message">Транзакция "${transaction}" не найдена</div>`;
+            }
+        }
+
+        // Обработчики для форм транзакций
+
+        // PKMC - Просмотр канбан-цикла
+        document.getElementById('pkmc-execute').addEventListener('click', function() {
+            const plant = document.getElementById('pkmc-plant').value;
+            const material = document.getElementById('pkmc-material').value;
+            
+            if (!material) {
+                document.getElementById('pkmc-result').innerHTML = 
+                    '<div class="error-message">Введите номер материала</div>';
+                return;
+            }
+
+            // Имитация данных SAP
+            const mockData = [
+                {
+                    material: '1J0803899AC',
+                    description: 'Болт крепления запасного колеса',
+                    plant: '5610',
+                    storageLocation: 'SML4-E15',
+                    kanbanCycle: 'KBN0012',
+                    route: 'Маршрут 5',
+                    packaging: 'A21',
+                    quantity: '20 шт'
+                },
+                {
+                    material: '1K0407357D',
+                    description: 'Кронштейн крепления',
+                    plant: '5610',
+                    storageLocation: 'WE-S3-B-01',
+                    kanbanCycle: 'KBN0045',
+                    route: 'Маршрут 3',
+                    packaging: 'B15',
+                    quantity: '30 шт'
+                }
+            ];
+
+            const result = mockData.find(item => item.material === material);
+            
+            if (result) {
+                let html = `
+                    <table class="result-table">
+                        <tr>
+                            <th>Материал</th>
+                            <th>Описание</th>
+                            <th>Завод</th>
+                            <th>Складское место</th>
+                            <th>Канбан-цикл</th>
+                            <th>Маршрут</th>
+                            <th>Упаковка</th>
+                            <th>Количество</th>
+                        </tr>
+                        <tr>
+                            <td>${result.material}</td>
+                            <td>${result.description}</td>
+                            <td>${result.plant}</td>
+                            <td>${result.storageLocation}</td>
+                            <td>${result.kanbanCycle}</td>
+                            <td>${result.route}</td>
+                            <td>${result.packaging}</td>
+                            <td>${result.quantity}</td>
+                        </tr>
+                    </table>
+                `;
+                document.getElementById('pkmc-result').innerHTML = html;
+            } else {
+                document.getElementById('pkmc-result').innerHTML = 
+                    `<div class="error-message">Материал ${material} не найден</div>`;
+            }
+        });
+
+        // LT09 - Перемещение EO
+        document.getElementById('lt09-execute').addEventListener('click', function() {
+            const eo = document.getElementById('lt09-eo').value;
+            const movement = document.getElementById('lt09-movement').value;
+            const targetType = document.getElementById('lt09-target-type').value;
+            
+            if (!eo || !targetType) {
+                document.getElementById('lt09-result').innerHTML = 
+                    '<div class="error-message">Заполните все обязательные поля</div>';
+                return;
+            }
+
+            // Имитация выполнения
+            const transportOrder = 'TO' + Math.floor(Math.random() * 1000000000);
+            let message = `Транспортный заказ ${transportOrder} создан. `;
+            
+            if (movement === '999' || movement === '951') {
+                message += 'Этикетка распечатана. ';
+            }
+            
+            message += `EO ${eo} перемещена на тип склада ${targetType}.`;
+            
+            document.getElementById('lt09-result').innerHTML = 
+                `<div class="success-message">${message}</div>`;
+        });
+
+        // LT10 - Массовое перемещение EO
+        document.getElementById('lt10-execute').addEventListener('click', function() {
+            const plant = document.getElementById('lt10-plant').value;
+            const sourceType = document.getElementById('lt10-source-type').value;
+            const movement = document.getElementById('lt10-movement').value;
+            const eoList = document.getElementById('lt10-eo-list').value;
+            
+            if (!sourceType || !eoList) {
+                document.getElementById('lt10-result').innerHTML = 
+                    '<div class="error-message">Заполните все обязательные поля</div>';
+                return;
+            }
+
+            const eos = eoList.split(',').map(eo => eo.trim()).filter(eo => eo);
+            
+            if (eos.length === 0) {
+                document.getElementById('lt10-result').innerHTML = 
+                    '<div class="error-message">Введите хотя бы один номер EO</div>';
+                return;
+            }
+
+            let html = `
+                <div class="success-message">Массовое перемещение выполнено:</div>
+                <table class="result-table">
+                    <tr>
+                        <th>EO</th>
+                        <th>Статус</th>
+                    </tr>
+            `;
+            
+            eos.forEach(eo => {
+                const status = Math.random() > 0.1 ? 'Успешно' : 'Ошибка: срок годности не указан';
+                const rowClass = status === 'Успешно' ? '' : 'style="color:red"';
+                html += `
+                    <tr ${rowClass}>
+                        <td>${eo}</td>
+                        <td>${status}</td>
+                    </tr>
+                `;
+            });
+            
+            html += `</table>`;
+            
+            if (movement === '999') {
+                html += `<div class="success-message">Этикетки распечатаны.</div>`;
+            }
+            
+            document.getElementById('lt10-result').innerHTML = html;
+        });
+
+        // HUMO - Управление EO
+        document.getElementById('humo-execute').addEventListener('click', function() {
+            const eo = document.getElementById('humo-eo').value;
+            const action = document.getElementById('humo-action').value;
+            
+            if (!eo) {
+                document.getElementById('humo-result').innerHTML = 
+                    '<div class="error-message">Введите номер EO</div>';
+                return;
+            }
+
+            let html = '';
+            
+            if (action === 'view') {
+                // Имитация данных EO
+                const mockEO = {
+                    id: eo,
+                    material: '1J0803899AC',
+                    description: 'Болт крепления запасного колеса',
+                    quantity: '20 шт',
+                    packaging: 'A21',
+                    status: Math.random() > 0.5 ? 'Свободен' : 'Заблокирован',
+                    storageType: '923',
+                    storageBin: 'REPACK',
+                    expiryDate: '31.12.2025'
+                };
+                
+                html = `
+                    <table class="result-table">
+                        <tr>
+                            <th>Параметр</th>
+                            <th>Значение</th>
+                        </tr>
+                        <tr>
+                            <td>Номер EO</td>
+                            <td>${mockEO.id}</td>
+                        </tr>
+                        <tr>
+                            <td>Материал</td>
+                            <td>${mockEO.material}</td>
+                        </tr>
+                        <tr>
+                            <td>Описание</td>
+                            <td>${mockEO.description}</td>
+                        </tr>
+                        <tr>
+                            <td>Количество</td>
+                            <td>${mockEO.quantity}</td>
+                        </tr>
+                        <tr>
+                            <td>Упаковка</td>
+                            <td>${mockEO.packaging}</td>
+                        </tr>
+                        <tr>
+                            <td>Статус</td>
+                            <td>${mockEO.status}</td>
+                        </tr>
+                        <tr>
+                            <td>Тип склада</td>
+                            <td>${mockEO.storageType}</td>
+                        </tr>
+                        <tr>
+                            <td>Складское место</td>
+                            <td>${mockEO.storageBin}</td>
+                        </tr>
+                        <tr>
+                            <td>Срок годности</td>
+                            <td>${mockEO.expiryDate}</td>
+                        </tr>
+                    </table>
+                `;
+            } else if (action === 'block') {
+                html = `<div class="success-message">EO ${eo} заблокирована. Статус: S (Заблокирован)</div>`;
+            } else if (action === 'unblock') {
+                html = `<div class="success-message">EO ${eo} разблокирована. Статус: Свободен</div>`;
+            }
+            
+            document.getElementById('humo-result').innerHTML = html;
+        });
+    </script>
+</body>
+</html>
