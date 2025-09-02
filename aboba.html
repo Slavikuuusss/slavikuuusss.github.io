@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="msapplication-TileColor" content="#3b82f6">
+    <title>MaterialVision</title>
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSI0MCIgZmlsbD0iIzNiODJmNiIvPjxwYXRoIGQ9Ik05NiA1MEM4OC44MjE0IDUwIDgyLjA2NzkgNTIuNDQ2NCA3Ni43NjU0IDU2Ljc2NTRDNzIuNDQ2NCA2Mi4wNjc5IDcwIDY4LjgyMTQgNzAgNzZDNzAgODMuMTc4NiA3Mi40NDY0IDg5LjkzMjEgNzYuNzY1NCA5NS4yMzQ2QzgyLjA2NzkgOTkuNTUzNiA4OC44MjE0IDEwMiA5NiAxMDJDMTAzLjE3OSAxMDIgMTA5LjkzMiA5OS41NTM2IDExNS4yMzUgOTUuMjM0NkMxMTkuNTU0IDg5LjkzMjEgMTIyIDgzLjE3ODYgMTIyIDc2QzEyMiA2OC44MjE0IDExOS41NTQgNjIuMDY3OSAxMTUuMjM1IDU2Ljc2NTRDMTA5LjkzMiA1Mi40NDY0IDEwMy4xNzkgNTAgOTYgNTBaTTE0MiAxMjZDNTEuODA3NyAxMjYgNTAgMTI2IDUwIDEyNkM1MCAxMjYgNTAgMTM2LjgwOCA1MCAxNDZDNTAgMTU1LjE5MiA1OC44MDc3IDE2MiA2OCAxNjJIMTI0QzEzMy4xOTIgMTYyIDE0MiAxNTUuMTkyIDE0MiAxNDZDMTQyIDEzNi44MDggMTQyIDEyNiAxNDIgMTI2WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=">
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxMiIgZmlsbD0iIzNiODJmNiIvPjxwYXRoIGQ9Ik0zMiAxNkMyOC44MjE0IDE2IDI1LjA2NzkgMTcuNDQ2NCAyMS43NjU0IDIxLjc2NTRDMTkuNDQ2NCAyNS4wNjc5IDE4IDI4LjgyMTQgMTggMzJDMTggMzUuMTc4NiAxOS40NDY0IDM4LjkzMjEgMjEuNzY1NCA0Mi4yMzQ2QzI1LjA2NzkgNDYuNTUzNiAyOC44MjE0IDQ4IDMyIDQ4QzM1LjE3OSA0OCAzOC45MzIgNDYuNTUzNiA0Mi4yMzUgNDIuMjM0NkM0Ni41NTQgMzguOTMyMSA0OCAzNS4xNzg2IDQ4IDMyQzQ4IDI4LjgyMTQgNDYuNTU0IDI1LjA2NzkgNDIuMjM1IDIxLjc2NTRDMzguOTMyIDE3LjQ0NjQgMzUuMTc5IDE2IDMyIDE2Wk00OCA0MkMzOC44MDc3IDQyIDM4IDQyIDM4IDQyQzM4IDQyIDM4IDQ1LjgwNzcgMzggNDZDMzggNDYuMTkyMiAzOC44MDc3IDQ2IDM4IDQ2SDQyQzQyLjE5MjIgNDYgNDYgNDYuMTkyMiA0NiA0NkM0NiA0NS44MDc3IDQ2IDQyIDQ2IDQyQzQ2IDQyIDQ1LjE5MjIgNDIgNDYgNDJINDhWNDJaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk1hdGVyaWFsVmlzaW9uIiwKICAic2hvcnRfbmFtZSI6ICJNYXRWaXNpb24iLAogICJkZXNjcmlwdGlvbiI6ICJDYXRhbG9nIG1hdGVyaWFsb3YiLAogICJzdGFydF91cmwiICIvIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZmFmYWZhIiwKICAidGhlbWVfY29sb3IiOiAiIzNiODJmNiIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImljb24tMTkyeDE5Mi5wbmciLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIsCiAgICAgICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSIKICAgIH0KICBdCn0=">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.25);
+            --glass-dark: rgba(255, 255, 255, 0.15);
+            --border: rgba(255, 255, 255, 0.3);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --safe-area-inset-top: env(safe-area-inset-top, 0px);
+            --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-area-inset-left: env(safe-area-inset-left, 0px);
+            --safe-area-inset-right: env(safe-area-inset-right, 0px);
+        }
+
+        /* LGBT Theme */
+        .lgbt-theme {
+            --primary: #ff0018;
+            --primary-dark: #d40014;
+            --text: #2d3748;
+            --text-light: #718096;
+            --bg: linear-gradient(135deg, #ff0018 0%, #ffa52c 20%, #ffff41 40%, #008018 60%, #0000f9 80%, #86007d 100%);
+            --glass: rgba(255, 255, 255, 0.35);
+            --glass-dark: rgba(255, 255, 255, 0.25);
+            --border: rgba(255, 255, 255, 0.4);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0f9ff 100%);
+            color: var(--text);
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            overflow-x: hidden;
+            transition: var(--transition);
+            padding: var(--safe-area-inset-top) var(--safe-area-inset-right) var(--safe-area-inset-bottom) var(--safe-area-inset-left);
+        }
+
+        .lgbt-theme body {
+            background: var(--bg);
+        }
+
+        /* iOS Specific Styles */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(var(--safe-area-inset-left), 20px);
+                padding-right: max(var(--safe-area-inset-right), 20px);
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: calc(20px + var(--safe-area-inset-bottom));
+        }
+
+        /* Login Screen */
+        #loginScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0f9ff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+            padding: var(--safe-area-inset-top) var(--safe-area-inset-right) var(--safe-area-inset-bottom) var(--safe-area-inset-left);
+        }
+
+        .lgbt-theme #loginScreen {
+            background: var(--bg);
+        }
+
+        .login-container {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 50px 40px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .login-logo {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+        }
+
+        .lgbt-theme .login-logo {
+            background: linear-gradient(135deg, #ff0018, #ffa52c, #ffff41, #008018, #0000f9, #86007d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 16px 20px;
+            margin: 12px 0;
+            background: var(--glass-dark);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 16px;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .lgbt-theme .login-input:focus {
+            box-shadow: 0 0 0 3px rgba(255, 0, 24, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 20px;
+            -webkit-touch-callout: none;
+        }
+
+        .login-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .lgbt-theme .login-btn {
+            background: linear-gradient(135deg, #ff0018, #ffa52c, #ffff41, #008018, #0000f9, #86007d);
+        }
+
+        .lgbt-theme .login-btn:hover {
+            background: linear-gradient(135deg, #d40014, #e59425, #e6e63a, #006914, #0000d4, #6e0067);
+            box-shadow: 0 8px 20px rgba(255, 0, 24, 0.4);
+        }
+
+        .error-message {
+            color: #ef4444;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Main App */
+        #mainApp {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 50px 30px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .lgbt-theme header {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .logo {
+            font-size: 3em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .lgbt-theme .logo {
+            background: linear-gradient(135deg, #ff0018, #ffa52c, #ffff41, #008018, #0000f9, #86007d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        /* Search Box */
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 18px 60px 18px 25px;
+            font-size: 16px;
+            background: var(--glass-dark);
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            color: var(--text);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .lgbt-theme .search-box:focus {
+            box-shadow: 0 0 0 3px rgba(255, 0, 24, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 1.3em;
+        }
+
+        /* Materials Grid */
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .material-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lgbt-theme .material-card {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .material-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lgbt-theme .material-card::before {
+            background: linear-gradient(135deg, rgba(255, 0, 24, 0.1), rgba(255, 165, 44, 0.1), rgba(255, 255, 65, 0.1), rgba(0, 128, 24, 0.1), rgba(0, 0, 249, 0.1), rgba(134, 0, 125, 0.1));
+        }
+
+        .material-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .material-card:hover::before {
+            opacity: 1;
+        }
+
+        .material-icon {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: var(--primary);
+            opacity: 0.8;
+        }
+
+        .lgbt-theme .material-icon {
+            background: linear-gradient(135deg, #ff0018, #ffa52c, #ffff41, #008018, #0000f9, #86007d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .material-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .material-desc {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        /* Gallery View */
+        .gallery-view {
+            display: none;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 35px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+        }
+
+        .lgbt-theme .gallery-view {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .gallery-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .back-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(-3px);
+        }
+
+        .lgbt-theme .back-btn {
+            background: linear-gradient(135deg, #ff0018, #ffa52c, #ffff41, #008018, #0000f9, #86007d);
+        }
+
+        .lgbt-theme .back-btn:hover {
+            background: linear-gradient(135deg, #d40014, #e59425, #e6e63a, #006914, #0000d4, #6e0067);
+        }
+
+        .gallery-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            background: var(--glass-dark);
+            border: 1px solid var(--border);
+        }
+
+        .photo-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .lgbt-theme .photo-item:hover {
+            box-shadow: 0 15px 35px rgba(255, 0, 24, 0.2);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Loading and Error States */
+        .loading {
+            text-align: center;
+            padding: 70px 20px;
+            color: var(--text-light);
+        }
+
+        .loading-spinner {
+            width: 45px;
+            height: 45px;
+            border: 3px solid var(--glass);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 25px;
+        }
+
+        .lgbt-theme .loading-spinner {
+            border-top: 3px solid #ff0018;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            text-align: center;
+            padding: 45px;
+            color: #ef4444;
+            background: var(--glass);
+            border-radius: 16px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        /* Rainbow animation for LGBT theme */
+        .rainbow-text {
+            background: linear-gradient(135deg, #ff0018, #ffa52c, #ffff41, #008018, #0000f9, #86007d);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 3s ease infinite;
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* iOS Safe Area Insets */
+        .safe-area-top {
+            padding-top: var(--safe-area-inset-top);
+        }
+
+        .safe-area-bottom {
+            padding-bottom: var(--safe-area-inset-bottom);
+        }
+
+        /* PWA Install Prompt */
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 15px 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            display: none;
+            z-index: 1000;
+            max-width: 90%;
+        }
+
+        .install-prompt button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                padding-bottom: calc(15px + var(--safe-area-inset-bottom));
+            }
+
+            .materials-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .photos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .logo {
+                font-size: 2.2em;
+            }
+            
+            .gallery-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .back-btn {
+                align-self: center;
+            }
+            
+            .login-container {
+                padding: 40px 30px;
+            }
+            
+            header {
+                padding: 35px 25px;
+            }
+
+            .search-box {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        /* iPhone Notch Support */
+        @media (max-width: 375px) {
+            .container {
+                padding: 10px;
+                padding-bottom: calc(10px + var(--safe-area-inset-bottom));
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--glass);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        .lgbt-theme ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ff0018, #ffa52c, #ffff41, #008018, #0000f9, #86007d);
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(25px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        /* Prevent zoom on iOS input focus */
+        @media screen and (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-container fade-in">
+            <div class="login-logo">MaterialVision</div>
+            <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.5;">
+                Защищенный доступ к каталогу материалов
+            </p>
+            
+            <input type="password" id="passwordInput" class="login-input" placeholder="🔒 Введите пароль" onkeypress="handleEnterKey(event)">
+            <button class="login-btn" onclick="checkPassword()">
+                <i class="fas fa-lock-open"></i>
+                Войти в систему
+            </button>
+            
+            <div id="errorMessage" class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                Неверный пароль
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="container">
+        <header class="fade-in">
+            <div class="logo">MaterialVision</div>
+            <div class="tagline">Минималистичный доступ к каталогу материалов</div>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-box" placeholder="🔍 Поиск по номеру материала...">
+                <div class="search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div id="materialsList" class="materials-grid">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    Загрузка каталога материалов...
+                </div>
+            </div>
+
+            <div id="galleryView" class="gallery-view">
+                <div class="gallery-header">
+                    <button class="back-btn" onclick="hideGallery()">
+                        <i class="fas fa-arrow-left"></i>
+                        Назад
+                    </button>
+                    <h2 id="galleryTitle" class="gallery-title">Просмотр материала</h2>
+                    <div></div>
+                </div>
+                <div id="photosContainer" class="photos-grid"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // PWA Features
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {
+                    // Silent fail if service worker not available
+                });
+            });
+        }
+
+        // Handle iOS standalone mode
+        if (window.navigator.standalone) {
+            document.body.classList.add('standalone');
+        }
+
+        // Password check
+        const CORRECT_PASSWORD = "334122";
+        const SECRET_PASSWORD = "никита";
+        let isLGBTTheme = false;
+        let deferredPrompt = null;
+        
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const errorElement = document.getElementById('errorMessage');
+            
+            if (password === CORRECT_PASSWORD || password === SECRET_PASSWORD) {
+                if (password === SECRET_PASSWORD) {
+                    isLGBTTheme = true;
+                    document.documentElement.classList.add('lgbt-theme');
+                    document.querySelector('.login-logo').classList.add('rainbow-text');
+                    document.querySelector('.logo').classList.add('rainbow-text');
+                }
+                
+                document.getElementById('loginScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('mainApp').style.opacity = '1';
+                        loadMaterials();
+                    }, 50);
+                }, 500);
+            } else {
+                errorElement.style.display = 'block';
+                document.getElementById('passwordInput').style.borderColor = '#ef4444';
+                setTimeout(() => {
+                    errorElement.style.display = 'none';
+                    document.getElementById('passwordInput').style.borderColor = '';
+                }, 3000);
+            }
+        }
+
+        function handleEnterKey(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        }
+
+        // Materials loading and display functions
+        let allMaterials = [];
+
+        async function loadMaterials() {
+            try {
+                const response = await fetch('index.json');
+                
+                if (!response.ok) {
+                    throw new Error('Файл index.json не найден');
+                }
+
+                const data = await response.json();
+                allMaterials = data.materials || [];
+                
+                displayMaterials(allMaterials);
+                
+            } catch (error) {
+                document.getElementById('materialsList').innerHTML = `
+                    <div class="error">
+                        ❌ Ошибка загрузки: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function displayMaterials(materials) {
+            const container = document.getElementById('materialsList');
+            
+            if (materials.length === 0) {
+                container.innerHTML = '<div class="error">Материалы не найдены</div>';
+                return;
+            }
+
+            container.innerHTML = materials.map(material => `
+                <div class="material-card" onclick="showMaterial('${material}')">
+                    <div class="material-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="material-name">${material}</h3>
+                    <p class="material-desc">Нажмите для просмотра</p>
+                </div>
+            `).join('');
+        }
+
+        async function showMaterial(materialName) {
+            document.getElementById('materialsList').style.display = 'none';
+            document.getElementById('galleryView').style.display = 'block';
+            document.getElementById('galleryTitle').textContent = materialName;
+
+            const photosContainer = document.getElementById('photosContainer');
+            photosContainer.innerHTML = '<div class="loading"><div class="loading-spinner"></div>Загрузка фотографий...</div>';
+
+            try {
+                const photos = [];
+                const extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+                
+                for (let i = 1; i <= 20; i++) {
+                    for (const ext of extensions) {
+                        const imgUrl = `материалы/${materialName}/${i}${ext}`;
+                        if (await imageExists(imgUrl)) {
+                            photos.push(imgUrl);
+                            break;
+                        }
+                    }
+                }
+
+                if (photos.length === 0) {
+                    photosContainer.innerHTML = '<div class="error">Фотографии не найдены</div>';
+                    return;
+                }
+
+                photosContainer.innerHTML = photos.map(photo => `
+                    <div class="photo-item">
+                        <img src="${photo}" alt="Фото материала" loading="lazy">
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                photosContainer.innerHTML = `<div class="error">Ошибка загрузки</div>`;
+            }
+        }
+
+        function hideGallery() {
+            document.getElementById('galleryView').style.display = 'none';
+            document.getElementById('materialsList').style.display = 'grid';
+        }
+
+        function imageExists(url) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+                img.src = url;
+                setTimeout(() => resolve(false), 1000);
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = allMaterials.filter(material => 
+                material.toLowerCase().includes(searchTerm)
+            );
+            displayMaterials(filtered);
+        });
+
+        // iOS specific fixes
+        document.addEventListener('touchstart', function() {}, {passive: true});
+        
+        // Prevent elastic scroll on iOS
+        document.addEventListener('touchmove', function(e) {
+            if (e.target === document.documentElement || e.target === document.body) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // Handle iOS keyboard appearance
+        window.addEventListener('resize', function() {
+            if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+                window.scrollTo(0, 0);
+            }
+        });
+    </script>
+</body>
+</html>
